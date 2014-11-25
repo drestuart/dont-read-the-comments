@@ -1,3 +1,2 @@
-$(document).ready(function(){
-	alert("What what!");
-});
+// alert(window.location.href);
+$("div").css("font-weight", "bold").css("color", "red");

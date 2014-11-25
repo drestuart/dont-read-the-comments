@@ -5,7 +5,10 @@
   "description": "Block out the comments section on YouTube and other sites",
   "version": "1.0",
 
-  "permissions": [
-    
-  ]
+  "permissions": ["webNavigation", "*://*/*"],
+  "background": {
+    "scripts": ["register.js"],
+    // "page": "background.html",
+    "persistent": false
+  }
 }
