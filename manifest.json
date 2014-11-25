@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+
+  "name": "Don't Read The Comments!",
+  "description": "Block out the comments section on YouTube and other sites",
+  "version": "1.0",
+
+  "permissions": [
+    
+  ],
+}
