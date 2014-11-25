@@ -1,10 +1,8 @@
 chrome.webNavigation.onCompleted.addListener(function(details) {
-    chrome.tabs.executeScript(details.tabId, {
-        runAt: "document_end",
-        file: "jquery-1.11.1.min.js"
-    });
-    chrome.tabs.executeScript(details.tabId, {
-        runAt: "document_idle",
-        file: "check.js"
-    });
+    var files = ["jquery-1.11.1.min.js", "parseUri.js", "drtc.js"];
+    for (var file of files) {
+	    chrome.tabs.executeScript(details.tabId, {
+	        file: file
+	    });
+	}
 }, { });
