@@ -51,16 +51,30 @@ function hideComments(comments_selector) {
 	$("#__drtc_cover").css(css_obj);
 }
 
+showText = "Show";
+hideText = "Hide";
+
 function showHide() {
 	$("#__drtc_cover").toggle();
+
+	if ($(this).text() == showText) {
+		$(this).text(hideText);
+	}
+	else {
+		$(this).text(showText);
+	}
 }
 
 if (shouldRun()) {
 	// alert(window.location.href);
-
+	var hideByDefault = false;
 	comments_selector = getCommentsSelector();
 	hideComments(comments_selector);
 
 	$("#__drtc_showhide").off("click").on("click", showHide);
+
+	if (!hideByDefault) {
+		$("#__drtc_showhide").trigger("click");
+	}
 	// $("div").css("font-weight", "bold").css("color", "red");	
 }
