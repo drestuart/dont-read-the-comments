@@ -16,7 +16,11 @@ function getCommentsSelector() {
 	return "#comments";
 }
 
-wrapHTML = "<div id='__drtc_wrap'></div>";
+coverHTML = "<div id='__drtc_area'>" +
+				"<a id='__drtc_showhide' href='javascript:void(0)'>Show</a>" +
+				"<div id='__drtc_cover'>" +
+				"</div>" +
+			"</div>";
 
 function hideComments(comments_selector) {
 	var c_elt = $(comments_selector);
@@ -34,21 +38,29 @@ function hideComments(comments_selector) {
 	}
 
 	// Add our div to the page
-	$("body").append(wrapHTML);
+	$("body").append(coverHTML);
 
-	// Style and position our wrap div
-	$("#__drtc_wrap").css({
+	// addShowHideControl(comments_selector);
+
+	// Style and position our cover div
+	$("#__drtc_area").css({
 		'z-index': (z + 1).toString(),
 		left: pos.left,
-		top: pos.top,
+		top: parseInt(pos.top) - parseInt($("#__drtc_showhide").css("height")),
 	});
-	$("#__drtc_wrap").css(css_obj);
+	$("#__drtc_cover").css(css_obj);
+}
+
+function showHide() {
+	$("#__drtc_cover").toggle();
 }
 
 if (shouldRun()) {
 	// alert(window.location.href);
 
-	var comments_selector = getCommentsSelector();
+	comments_selector = getCommentsSelector();
 	hideComments(comments_selector);
+
+	$("#__drtc_showhide").off("click").on("click", showHide);
 	// $("div").css("font-weight", "bold").css("color", "red");	
 }
