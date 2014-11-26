@@ -16,8 +16,11 @@ function getCommentsSelector() {
 	return "#comments";
 }
 
+showText = "Show &#8595;";
+hideText = "Hide &#8593;";
+
 coverHTML = "<div id='__drtc_area'>" +
-				"<a id='__drtc_showhide' href='javascript:void(0)'>Show</a>" +
+				"<a id='__drtc_showhide' href='javascript:void(0)'>" + showText + "</a>" +
 				"<div id='__drtc_cover'>" +
 				"</div>" +
 			"</div>";
@@ -40,8 +43,6 @@ function hideComments(comments_selector) {
 	// Add our div to the page
 	$("body").append(coverHTML);
 
-	// addShowHideControl(comments_selector);
-
 	// Style and position our cover div
 	$("#__drtc_area").css({
 		'z-index': (z + 1).toString(),
@@ -51,23 +52,20 @@ function hideComments(comments_selector) {
 	$("#__drtc_cover").css(css_obj);
 }
 
-showText = "Show";
-hideText = "Hide";
-
 function showHide() {
 	$("#__drtc_cover").toggle();
 
-	if ($(this).text() == showText) {
-		$(this).text(hideText);
+	if ($("#__drtc_cover").css("display") == 'none') {
+		$(this).html(hideText);
 	}
 	else {
-		$(this).text(showText);
+		$(this).html(showText);
 	}
 }
 
 if (shouldRun()) {
 	// alert(window.location.href);
-	var hideByDefault = false;
+	var hideByDefault = true;
 	comments_selector = getCommentsSelector();
 	hideComments(comments_selector);
 
