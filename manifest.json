@@ -5,10 +5,22 @@
   "description": "Block out the comments section on YouTube and other sites",
   "version": "1.0",
 
-  "permissions": ["webNavigation", "*://*/*"],
+  "permissions": ["webNavigation", "*://*/*", "storage"],
+
   "background": {
     "scripts": ["register.js"],
     // "page": "background.html",
     "persistent": false
+  },
+
+  // Chrome <40
+  "options_page": "options.html",
+
+  // Chrome 40+
+  "options_ui": {
+    // Required.
+    "page": "options.html",
+    // Recommended.
+    "chrome_style": true
   }
 }
