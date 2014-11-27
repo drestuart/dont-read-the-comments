@@ -1,3 +1,16 @@
 #__drtc_area {
 	position: absolute;
 }
+
+.__drtc_showhide {
+	border: 2px solid black;
+	width: 52px;
+	text-align: center;
+	background: #bbb;
+	opacity: 0.2;
+	cursor: pointer;
+}
+
+.__drtc_showhide:hover {
+	opacity: 0.8;
+}

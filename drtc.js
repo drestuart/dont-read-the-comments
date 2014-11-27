@@ -1,3 +1,7 @@
+function getElementHeight(elt) {
+	return $(elt).outerHeight(true);
+}
+
 function shouldRun() {
 	var goodDomains = ["", "stackoverflow.com"];
 
@@ -20,7 +24,7 @@ showText = "Show &#8595;";
 hideText = "Hide &#8593;";
 
 coverHTML = "<div id='__drtc_area'>" +
-				"<a id='__drtc_showhide' href='javascript:void(0)'>" + showText + "</a>" +
+				"<div class='__drtc_showhide'>" + showText + "</div>" +
 				"<div id='__drtc_cover'>" +
 				"</div>" +
 			"</div>";
@@ -44,10 +48,12 @@ function hideComments(comments_selector) {
 	$("body").append(coverHTML);
 
 	// Style and position our cover div
+	var top = parseInt(pos.top) - getElementHeight(".__drtc_showhide");
+
 	$("#__drtc_area").css({
 		'z-index': (z + 1).toString(),
 		left: pos.left,
-		top: parseInt(pos.top) - parseInt($("#__drtc_showhide").css("height")),
+		top: top
 	});
 	$("#__drtc_cover").css(css_obj);
 }
@@ -69,10 +75,10 @@ if (shouldRun()) {
 	comments_selector = getCommentsSelector();
 	hideComments(comments_selector);
 
-	$("#__drtc_showhide").off("click").on("click", showHide);
+	$(".__drtc_showhide").off("click").on("click", showHide);
 
 	if (!hideByDefault) {
-		$("#__drtc_showhide").trigger("click");
+		$(".__drtc_showhide").trigger("click");
 	}
 	// $("div").css("font-weight", "bold").css("color", "red");	
 }
