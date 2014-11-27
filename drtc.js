@@ -56,6 +56,51 @@ function hideComments(comments_selector) {
 		top: top
 	});
 	$("#__drtc_cover").css(css_obj);
+
+	// Style the show/hide control
+	styleShowHide(c_elt);
+}
+
+function styleShowHide(c_elt) {
+	// Get the words into an array
+	// The filter throws out empty strings
+	var words = c_elt.text().split(/\W+/).filter(Boolean);
+
+	// lowercase
+	words = words.map(function(value) {
+    	return value.toLowerCase();
+	});
+
+	// How many of these are bad words?
+	var num_words = 0;
+	var num_bad = 0;
+	for (word of words) {
+		num_words++;
+		if (bad_words.indexOf(word) != -1) {
+			num_bad++;
+		}
+	}
+
+	var bad_ratio = num_bad/num_words;
+
+	color = getShowHideColor(bad_ratio);
+	alert(color);
+	$(".__drtc_showhide").css("background", color);
+}
+
+color_map = {
+			0.4 : "#f00",
+			0.2 : "orange",
+			0 : "#bbb"};
+ratios = [0.4, 0.2, 0];
+
+function getShowHideColor(ratio) {
+	for (var r of ratios) {
+		alert(r);
+		if (ratio >= r) {
+			return color_map[r];
+		}
+	}
 }
 
 function showHide() {
@@ -70,7 +115,6 @@ function showHide() {
 }
 
 if (shouldRun()) {
-	// alert(window.location.href);
 	var hideByDefault = true;
 	comments_selector = getCommentsSelector();
 	hideComments(comments_selector);
@@ -80,5 +124,4 @@ if (shouldRun()) {
 	if (!hideByDefault) {
 		$(".__drtc_showhide").trigger("click");
 	}
-	// $("div").css("font-weight", "bold").css("color", "red");	
 }
