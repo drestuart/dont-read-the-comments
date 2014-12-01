@@ -106,6 +106,7 @@ function styleShowHide(c_elt) {
 		}
 	}
 
+	// alert(num_bad);
 	var bad_ratio = num_bad/num_words;
 
 	color = getShowHideColor(bad_ratio);
