@@ -60,7 +60,19 @@ function hideComments(comments_selector) {
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
 	if (c_elt.css("background-color") === "rgba(0, 0, 0, 0)") {
+		// Default if we don't find a background to use
 		$("#__drtc_cover").css("background-color", "#fff");
+
+		var parents = c_elt.parents();
+		for (var i = 0 ; i < parents.length ; i++) {
+			elt = $(parents[i]);
+
+			var bgc = elt.css("background-color");
+			if (bgc !== "rgba(0, 0, 0, 0)") {
+				$("#__drtc_cover").css("background-color", bgc);
+				break;
+			}
+		}
 	}
 
 	// Style the show/hide control
