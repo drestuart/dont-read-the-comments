@@ -57,34 +57,46 @@ function hideComments(comments_selector) {
 	});
 	$("#__drtc_cover").css(css_obj);
 
+	// Style the background if the comment area
+	// doesn't have a style explicitly set
+	if (c_elt.css("background-color") === "rgba(0, 0, 0, 0)") {
+		$("#__drtc_cover").css("background-color", "#fff");
+	}
+
 	// Style the show/hide control
 	styleShowHide(c_elt);
 }
 
 function styleShowHide(c_elt) {
 	// Get the words into an array
-	// The filter throws out empty strings
-	var words = c_elt.text().split(/\W+/).filter(Boolean);
+	var num_words = 0;
 
-	// lowercase
-	words = words.map(function(value) {
-    	return value.toLowerCase();
-	});
+	var text = c_elt.text()
+		.split(/\W+/)
+		// The filter throws out empty strings
+		.filter(Boolean)
+		// lowercase
+		.map(function(value) {
+			// Count words while we're at it
+			num_words++;
+    		return value.toLowerCase();
+		})
+		// join back into a string with spaces
+		.join(" ");
 
 	// How many of these are bad words?
-	var num_words = 0;
 	var num_bad = 0;
-	for (word of words) {
-		num_words++;
-		if (bad_words.indexOf(word) != -1) {
-			num_bad++;
+	for (bw of bad_words) {
+		if (text.indexOf(bw) != -1) {
+			var re = new RegExp('\\b' + bw + '\\b',"g");
+			var count = (text.match(re) || []).length;
+			num_bad += bw.split(" ").length * count;
 		}
 	}
 
 	var bad_ratio = num_bad/num_words;
 
 	color = getShowHideColor(bad_ratio);
-	alert(color);
 	$(".__drtc_showhide").css("background", color);
 }
 
@@ -96,7 +108,6 @@ ratios = [0.4, 0.2, 0];
 
 function getShowHideColor(ratio) {
 	for (var r of ratios) {
-		alert(r);
 		if (ratio >= r) {
 			return color_map[r];
 		}
