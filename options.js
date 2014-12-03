@@ -27,8 +27,6 @@ $(document).ready(function() {
 
 	// Save options
 	$("#save").on('click', function() {
-		var awesome_data = $("#awesome_data").val();
-
 		data = $("#options_form").serializeObject();
 		console.log(data);
 
