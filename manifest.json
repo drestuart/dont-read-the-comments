@@ -3,9 +3,13 @@
 
   "name": "Don't Read The Comments!",
   "description": "Block out the comments section on YouTube and other sites",
-  "version": "1.0",
+  "version": "0.1",
 
-  "permissions": ["webNavigation", "*://*/*", "storage"],
+  "permissions": [
+    "webNavigation",
+    "*://*/*",
+    "storage"
+  ],
 
   "background": {
     "scripts": ["register.js"],
