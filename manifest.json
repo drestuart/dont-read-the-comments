@@ -13,7 +13,7 @@
   ],
 
   "background": {
-    "scripts": ["register.js"],
+    "scripts": ["install.js", "register.js"],
     // "page": "background.html",
     "persistent": true
   },
