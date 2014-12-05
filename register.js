@@ -2,6 +2,11 @@
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install") {
         console.log("First install!");
+        
+        chrome.storage.sync.set({"awesome_data" : "awesome by default"}, 
+            function() {
+                console.log("Installed fresh data");
+        });
     }
     else if(details.reason == "update") {
         var thisVersion = chrome.runtime.getManifest().version;

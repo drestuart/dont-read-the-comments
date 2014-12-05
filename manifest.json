@@ -2,6 +2,7 @@
   "manifest_version": 2,
 
   "name": "Don't Read The Comments!",
+  "short_name": "DRTC!",
   "description": "Block out the comments section on YouTube and other sites",
   "version": "0.1",
 
@@ -14,7 +15,7 @@
   "background": {
     "scripts": ["register.js"],
     // "page": "background.html",
-    "persistent": false
+    "persistent": true
   },
 
   "icons": {
