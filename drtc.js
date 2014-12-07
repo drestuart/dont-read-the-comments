@@ -3,21 +3,20 @@ function getElementHeight(elt) {
 }
 
 function shouldRun() {
-	var goodDomains = ["", "stackoverflow.com"];
-
-	var uriobj = parseUri(window.location.href);
-	var domain = uriobj.authority;
-
-	for (gd of goodDomains) {
-		if (domain == gd) {
-			return true;
-		}
+	if (typeof siteProfile === "undefined") {
+		return false;
 	}
-	return false;
+
+	if (siteProfile["mode"] !== "disabled") {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 function getCommentsSelector() {
-	return "#comments";
+	return siteProfile["section_selector"];
 }
 
 showText = "Show &#8595;";
@@ -138,14 +137,31 @@ function showHide() {
 	}
 }
 
-if (shouldRun()) {
-	var hideByDefault = true;
-	comments_selector = getCommentsSelector();
-	hideComments(comments_selector);
 
-	$(".__drtc_showhide").off("click").on("click", showHide);
+var siteProfile;
 
-	if (!hideByDefault) {
-		$(".__drtc_showhide").trigger("click");
-	}
-}
+$(document).ready(function() {
+	var profiles;
+
+	chrome.storage.sync.get("profiles", function(data) {
+		profiles = data["profiles"];
+
+		var domain = parseUri(window.location.href).authority;
+
+		for (p of profiles) {
+			if (domain == p["domain"]) {
+				siteProfile = p;
+			}
+		}
+
+		if (shouldRun()) {
+			section_selector = getCommentsSelector();
+			hideComments(section_selector);
+
+			$(".__drtc_showhide").off("click").on("click", showHide);
+		}
+		else {
+
+		}
+	});
+});

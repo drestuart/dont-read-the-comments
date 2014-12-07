@@ -11,14 +11,27 @@ chrome.runtime.onInstalled.addListener(function(details){
     }
 });
 
+var alreadyRan = false;
+
 chrome.webNavigation.onCompleted.addListener(function(details) {
-    var files = [
-    	"jquery-1.11.1.min.js", "parseUri.js", "drtc.js",
-    	"drtc.css", "bad_words/en.js"
-    ];
-    for (var file of files) {
-	    chrome.tabs.executeScript(details.tabId, {
-	        file: file
-	    });
-	}
+    if (!alreadyRan) {
+        alreadyRan = true;  // Only run once!
+        var scripts = [
+            "jquery-1.11.1.min.js", "parseUri.js", "drtc.js",
+            "bad_words/en.js"
+        ];
+
+        var css = ["drtc.css"];
+        for (var file of scripts) {
+            chrome.tabs.executeScript(details.tabId, {
+                file: file
+            });
+        }
+
+        for (var file of css) {
+            chrome.tabs.insertCSS(details.tabId, {
+                file: file
+            });
+        }
+    }
 }, { });
