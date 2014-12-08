@@ -79,11 +79,21 @@ $(document).ready(function() {
 		$("table#profiles > tbody").find("tr").each(function(ind, row) {
 			var profile = {};
 			var fields = ["domain", "mode", "section_selector", "comment_selector"];
-			
+			var empty = true;
+
 			for (f of fields) {
-				profile[f] = $(row).find("." + f).val();
+				var value = $(row).find("." + f).val();
+				profile[f] = value;
+
+				// Don't save empty rows!
+				if (f !== "mode" && value !== "") {
+					empty = false;
+				}
 			}
-			data.profiles.push(profile);
+
+			if (!empty) {
+				data.profiles.push(profile);
+			}
 		});
 
 		console.log(data);
