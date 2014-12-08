@@ -21,13 +21,13 @@ chrome.webNavigation.onCompleted.addListener(function(details) {
             "bad_words/en.js"
         ];
 
-        var css = ["drtc.css"];
         for (var file of scripts) {
             chrome.tabs.executeScript(details.tabId, {
                 file: file
             });
         }
 
+        var css = ["drtc.css"];
         for (var file of css) {
             chrome.tabs.insertCSS(details.tabId, {
                 file: file
