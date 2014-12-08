@@ -20,19 +20,22 @@ h1 {
 	text-align: center;
 }
 
-div#profiles_section {
+table#profiles thead, table#profiles tbody {
+	display: block;
+}
+
+table#profiles tbody {
 	max-height: 200px;
-	overflow-y: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+table#profiles th, table#profiles td {
+	width: 150px;
 }
 
 table#profiles th {
 	font-size: 16px;
-	/*text-align: left;*/
-	width: 150px;
-}
-
-table#profiles td {
-	width: 150px;
 }
 
 table#profiles td input, table#profiles td select {
