@@ -30,8 +30,12 @@ table.opt_table tbody {
 	overflow-x: hidden;
 }
 
-table.opt_table th, table.opt_table td {
+table#profiles th, table#profiles td {
 	width: 150px;
+}
+
+table#templates th, table#templates td {
+	width: 200px;
 }
 
 table.opt_table th {
@@ -42,4 +46,5 @@ table.opt_table td input, table.opt_table td select {
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
+	display: block;
 }

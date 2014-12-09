@@ -52,13 +52,6 @@ numTemplates = 0;
 function addTemplateRow(data) {
 	var rowHTML = '<tr id="template' + numTemplates +'">' + 
 		'<td><input type="text" class="system" name="system"></td>' + 
-		'<td>' + 
-		  '<select class="mode" name="mode" class="mode">' + 
-		    '<option value="all">All</option>' + 
-		    '<option value="individual">Individual</option>' + 
-		    '<option value="disabled">Disabled</option>' + 
-		  '</select>' + 
-		'</td>' + 
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
 	'</tr>';
@@ -109,7 +102,7 @@ function getTemplateData() {
 
 	$("table#templates > tbody").find("tr").each(function(ind, row) {
 		var template = {};
-		var fields = ["system", "mode", "section_selector", "comment_selector"];
+		var fields = ["system", "section_selector", "comment_selector"];
 		var empty = true;
 
 		for (f of fields) {
@@ -117,7 +110,7 @@ function getTemplateData() {
 			template[f] = value;
 
 			// Don't save empty rows!
-			if (f !== "mode" && value !== "") {
+			if (value !== "") {
 				empty = false;
 			}
 		}
