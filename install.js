@@ -1,5 +1,5 @@
 function loadStartingData() {
-	var fresh_data = {"awesome_data" : "awesome by default"};
+	var fresh_data = {};
 
 	// Load up default website profiles
 	var profiles = [

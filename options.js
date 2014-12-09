@@ -124,12 +124,6 @@ function getTemplateData() {
 }
 
 $(document).ready(function() {
-	// Load options
-	chrome.storage.sync.get("awesome_data", function(data) {
-		$("#awesome_data").val(data['awesome_data']);
-		console.log("Got!");
-		console.log(data);
-	});
 
 	// Load up saved profiles
 	chrome.storage.sync.get("profiles", function(data) {
@@ -163,8 +157,6 @@ $(document).ready(function() {
 
 	// Save options
 	$("#save").on('click', function() {
-		data = {"awesome_data": $("#awesome_data").val()};
-
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
 
