@@ -31,6 +31,7 @@ function addProfileRow(data) {
 		'</td>' + 
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
 	$("table#profiles > tbody").append(rowHTML);
@@ -44,6 +45,11 @@ function addProfileRow(data) {
 		}
 	}
 
+	// Wire up the delete button
+	$('#profile' + numProfiles + ' .delete_row').on('click', function() {
+		$(this).parents("tr").remove();
+	});
+
 	numProfiles++;
 }
 
@@ -54,6 +60,7 @@ function addTemplateRow(data) {
 		'<td><input type="text" class="system" name="system"></td>' + 
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
 	$("table#templates > tbody").append(rowHTML);
@@ -66,6 +73,11 @@ function addTemplateRow(data) {
 			row.find("." + f).val(data[f]);
 		}
 	}
+
+	// Wire up the delete button
+	$('#template' + numTemplates + ' .delete_row').on('click', function() {
+		$(this).parents("tr").remove();
+	});
 
 	numTemplates++;
 }
@@ -157,6 +169,8 @@ $(document).ready(function() {
 
 	// Save options
 	$("#save").on('click', function() {
+		var data = {};
+
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
 

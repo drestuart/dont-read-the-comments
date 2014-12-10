@@ -34,6 +34,10 @@ table.opt_table tbody {
 	overflow-x: hidden;
 }
 
+table#profiles td.delete_col, table#templates td.delete_col {
+	width: 20px;
+}
+
 table#profiles th, table#profiles td {
 	width: 150px;
 }
