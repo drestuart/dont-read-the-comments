@@ -39,7 +39,7 @@ table#profiles td.delete_col, table#templates td.delete_col {
 }
 
 table#profiles th, table#profiles td {
-	width: 150px;
+	width: 130px;
 }
 
 table#templates th, table#templates td {

@@ -23,7 +23,7 @@ function addProfileRow(data) {
 	var rowHTML = '<tr id="profile' + numProfiles +'">' + 
 		'<td><input type="text" class="domain" name="domain"></td>' + 
 		'<td>' + 
-		  '<select class="mode" name="mode" class="mode">' + 
+		  '<select class="mode" name="mode">' + 
 		    '<option value="all">All</option>' + 
 		    '<option value="individual">Individual</option>' + 
 		    '<option value="disabled">Disabled</option>' + 
@@ -31,26 +31,73 @@ function addProfileRow(data) {
 		'</td>' + 
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+		'<td><select class="template" name="template"><option value="">None</option></select></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
 	$("table#profiles > tbody").append(rowHTML);
 
+	var row = $('tr#profile' + numProfiles);
+
+	// Populate template select list
+	for (t of templates) {
+		var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+		row.find('.template').append(optionHTML);
+	}
+
+	// Populate supplied data
 	if (typeof data !== 'undefined') {
-		var row = $('tr#profile' + numProfiles);
 		var fields = ["domain", "mode", "section_selector", "comment_selector"];
-		
+
+		if (data['template'] !== '') {
+			fields = ["domain", "mode"];
+			var template_selector = row.find('.template');
+			template_selector.val(data['template']);
+			fillInTemplateValues(template_selector);
+		}
+
 		for (f of fields) {
 			row.find("." + f).val(data[f]);
 		}
 	}
 
-	// Wire up the delete button
-	$('#profile' + numProfiles + ' .delete_row').on('click', function() {
+	// Wire up delete button
+	row.find('.delete_row').on('click', function() {
 		$(this).parents("tr").remove();
 	});
 
+	// Wire up profile select
+	row.find('.template').on('change', function() {
+		fillInTemplateValues(this);
+	});
+
+	// Wire up other fields
+	row.find('.section_selector, .comment_selector').on('input', function() {
+		row.find('.template').val('');
+	});
+
 	numProfiles++;
+}
+
+function fillInTemplateValues(element) {
+	var template_name = $(element).val();
+	var row = $(element).parents("tr");
+	if (template_name !== '') {
+		var selected_template = null;
+
+		for (t of templates) {
+			if (t['system'] === template_name) {
+				selected_template = t;
+				break;
+			}
+		}
+
+		// Fill in template values
+		if (selected_template != null) {
+			row.find('.section_selector').val(selected_template['section_selector']);
+			row.find('.comment_selector').val(selected_template['comment_selector']);
+		}
+	}
 }
 
 numTemplates = 0;
@@ -88,7 +135,7 @@ function getProfileData() {
 
 	$("table#profiles > tbody").find("tr").each(function(ind, row) {
 		var profile = {};
-		var fields = ["domain", "mode", "section_selector", "comment_selector"];
+		var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 		var empty = true;
 
 		for (f of fields) {
@@ -137,6 +184,16 @@ function getTemplateData() {
 
 $(document).ready(function() {
 
+	// Load up comment system templates
+	chrome.storage.sync.get("templates", function(data) {
+		console.log(data);
+		templates = data["templates"];
+
+		for (t of templates) {
+			addTemplateRow(t);
+		}
+	});
+
 	// Load up saved profiles
 	chrome.storage.sync.get("profiles", function(data) {
 		console.log(data);
@@ -144,16 +201,6 @@ $(document).ready(function() {
 
 		for (p of profiles) {
 			addProfileRow(p);
-		}
-	});
-
-	// Load up comment system templates
-	chrome.storage.sync.get("templates", function(data) {
-		console.log(data);
-		var templates = data["templates"];
-
-		for (t of templates) {
-			addTemplateRow(t);
 		}
 	});
 

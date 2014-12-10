@@ -8,8 +8,8 @@ function loadStartingData() {
 	];
 
 	var templates = [
-		{"system": "Disqus", "section_selector": "#comments", "comment_selector": ""},
-		{"system": "Facebook", "section_selector": "#comments", "comment_selector": ""}
+		{"system": "Disqus", "section_selector": "#dq_comments", "comment_selector": ".dq_comment"},
+		{"system": "Facebook", "section_selector": "#fb_comments", "comment_selector": ".fb_comment"}
 	];
 
 	fresh_data.profiles = profiles;
