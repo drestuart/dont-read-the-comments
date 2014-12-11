@@ -56,6 +56,9 @@ function hideComments(comments_selector) {
 	});
 	$("#__drtc_cover").css(css_obj);
 
+	// Put the show/hide control at 1 higher z-index
+	$(".__drtc_showhide").css({'z-index': (z + 2).toString()});
+
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
 	if (c_elt.css("background-color") === "rgba(0, 0, 0, 0)") {
