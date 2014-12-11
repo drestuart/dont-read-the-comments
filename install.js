@@ -3,8 +3,8 @@ function loadStartingData() {
 
 	// Load up default website profiles
 	var profiles = [
-		{"domain": "youtube.com", "mode": "all", "section_selector": "#comments", "comment_selector": ""},
-		{"domain": "", "mode": "all", "section_selector": "#comments", "comment_selector": ""}
+		{"domain": "youtube.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""},
+		{"domain": "", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""}
 	];
 
 	var templates = [

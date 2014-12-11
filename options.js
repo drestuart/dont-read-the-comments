@@ -139,7 +139,7 @@ function getProfileData() {
 		var empty = true;
 
 		for (f of fields) {
-			var value = $(row).find("." + f).val();
+			var value = $(row).find("." + f).val().trim();
 			profile[f] = value;
 
 			// Don't save empty rows!
@@ -165,7 +165,7 @@ function getTemplateData() {
 		var empty = true;
 
 		for (f of fields) {
-			var value = $(row).find("." + f).val();
+			var value = $(row).find("." + f).val().trim();
 			template[f] = value;
 
 			// Don't save empty rows!
