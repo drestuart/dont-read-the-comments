@@ -12,9 +12,17 @@
     "storage"
   ],
 
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": ["drtc.css"],
+      "js": ["jquery-1.11.1.min.js", "parseUri.js", "bad_words/en.js", 
+            "drtc.js"]
+    }
+  ],
+
   "background": {
     "scripts": ["install.js", "register.js"],
-    // "page": "background.html",
     "persistent": true
   },
 

@@ -4,7 +4,7 @@ function loadStartingData() {
 	// Load up default website profiles
 	var profiles = [
 		{"domain": "youtube.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""},
-		{"domain": "", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""}
+		{"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""}
 	];
 
 	var templates = [
@@ -16,7 +16,8 @@ function loadStartingData() {
 	fresh_data.templates = templates;
 
 	chrome.storage.sync.set(fresh_data, 
-    function() {
+    	function() {
             console.log("Installed fresh data");
-    });
+    	}
+    );
 }

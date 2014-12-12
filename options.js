@@ -186,7 +186,6 @@ $(document).ready(function() {
 
 	// Load up comment system templates
 	chrome.storage.sync.get("templates", function(data) {
-		console.log(data);
 		templates = data["templates"];
 
 		for (t of templates) {
@@ -196,7 +195,6 @@ $(document).ready(function() {
 
 	// Load up saved profiles
 	chrome.storage.sync.get("profiles", function(data) {
-		console.log(data);
 		var profiles = data["profiles"];
 
 		for (p of profiles) {
@@ -220,8 +218,6 @@ $(document).ready(function() {
 
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
-
-		console.log(data);
 
 		chrome.storage.sync.set(data, function() {
 			console.log("Saved!");

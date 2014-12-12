@@ -31,6 +31,12 @@ coverHTML = "<div id='__drtc_area'>" +
 function hideComments(comments_selector) {
 	var c_elt = $(comments_selector);
 
+	// If the element we want isn't present on the page, do nothing
+	if (c_elt.length === 0) {
+		console.log("No comment element found");
+		return;
+	}
+
 	// Get some parameters from the comments block
 	var properties = ["background", "width", "height",
 		"margin", "border", "padding"];
@@ -113,7 +119,6 @@ function styleShowHide(c_elt) {
 		}
 	}
 
-	// alert(num_bad);
 	var bad_ratio = num_bad/num_words;
 
 	color = getShowHideColor(bad_ratio);
@@ -151,6 +156,7 @@ var siteProfile;
 $(document).ready(function() {
 	var profiles;
 
+	console.log("Getting profiles");
 	chrome.storage.sync.get("profiles", function(data) {
 		profiles = data["profiles"];
 
@@ -159,6 +165,7 @@ $(document).ready(function() {
 		for (p of profiles) {
 			if (domain == p["domain"]) {
 				siteProfile = p;
+				break;
 			}
 		}
 
