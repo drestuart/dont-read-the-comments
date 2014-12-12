@@ -38,6 +38,10 @@ function hideComments(comments_selector) {
 	var pos = c_elt.offset();
 	var css_obj = {};
 
+	if (isNaN(z)) {
+		z = 0;
+	}
+
 	// Fill in styles to impersonate
 	for (p of properties) {
 		css_obj[p] = c_elt.css(p);
@@ -54,6 +58,7 @@ function hideComments(comments_selector) {
 		left: pos.left,
 		top: top
 	});
+
 	$("#__drtc_cover").css(css_obj);
 
 	// Put the show/hide control at 1 higher z-index
