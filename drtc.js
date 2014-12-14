@@ -24,8 +24,7 @@ hideText = "Hide &#8593;";
 
 coverHTML = "<div id='__drtc_area'>" +
 				"<div class='__drtc_showhide'>" + showText + "</div>" +
-				"<div id='__drtc_cover'>" +
-				"</div>" +
+				"<div id='__drtc_cover'></div>" +
 			"</div>";
 
 function hideComments(comments_selector) {
@@ -57,15 +56,17 @@ function hideComments(comments_selector) {
 	$("body").append(coverHTML);
 
 	// Style and position our cover div
-	var top = parseInt(pos.top) - getElementHeight(".__drtc_showhide");
-
 	$("#__drtc_area").css({
 		'z-index': (z + 1).toString(),
 		left: pos.left,
-		top: top
+		top: pos.top,
+		height: c_elt.css("height")
 	});
 
 	$("#__drtc_cover").css(css_obj);
+	$("#__drtc_cover").css({
+		top: - getElementHeight($(".__drtc_showhide"))
+	});
 
 	// Put the show/hide control at 1 higher z-index
 	$(".__drtc_showhide").css({'z-index': (z + 2).toString()});
@@ -122,7 +123,9 @@ function styleShowHide(c_elt) {
 	var bad_ratio = num_bad/num_words;
 
 	color = getShowHideColor(bad_ratio);
-	$(".__drtc_showhide").css("background", color);
+	$(".__drtc_showhide").css({
+		background: color,
+	});
 }
 
 color_map = {

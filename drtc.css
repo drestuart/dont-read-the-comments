@@ -9,6 +9,7 @@
 	background: #bbb;
 	opacity: 0.2;
 	cursor: pointer;
+	position: relative;
 
 	/* Over-specify the font properties so they don't get overridden */
 	font-size: 12px;
@@ -23,4 +24,8 @@
 
 .__drtc_showhide:hover {
 	opacity: 0.8;
+}
+
+#__drtc_cover {
+	position: relative;
 }
