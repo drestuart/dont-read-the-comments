@@ -1,3 +1,7 @@
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
 function getElementHeight(elt) {
 	return $(elt).outerHeight(true);
 }
@@ -166,9 +170,23 @@ $(document).ready(function() {
 		var domain = parseUri(window.location.href).authority;
 
 		for (p of profiles) {
-			if (domain == p["domain"]) {
-				siteProfile = p;
-				break;
+			// Check if the profile's domain has a glob in it
+			if (p["domain"].indexOf('*') !== -1) {
+				// Build it into a regex
+				p["domain"] = p["domain"].replace(/\*/g, '[\\w\.-]*')  + '$';
+
+				console.log("Matching " + p["domain"] + " against " + domain);
+
+				if (domain.match(p["domain"])) {
+					siteProfile = p;
+					break;
+				}
+			}
+			else {
+				if (domain.endsWith(p["domain"])) {
+					siteProfile = p;
+					break;
+				}
 			}
 		}
 
