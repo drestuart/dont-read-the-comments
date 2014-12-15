@@ -19,20 +19,25 @@ function shouldRun() {
 	}
 }
 
-function getCommentsSelector() {
+function getSectionSelector() {
 	return siteProfile["section_selector"];
+}
+
+function getCommentSelector() {
+	return siteProfile["comment_selector"];
 }
 
 showText = "Show &#8595;";
 hideText = "Hide &#8593;";
 
-coverHTML = "<div id='__drtc_area'>" +
+coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
 				"<div class='__drtc_showhide'>" + showText + "</div>" +
-				"<div id='__drtc_cover'></div>" +
+				"<div class='__drtc_cover' id='__drtc_cover%id%'></div>" +
 			"</div>";
+coversAdded = 0;
 
-function hideComments(comments_selector) {
-	var c_elt = $(comments_selector);
+function hideCommentSection(section_selector) {
+	var c_elt = $(section_selector);
 
 	// If the element we want isn't present on the page, do nothing
 	if (c_elt.length === 0) {
@@ -56,30 +61,37 @@ function hideComments(comments_selector) {
 		css_obj[p] = c_elt.css(p);
 	}
 
-	// Add our div to the page
-	$("body").append(coverHTML);
+	// Put the area number into the html
+	var drtcArea = $(coverHTML.replace("%id%", coversAdded.toString()));
 
-	// Style and position our cover div
-	$("#__drtc_area").css({
+	// Add our div to the page
+	$("body").append(drtcArea);
+
+	// Style and position our area div
+	$(drtcArea).css({
 		'z-index': (z + 1).toString(),
 		left: pos.left,
 		top: pos.top,
 		height: c_elt.css("height")
 	});
 
-	$("#__drtc_cover").css(css_obj);
-	$("#__drtc_cover").css({
-		top: - getElementHeight($(".__drtc_showhide"))
+	// Get some of the children
+	var cover = drtcArea.find(".__drtc_cover");
+	var showHide = drtcArea.find(".__drtc_showhide");
+
+	cover.css(css_obj);
+	cover.css({
+		top: - getElementHeight(showHide)
 	});
 
 	// Put the show/hide control at 1 higher z-index
-	$(".__drtc_showhide").css({'z-index': (z + 2).toString()});
+	showHide.css({'z-index': (z + 2).toString()});
 
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
 	if (c_elt.css("background-color") === "rgba(0, 0, 0, 0)") {
 		// Default if we don't find a background to use
-		$("#__drtc_cover").css("background-color", "#fff");
+		cover.css("background-color", "#fff");
 
 		var parents = c_elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
@@ -87,17 +99,23 @@ function hideComments(comments_selector) {
 
 			var bgc = elt.css("background-color");
 			if (bgc !== "rgba(0, 0, 0, 0)") {
-				$("#__drtc_cover").css("background-color", bgc);
+				cover.css("background-color", bgc);
 				break;
 			}
 		}
 	}
 
 	// Style the show/hide control
-	styleShowHide(c_elt);
+	styleShowHide(c_elt, showHide);
+
+	coversAdded++;
 }
 
-function styleShowHide(c_elt) {
+function hideComments(comment_selector) {
+
+}
+
+function styleShowHide(c_elt, showHideElt) {
 	// Get the words into an array
 	var num_words = 0;
 
@@ -127,7 +145,7 @@ function styleShowHide(c_elt) {
 	var bad_ratio = num_bad/num_words;
 
 	color = getShowHideColor(bad_ratio);
-	$(".__drtc_showhide").css({
+	showHideElt.css({
 		background: color,
 	});
 }
@@ -147,9 +165,10 @@ function getShowHideColor(ratio) {
 }
 
 function showHide() {
-	$("#__drtc_cover").toggle();
+	var cover = $(this).siblings(".__drtc_cover");
+	cover.toggle();
 
-	if ($("#__drtc_cover").css("display") == 'none') {
+	if (cover.css("display") == 'none') {
 		$(this).html(hideText);
 	}
 	else {
@@ -191,8 +210,14 @@ $(document).ready(function() {
 		}
 
 		if (shouldRun()) {
-			section_selector = getCommentsSelector();
-			hideComments(section_selector);
+			if (siteProfile["mode"] === "all") {
+				section_selector = getSectionSelector();
+				hideCommentSection(section_selector);
+			}
+			else if (siteProfile["mode"] === "individual") {
+				comment_selector = getCommentSelector();
+				hideComments(comment_selector);
+			}
 
 			$(".__drtc_showhide").off("click").on("click", showHide);
 		}

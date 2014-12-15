@@ -1,4 +1,4 @@
-#__drtc_area {
+.__drtc_area {
 	position: absolute;
 }
 
@@ -26,6 +26,6 @@
 	opacity: 0.8;
 }
 
-#__drtc_cover {
+.__drtc_cover {
 	position: relative;
 }
