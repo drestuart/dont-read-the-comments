@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
   <head>
-  	<link rel="stylesheet" type="text/css" href="test.css"/>
-  	<script language="javascript" type="text/javascript" src="jquery-1.11.1.min.js"></script>
-  	<script language="javascript" type="text/javascript" src="parseUri.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/test.css') }}">
+    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/parseUri.js') }}"></script>
   </head>
   <body>
     <div id="page">
@@ -24,8 +24,5 @@
     	</div>
   </div>
   </body>
-  <link rel="stylesheet" type="text/css" href="drtc.css"/>
-  <script language="javascript" type="text/javascript" src="bad_words/en.js"></script>
-  <script language="javascript" type="text/javascript" src="drtc.js"></script>
 </html>
 
