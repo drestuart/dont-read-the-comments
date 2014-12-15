@@ -1,11 +1,12 @@
 #comments {
-	background: lightgrey;
+	background: lightblue;
 	width: 500px;
 	padding: 10px;
 }
-#comments li {
+#comments div.comment {
 	color: #666;
-	margin-top: 5px;
+	background: lightgrey;
+	margin: 5px;
 }
 #page {
 	/*background: lightblue;*/
