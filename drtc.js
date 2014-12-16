@@ -2,8 +2,18 @@ String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
-function getElementHeight(elt) {
-	return $(elt).outerHeight(true);
+function getElementHeight(elt, margin) {
+	if (typeof margin === 'undefined') {
+		margin = false;
+	}
+	return $(elt).outerHeight(margin);
+}
+
+function getElementWidth(elt, margin) {
+	if (typeof margin === 'undefined') {
+		margin = false;
+	}
+	return $(elt).outerWidth(margin);
 }
 
 function shouldRun() {
@@ -103,8 +113,12 @@ function hideElement(elt) {
 		top: - getElementHeight(showHide)
 	});
 
-	// Put the show/hide control at 1 higher z-index
-	showHide.css({'z-index': (z + 2).toString()});
+	showHide.css({
+		// Put the show/hide control at 1 higher z-index
+		'z-index': (z + 2).toString(),
+		// Move the control over to the right
+		'margin-left': parseInt(getElementWidth(elt)) - parseInt(getElementWidth(showHide))
+	});
 
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
