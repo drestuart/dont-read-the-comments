@@ -36,21 +36,40 @@ coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
 			"</div>";
 coversAdded = 0;
 
-function hideCommentSection(section_selector) {
-	var c_elt = $(section_selector);
+function hideComments(comment_selector) {
+	var comments = $(comment_selector);
 
 	// If the element we want isn't present on the page, do nothing
-	if (c_elt.length === 0) {
-		console.log("No comment element found");
+	if (comments.length === 0) {
+		console.log("No comments found");
 		return;
 	}
 
+	comments.each(function(index, elt) {
+		hideElement($(elt));
+	});
+}
+
+function hideCommentSection(section_selector) {
+	var section = $(section_selector);
+
+	// If the element we want isn't present on the page, do nothing
+	if (section.length === 0) {
+		console.log("No comment section found");
+		return;
+	}
+
+	hideElement(section);
+}
+
+function hideElement(elt) {
+	var css_obj = {};
+
 	// Get some parameters from the comments block
 	var properties = ["background", "width", "height",
-		"margin", "border", "padding"];
-	var z = parseInt(c_elt.css("z-index"));
-	var pos = c_elt.offset();
-	var css_obj = {};
+		"margin", "border"];
+	var pos = elt.offset();
+	var z = parseInt(elt.css("z-index"));
 
 	if (isNaN(z)) {
 		z = 0;
@@ -58,7 +77,7 @@ function hideCommentSection(section_selector) {
 
 	// Fill in styles to impersonate
 	for (p of properties) {
-		css_obj[p] = c_elt.css(p);
+		css_obj[p] = elt.css(p);
 	}
 
 	// Put the area number into the html
@@ -72,7 +91,7 @@ function hideCommentSection(section_selector) {
 		'z-index': (z + 1).toString(),
 		left: pos.left,
 		top: pos.top,
-		height: c_elt.css("height")
+		height: elt.css("height")
 	});
 
 	// Get some of the children
@@ -89,11 +108,11 @@ function hideCommentSection(section_selector) {
 
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
-	if (c_elt.css("background-color") === "rgba(0, 0, 0, 0)") {
+	if (elt.css("background-color") === "rgba(0, 0, 0, 0)") {
 		// Default if we don't find a background to use
 		cover.css("background-color", "#fff");
 
-		var parents = c_elt.parents();
+		var parents = elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
 			elt = $(parents[i]);
 
@@ -106,20 +125,16 @@ function hideCommentSection(section_selector) {
 	}
 
 	// Style the show/hide control
-	styleShowHide(c_elt, showHide);
+	styleShowHide(elt, showHide);
 
 	coversAdded++;
 }
 
-function hideComments(comment_selector) {
-
-}
-
-function styleShowHide(c_elt, showHideElt) {
+function styleShowHide(elt, showHideElt) {
 	// Get the words into an array
 	var num_words = 0;
 
-	var text = c_elt.text()
+	var text = elt.text()
 		.split(/\W+/)
 		// The filter throws out empty strings
 		.filter(Boolean)

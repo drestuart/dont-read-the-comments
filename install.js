@@ -4,7 +4,7 @@ function loadStartingData() {
 	// Load up default website profiles
 	var profiles = [
 		{"domain": "youtube.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""},
-		{"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""}
+		{"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment", "template": ""}
 	];
 
 	var templates = [
