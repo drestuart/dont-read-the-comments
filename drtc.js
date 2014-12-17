@@ -239,6 +239,9 @@ $(document).ready(function() {
 		}
 
 		if (shouldRun()) {
+			// Message the background page to show the page action
+			chrome.runtime.sendMessage("showPageAction");
+
 			if (siteProfile["mode"] === "all") {
 				section_selector = getSectionSelector();
 				hideCommentSection(section_selector);
@@ -251,7 +254,7 @@ $(document).ready(function() {
 			$(".__drtc_showhide").off("click").on("click", showHide);
 		}
 		else {
-
+			chrome.runtime.sendMessage("showDisabledPageAction");
 		}
 	});
 });
