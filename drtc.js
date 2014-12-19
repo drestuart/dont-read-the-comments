@@ -240,7 +240,7 @@ $(document).ready(function() {
 
 		if (shouldRun()) {
 			// Message the background page to show the page action
-			chrome.runtime.sendMessage("showPageAction");
+			chrome.runtime.sendMessage("pageActionEnabled");
 
 			if (siteProfile["mode"] === "all") {
 				section_selector = getSectionSelector();
@@ -254,7 +254,17 @@ $(document).ready(function() {
 			$(".__drtc_showhide").off("click").on("click", showHide);
 		}
 		else {
-			chrome.runtime.sendMessage("showDisabledPageAction");
+			chrome.runtime.sendMessage("pageActionDisabled");
 		}
+
+		chrome.runtime.onMessage.addListener(
+			function(request, sender, sendResponse) {
+				console.log(request);
+				if (request === "getSiteProfile") {
+					console.log("Returning site profile")
+					sendMessage(siteProfile);
+				}
+			}
+		);
 	});
 });

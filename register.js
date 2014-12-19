@@ -17,14 +17,23 @@ chrome.runtime.onMessage.addListener(
             // Show the page action icon
             chrome.pageAction.show(sender.tab.id);
         }
-        else if (request === "showDisabledPageAction") {
-            chrome.pageAction.show(sender.tab.id);
+        else if (request === "pageActionDisabled") {
             chrome.pageAction.setIcon({tabId: sender.tab.id, path:
                 {
                     "19": "images/logo_drtc_gs_19.png",
                     "38": "images/logo_drtc_gs_38.png"
                 }
             });
+            chrome.pageAction.show(sender.tab.id);
+        }
+        else if (request === "pageActionEnabled") {
+            chrome.pageAction.setIcon({tabId: sender.tab.id, path:
+                {
+                    "19": "images/logo_drtc_19.png",
+                    "38": "images/logo_drtc_38.png"
+                }
+            });
+            chrome.pageAction.show(sender.tab.id);
         }
     }
 );
