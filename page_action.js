@@ -6,6 +6,7 @@ var profiles = [];
 var templates = [];
 var siteProfile = null;
 var siteIndex = -1;
+var currentTab = null;
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
@@ -29,13 +30,47 @@ function fillInTemplateValues(element) {
 
 $(document).ready(function() {
 	$("#save").on('click', function() {
+		var profile = {};
+		var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+
+		for (f of fields) {
+			var value = $("#" + f).val().trim();
+
+			// Trim extraneous stuff from domain
+			if (f === "domain") {
+				value = parseUri(value).authority;
+			}
+
+			profile[f] = value;
+		}
+
+		if (siteIndex !== -1) {
+			profiles[siteIndex] = profile;
+		}
+		else {
+			profiles.push(profile);
+		}
 		
+		chrome.storage.sync.set({"profiles" : profiles}, function() {
+			console.log("Saved!");
+		});
+
+		$("#message").text("Saved");
+
+		setTimeout(function(){ chrome.tabs.reload() }, 3000);
 	});
 
-	chrome.tabs.query({ currentWindow: true, active: true },
+	$("#template").on("input", function() {
+		fillInTemplateValues(this);
+	})
+
+	chrome.tabs.query({currentWindow: true, active: true},
 		function (tabs) {
-			var tab = tabs[0];
-			var domain = parseUri(tab.url).authority;
+			currentTab = tabs[0];
+			var domain = parseUri(currentTab.url).authority;
+
+			// Fill in domain field whether we load anything or not
+			$("#domain").val(domain);
 
 			chrome.storage.sync.get(["profiles", "templates"], function(data) {
 				profiles = data["profiles"];
@@ -64,19 +99,20 @@ $(document).ready(function() {
 					}
 				}
 
+				// Fill in template menu
+				var template_menu = $('select#template');
+				for (t of templates) {
+					var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+					template_menu.append(optionHTML);
+				}
+
 				// Fill in form fields
 				if (siteProfile !== null) {
-					var template_menu = $('select#template');
-					for (t of templates) {
-						var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
-						template_menu.append(optionHTML);
-					}
-
 					var fields = ["domain", "mode", "section_selector", "comment_selector"];
 
 					if (siteProfile['template'] !== '') {
 						fields = ["domain", "mode"];
-						template_menu.val(data['template']);
+						template_menu.val(siteProfile['template']);
 						fillInTemplateValues(template_menu);
 					}
 
