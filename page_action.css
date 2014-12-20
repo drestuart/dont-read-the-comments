@@ -1,3 +1,15 @@
-h1, h2 {
-	margin-top: 0;
+html {
+	width: 200px;
+}
+
+input[type="text"], select {
+	width: 100px;
+}
+
+tr {
+	min-height: 2em;
+}
+
+td:first-child {
+	width: 70px;
 }

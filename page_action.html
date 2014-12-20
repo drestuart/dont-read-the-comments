@@ -7,9 +7,58 @@
     <script language="javascript" type="text/javascript" src="parseUri.js"></script>
   </head>
   <body>
-    <h1>Don't Read The Comments!</h1>
-    <p>This seems to just work!</p>
-    <input type="button" value="Hi" id="hi">
+    <table id="profile">
+      <tr>
+        <td>
+          <label for="domain">Domain</label>
+        </td>
+        <td>
+          <input type="text" id="domain" name="domain">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="mode">Mode</label>
+        </td>
+        <td>
+          <select id="mode" name="mode"> 
+            <option value="all">All</option> 
+            <option value="individual">Individual</option> 
+            <option value="disabled">Disabled</option> 
+          </select> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="section_selector">Section Selector</label>
+        </td>
+        <td>
+          <input type="text" id="section_selector" name="section_selector">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="comment selector">Comment Selector</label>
+        </td>
+        <td>
+          <input type="text" id="comment_selector" name="comment_selector">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="template">Template</label>
+        </td>
+        <td>
+          <select id="template" name="template">
+            <option value="">None</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><input type="button" id="save" value="Save"></td>
+      </tr>
+    </table>
   </body>
 </html>
 

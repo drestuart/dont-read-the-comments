@@ -190,18 +190,14 @@ function getTemplateData() {
 
 $(document).ready(function() {
 
-	// Load up comment system templates
-	chrome.storage.sync.get("templates", function(data) {
+	// Load up comment system templates and profiles
+	chrome.storage.sync.get(["profiles", "templates"], function(data) {
 		templates = data["templates"];
+		var profiles = data["profiles"];
 
 		for (t of templates) {
 			addTemplateRow(t);
 		}
-	});
-
-	// Load up saved profiles
-	chrome.storage.sync.get("profiles", function(data) {
-		var profiles = data["profiles"];
 
 		for (p of profiles) {
 			addProfileRow(p);
