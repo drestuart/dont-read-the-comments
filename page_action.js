@@ -62,7 +62,12 @@ $(document).ready(function() {
 
 	$("#template").on("input", function() {
 		fillInTemplateValues(this);
-	})
+	});
+
+	$("#enable").on("click", function() {
+		$("#profile_not_found").hide();
+		$("#profile_found").show();
+	});
 
 	chrome.tabs.query({currentWindow: true, active: true},
 		function (tabs) {
@@ -108,6 +113,7 @@ $(document).ready(function() {
 
 				// Fill in form fields
 				if (siteProfile !== null) {
+					$("#profile_found").show();
 					var fields = ["domain", "mode", "section_selector", "comment_selector"];
 
 					if (siteProfile['template'] !== '') {
@@ -119,6 +125,9 @@ $(document).ready(function() {
 					for (f of fields) {
 						$("input#" + f).val(siteProfile[f]);
 					}
+				}
+				else {
+					$("#profile_not_found").show();
 				}
 			});
 		}

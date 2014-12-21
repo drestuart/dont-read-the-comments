@@ -13,3 +13,7 @@ tr {
 td:first-child {
 	width: 70px;
 }
+
+#profile_not_found, #profile_found {
+	display: none;
+}
