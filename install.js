@@ -3,7 +3,7 @@ function loadStartingData() {
 
 	// Load up default website profiles
 	var profiles = [
-		{"domain": "youtube.com", "mode": "all", "section_selector": "#comments", "comment_selector": "", "template": ""},
+		{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve .oba .HPa, .Ik .Wv", "template": ""},
 		{"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment", "template": ""}
 	];
 
