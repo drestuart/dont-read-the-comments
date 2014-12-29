@@ -14,6 +14,7 @@ function loadStartingData() {
 
 	fresh_data.profiles = profiles;
 	fresh_data.templates = templates;
+	fresh_data.comment_threshold = 0;
 
 	chrome.storage.sync.set(fresh_data, 
     	function() {

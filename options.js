@@ -191,9 +191,10 @@ function getTemplateData() {
 $(document).ready(function() {
 
 	// Load up comment system templates and profiles
-	chrome.storage.sync.get(["profiles", "templates"], function(data) {
+	chrome.storage.sync.get(["profiles", "templates", "comment_threshold"], function(data) {
 		templates = data["templates"];
 		var profiles = data["profiles"];
+		ct = data["comment_threshold"];
 
 		for (t of templates) {
 			addTemplateRow(t);
@@ -202,6 +203,18 @@ $(document).ready(function() {
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Set up slider
+	    $("#comment_threshold").slider({
+			value: ct,
+			min: 0,
+			max: 4,
+			step: 0.5,
+			slide: function( event, ui ) {
+				$("#comment_threshold_value").val(ui.value);
+			}
+	    });
+	    $("#comment_threshold_value").val($("#comment_threshold").slider("value"));
 	});
 
 	// Add profile button
@@ -220,6 +233,7 @@ $(document).ready(function() {
 
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
+		data.comment_threshold = $("#comment_threshold").slider("value");
 
 		chrome.storage.sync.set(data, function() {
 			console.log("Saved!");

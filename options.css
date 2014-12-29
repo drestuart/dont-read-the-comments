@@ -56,3 +56,13 @@ table.opt_table td input, table.opt_table td select {
 	margin-right: auto;
 	display: block;
 }
+
+div#comment_threshold {
+	margin: 10px;
+	width: 300px;
+}
+
+input#comment_threshold_value {
+	border:0;
+	font-weight:bold;
+}

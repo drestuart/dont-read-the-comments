@@ -2,7 +2,7 @@
 <html>
   <head>
   	<link rel="stylesheet" type="text/css" href="options.css"/>
-    
+
   	<script language="javascript" type="text/javascript" src="jquery-1.11.1.min.js"></script>
     <script language="javascript" type="text/javascript" src="install.js"></script>
   	<script language="javascript" type="text/javascript" src="options.js"></script>
@@ -48,9 +48,15 @@
             </thead>
             <tbody></tbody>
           </table>
+          <input type="button" value="+" id="add_template">
+
+          <br>
+          <h3>Comment Severity Threshold</h3>
+          <label for="comment_threshold_value">Severity: </label>
+          <input type="text" id="comment_threshold_value" readonly>
+          <div id="comment_threshold"></div>
         </div>
-        <input type="button" value="+" id="add_template">
-        
+
         <br><br>
         <input type="button" value="Do it up" id="save">
         <input type="button" value="Burn it" id="clear">
