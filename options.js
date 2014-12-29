@@ -208,10 +208,15 @@ $(document).ready(function() {
 	    $("#comment_threshold").slider({
 			value: ct,
 			min: 0,
-			max: 4,
+			max: 5,
 			step: 0.5,
 			slide: function( event, ui ) {
-				$("#comment_threshold_value").val(ui.value);
+				if (ui.value === 0) {
+					$("#comment_threshold_value").val(ui.value + " (hide everything)");
+				}
+				else {
+					$("#comment_threshold_value").val(ui.value);
+				}
 			}
 	    });
 	    $("#comment_threshold_value").val($("#comment_threshold").slider("value"));

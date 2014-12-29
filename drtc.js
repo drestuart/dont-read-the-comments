@@ -56,7 +56,7 @@ function hideComments(comment_selector) {
 	}
 
 	comments.each(function(index, elt) {
-		hideElement($(elt));
+		hideElement($(elt), comment_threshold);
 	});
 }
 
@@ -72,7 +72,11 @@ function hideCommentSection(section_selector) {
 	hideElement(section);
 }
 
-function hideElement(elt) {
+function hideElement(elt, ct) {
+	if (typeof(ct) === 'undefined') {
+		ct = 0;
+	}
+
 	var css_obj = {};
 
 	// Get some parameters from the comments block
@@ -139,12 +143,12 @@ function hideElement(elt) {
 	}
 
 	// Style the show/hide control
-	styleShowHide(elt, showHide);
+	styleShowHide(elt, showHide, ct);
 
 	coversAdded++;
 }
 
-function styleShowHide(elt, showHideElt) {
+function styleShowHide(elt, showHideElt, ct) {
 	// Get the words into an array
 	var num_words = 0;
 
@@ -177,6 +181,13 @@ function styleShowHide(elt, showHideElt) {
 	showHideElt.css({
 		background: color,
 	});
+
+	showHideElt.off("click").on("click", showHide);
+
+	// Show or hide based on comment threshold
+	if (bad_ratio < ct) {
+		showHideElt.trigger("click");
+	}
 }
 
 color_map = {
@@ -212,8 +223,9 @@ $(document).ready(function() {
 	var profiles;
 
 	console.log("Getting profiles");
-	chrome.storage.sync.get("profiles", function(data) {
+	chrome.storage.sync.get(["profiles", "comment_threshold"], function(data) {
 		profiles = data["profiles"];
+		comment_threshold = data["comment_threshold"]/10;
 
 		var domain = parseUri(window.location.href).authority;
 
@@ -250,8 +262,6 @@ $(document).ready(function() {
 				comment_selector = getCommentSelector();
 				hideComments(comment_selector);
 			}
-
-			$(".__drtc_showhide").off("click").on("click", showHide);
 		}
 		else {
 			chrome.runtime.sendMessage("pageActionDisabled");
