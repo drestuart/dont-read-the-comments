@@ -57,7 +57,7 @@ $(document).ready(function() {
 
 		$("#message").text("Saved");
 
-		setTimeout(function(){ chrome.tabs.reload() }, 3000);
+		chrome.tabs.reload();
 	});
 
 	$("#template").on("input", function() {

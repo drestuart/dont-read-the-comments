@@ -17,9 +17,8 @@
       <h1>Don't Read the Comments! Options</h1>
 
       <form id="options_form">
-        <br>
-        <h2>Website Profiles</h2>
-        <div id="profiles_section">
+        <div id="profiles_section" class="options_section">
+          <h2>Website Profiles</h2>
           <table id="profiles" class="opt_table">
             <thead>
               <tr>
@@ -30,14 +29,25 @@
                 <th>Template</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr>
+                <td><input type="button" value="+" id="add_profile" class="add_row"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
           </table>
         </div>
-        <input type="button" value="+" id="add_profile">
-        <br><br>
-
-        <h2>Comment System Templates</h2>
-        <div id="templates_section">
+        <div id="comment_threshold_section" class="options_section">
+          <h3>Comment Severity Threshold</h3>
+          <label for="comment_threshold_value">Severity: </label>
+          <input type="text" id="comment_threshold_value" readonly>
+          <div id="comment_threshold"></div>
+        </div>
+        <div id="templates_section" class="options_section">
+          <h2>Comment System Templates</h2>
           <table id="templates" class="opt_table">
             <thead>
               <tr>
@@ -46,18 +56,15 @@
                 <th>Individual Comment</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              <tr>
+                <td><input type="button" value="+" id="add_template" class="add_row"></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
           </table>
-          <input type="button" value="+" id="add_template">
-
-          <br>
-          <h3>Comment Severity Threshold</h3>
-          <label for="comment_threshold_value">Severity: </label>
-          <input type="text" id="comment_threshold_value" readonly>
-          <div id="comment_threshold"></div>
         </div>
-
-        <br><br>
         <input type="button" value="Do it up" id="save">
         <input type="button" value="Burn it" id="clear">
       </form>
