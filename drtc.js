@@ -70,6 +70,11 @@ function hideCommentSection(section_selector) {
 	}
 
 	hideElement(section);
+
+	// Subscribe the mutation observer
+	var target = document.querySelector(section_selector);
+	observer.observe(target, mutConfig);
+	console.log("Watching for mutations on " + section_selector);
 }
 
 function hideElement(elt, ct) {
@@ -208,6 +213,8 @@ function showHide() {
 	var cover = $(this).siblings(".__drtc_cover");
 	cover.toggle();
 
+	// TODO: The __drtc_area element is still blocking the stuff underneath it
+
 	if (cover.css("display") == 'none') {
 		$(this).html(hideText);
 	}
@@ -216,13 +223,48 @@ function showHide() {
 	}
 }
 
-
 var siteProfile;
+var profiles;
+
+// configuration of the observer:
+var mutConfig = { childList: true, characterData: true, subtree: true};
+
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+    drtcRun();
+  });    
+});
+
+function drtcRun() {
+	// Delete all DRTC cover elements before running again
+	$(".__drtc_area").remove();
+
+	// Shut down the mutation observer
+	observer.disconnect();
+
+	if (shouldRun()) {
+		// Message the background page to show the page action
+		chrome.runtime.sendMessage("pageActionEnabled");
+
+		if (siteProfile["mode"] === "all") {
+			section_selector = getSectionSelector();
+			hideCommentSection(section_selector);
+		}
+		else if (siteProfile["mode"] === "individual") {
+			comment_selector = getCommentSelector();
+			hideComments(comment_selector);
+		}
+	}
+	else {
+		chrome.runtime.sendMessage("pageActionDisabled");
+	}
+}
 
 $(document).ready(function() {
-	var profiles;
+	// Load profile and template data
 
-	console.log("Getting profiles");
+	console.log("Getting data");
 	chrome.storage.sync.get(["profiles", "comment_threshold"], function(data) {
 		profiles = data["profiles"];
 		comment_threshold = data["comment_threshold"]/10;
@@ -250,23 +292,7 @@ $(document).ready(function() {
 			}
 		}
 
-		if (shouldRun()) {
-			// Message the background page to show the page action
-			chrome.runtime.sendMessage("pageActionEnabled");
-
-			if (siteProfile["mode"] === "all") {
-				section_selector = getSectionSelector();
-				hideCommentSection(section_selector);
-			}
-			else if (siteProfile["mode"] === "individual") {
-				comment_selector = getCommentSelector();
-				hideComments(comment_selector);
-			}
-		}
-		else {
-			chrome.runtime.sendMessage("pageActionDisabled");
-		}
-
+		// Add a listener for the page action
 		chrome.runtime.onMessage.addListener(
 			function(request, sender, sendResponse) {
 				console.log(request);
@@ -276,5 +302,8 @@ $(document).ready(function() {
 				}
 			}
 		);
+
+		// Run all the DRTC code
+		drtcRun();
 	});
 });
