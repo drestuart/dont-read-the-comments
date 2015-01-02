@@ -123,7 +123,7 @@ $(document).ready(function() {
 					}
 
 					for (f of fields) {
-						$("input#" + f).val(siteProfile[f]);
+						$("#" + f).val(siteProfile[f]);
 					}
 				}
 				else {
