@@ -70,11 +70,6 @@ function hideCommentSection(section_selector) {
 	}
 
 	hideElement(section);
-
-	// Subscribe the mutation observer
-	var target = document.querySelector(section_selector);
-	observer.observe(target, mutConfig);
-	console.log("Watching for mutations on " + section_selector);
 }
 
 function hideElement(elt, ct) {
@@ -226,22 +221,9 @@ function showHide() {
 var siteProfile;
 var profiles;
 
-// configuration of the observer:
-var mutConfig = { childList: true, characterData: true, subtree: true};
-
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    console.log(mutation.type);
-    drtcRun();
-  });    
-});
-
 function drtcRun() {
 	// Delete all DRTC cover elements before running again
 	$(".__drtc_area").remove();
-
-	// Shut down the mutation observer
-	observer.disconnect();
 
 	if (shouldRun()) {
 		// Message the background page to show the page action
@@ -305,5 +287,8 @@ $(document).ready(function() {
 
 		// Run all the DRTC code
 		drtcRun();
+
+		// Run it again periodically
+		setInterval(drtcRun, 1000);
 	});
 });
