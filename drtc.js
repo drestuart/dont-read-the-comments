@@ -161,7 +161,6 @@ function hideElement(elt, ct) {
 function styleShowHide(elt, showHideElt, element_id, ct) {
 	// Get the words into an array
 	var num_words = 0;
-	shown = false;
 
 	var text = elt.text()
 		.split(/\W+/)
@@ -195,18 +194,19 @@ function styleShowHide(elt, showHideElt, element_id, ct) {
 
 	showHideElt.off("click").on("click", showHide);
 
-	// Show or hide based on comment threshold or previous setting
-	if (bad_ratio < ct || showEltId[element_id]) {
-		showHideElt.trigger("click");
-		shown = true;
-	}
+	shown = false;
 
 	// Keep track of the show/hide status of this element
-	if(typeof showEltId[element_id] !== 'undefined') {
-		showEltId[element_id] = shown;
-	}
-	else {
+	if(typeof showEltId[element_id] === 'undefined') {
 		showEltId.push(shown);
+
+		// Show or hide based on comment threshold or previous setting
+		if (bad_ratio < ct) {
+			showHideElt.trigger("click");
+		}
+	}
+	else if (showEltId[element_id]) {
+		showHideElt.trigger("click");
 	}
 }
 
@@ -240,8 +240,6 @@ function showHide() {
 		$(this).html(showText);
 		showEltId[id] = false;
 	}
-
-
 }
 
 var siteProfile;
