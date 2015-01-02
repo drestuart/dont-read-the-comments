@@ -138,7 +138,12 @@ function getProfileData() {
 		var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 		var empty = true;
 
+		if ($(row).hasClass("control_row")) {
+			return; // continue
+		}
+
 		for (f of fields) {
+			console.log(f);
 			var value = $(row).find("." + f).val().trim();
 
 			// Trim extraneous stuff from domain
@@ -169,6 +174,10 @@ function getTemplateData() {
 		var template = {};
 		var fields = ["system", "section_selector", "comment_selector"];
 		var empty = true;
+
+		if ($(row).hasClass("control_row")) {
+			return; // continue
+		}
 
 		for (f of fields) {
 			var value = $(row).find("." + f).val().trim();
