@@ -41,10 +41,11 @@ showText = "Show &#8595;";
 hideText = "Hide &#8593;";
 
 coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
-				"<div class='__drtc_showhide'>" + showText + "</div>" +
+				"<div class='__drtc_showhide' __drtc_id='%id%'>" + showText + "</div>" +
 				"<div class='__drtc_cover' id='__drtc_cover%id%'></div>" +
 			"</div>";
-coversAdded = 0;
+id = 0;
+showEltId = [];
 
 function hideComments(comment_selector) {
 	var comments = $(comment_selector);
@@ -84,6 +85,17 @@ function hideElement(elt, ct) {
 		"margin", "border"];
 	var pos = elt.offset();
 	var z = parseInt(elt.css("z-index"));
+	var element_id;
+
+	// Get this element's __drtc_id if it exists, define it if not
+	if (typeof elt.attr("__drtc_id") !== 'undefined') {
+		element_id = parseInt(elt.attr("__drtc_id"));
+	}
+	else {
+		element_id = id;
+		elt.attr("__drtc_id", element_id);
+		id++;
+	}
 
 	if (isNaN(z)) {
 		z = 0;
@@ -95,7 +107,7 @@ function hideElement(elt, ct) {
 	}
 
 	// Put the area number into the html
-	var drtcArea = $(coverHTML.replace("%id%", coversAdded.toString()));
+	var drtcArea = $(coverHTML.replace(/%id%/g, element_id.toString()));
 
 	// Add our div to the page
 	$("body").append(drtcArea);
@@ -143,14 +155,13 @@ function hideElement(elt, ct) {
 	}
 
 	// Style the show/hide control
-	styleShowHide(elt, showHide, ct);
-
-	coversAdded++;
+	styleShowHide(elt, showHide, element_id, ct);
 }
 
-function styleShowHide(elt, showHideElt, ct) {
+function styleShowHide(elt, showHideElt, element_id, ct) {
 	// Get the words into an array
 	var num_words = 0;
+	shown = false;
 
 	var text = elt.text()
 		.split(/\W+/)
@@ -184,9 +195,18 @@ function styleShowHide(elt, showHideElt, ct) {
 
 	showHideElt.off("click").on("click", showHide);
 
-	// Show or hide based on comment threshold
-	if (bad_ratio < ct) {
+	// Show or hide based on comment threshold or previous setting
+	if (bad_ratio < ct || showEltId[element_id]) {
 		showHideElt.trigger("click");
+		shown = true;
+	}
+
+	// Keep track of the show/hide status of this element
+	if(typeof showEltId[element_id] !== 'undefined') {
+		showEltId[element_id] = shown;
+	}
+	else {
+		showEltId.push(shown);
 	}
 }
 
@@ -205,21 +225,28 @@ function getShowHideColor(ratio) {
 }
 
 function showHide() {
+	var id = parseInt($(this).attr("__drtc_id"));
 	var cover = $(this).siblings(".__drtc_cover");
 	cover.toggle();
 
 	// TODO: The __drtc_area element is still blocking the stuff underneath it
 
+	// Update text and track show/hide status of this element
 	if (cover.css("display") == 'none') {
 		$(this).html(hideText);
+		showEltId[id] = true;
 	}
 	else {
 		$(this).html(showText);
+		showEltId[id] = false;
 	}
+
+
 }
 
 var siteProfile;
 var profiles;
+var refreshInterval = 1000;
 
 function drtcRun() {
 	// Delete all DRTC cover elements before running again
@@ -289,6 +316,6 @@ $(document).ready(function() {
 		drtcRun();
 
 		// Run it again periodically
-		setInterval(drtcRun, 1000);
+		setInterval(drtcRun, refreshInterval);
 	});
 });
