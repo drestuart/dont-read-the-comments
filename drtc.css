@@ -1,5 +1,7 @@
 .__drtc_area {
 	position: absolute;
+	height: 0;
+	overflow: visible;
 }
 
 .__drtc_showhide {

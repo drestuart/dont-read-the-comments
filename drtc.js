@@ -117,7 +117,6 @@ function hideElement(elt, ct) {
 		'z-index': (z + 1).toString(),
 		left: pos.left,
 		top: pos.top,
-		height: elt.css("height")
 	});
 
 	// Get some of the children
@@ -228,8 +227,6 @@ function showHide() {
 	var id = parseInt($(this).attr("__drtc_id"));
 	var cover = $(this).siblings(".__drtc_cover");
 	cover.toggle();
-
-	// TODO: The __drtc_area element is still blocking the stuff underneath it
 
 	// Update text and track show/hide status of this element
 	if (cover.css("display") == 'none') {
