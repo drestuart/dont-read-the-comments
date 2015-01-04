@@ -200,10 +200,14 @@ function getTemplateData() {
 $(document).ready(function() {
 
 	// Load up comment system templates and profiles
-	chrome.storage.sync.get(["profiles", "templates", "comment_threshold"], function(data) {
+	chrome.storage.sync.get(["profiles", "templates", "comment_threshold", 
+		"custom_words", "word_lists_enabled"], function(data) {
+
 		templates = data["templates"];
-		var profiles = data["profiles"];
 		ct = data["comment_threshold"];
+		var profiles = data["profiles"];
+		var custom_words = data["custom_words"];
+		var word_lists_enabled = data["word_lists_enabled"];
 
 		for (t of templates) {
 			addTemplateRow(t);
@@ -212,6 +216,17 @@ $(document).ready(function() {
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Fill in word lists
+		$("#custom_list").val(custom_words.join(", "));
+		$("#profanity_list").val(profanity_words.join(", "));
+		$("#obscenity_list").val(obscenity_words.join(", "));
+		$("#bigotry_list").val(bigotry_words.join(", "));
+
+		// Fill in word list check boxes
+		$("#profanity_check").prop('checked', word_lists_enabled["profanity"]);
+		$("#obscenity_check").prop('checked', word_lists_enabled["obscenity"]);
+		$("#bigotry_check").prop('checked', word_lists_enabled["bigotry"]);
 
 		// Set up slider
 	    $("#comment_threshold").slider({
@@ -248,6 +263,19 @@ $(document).ready(function() {
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
 		data.comment_threshold = $("#comment_threshold").slider("value");
+		data.custom_words = $("#custom_list").val()
+			.replace(/\s+/g, " ")
+			.trim()
+			.toLowerCase()
+			.split(/\s*,\s*/m);
+
+		word_lists_enabled = {};
+
+		word_lists_enabled["profanity"] = $("#profanity_check").prop('checked');
+		word_lists_enabled["obscenity"] = $("#obscenity_check").prop('checked');
+		word_lists_enabled["bigotry"] = $("#bigotry_check").prop('checked');
+
+		data.word_lists_enabled = word_lists_enabled;
 
 		chrome.storage.sync.set(data, function() {
 			console.log("Saved!");
@@ -255,10 +283,11 @@ $(document).ready(function() {
 		location.reload();
 	});
 
-	// Clear options
-	$("#clear").on('click', function() {
-		loadStartingData();
-		console.log("Cleared!");
+	// Reset options
+	$("#reset").on('click', function() {
+		if (confirm("This will reset all DRTC settings to their starting values. Are you sure?")) {
+			loadStartingData();
+		}
 		location.reload();
 	});
 });

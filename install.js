@@ -12,9 +12,19 @@ function loadStartingData() {
 		{"system": "Facebook", "section_selector": "#fb_comments", "comment_selector": ".fb_comment"}
 	];
 
+	var custom_words = [];
+
+	var word_lists_enabled = {
+		"profanity" : true,
+		"obscenity" : true,
+		"bigotry" : true
+	};
+
 	fresh_data.profiles = profiles;
 	fresh_data.templates = templates;
 	fresh_data.comment_threshold = 0;
+	fresh_data.custom_words = custom_words;
+	fresh_data.word_lists_enabled = word_lists_enabled;
 
 	chrome.storage.sync.set(fresh_data, 
     	function() {

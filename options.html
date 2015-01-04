@@ -8,6 +8,12 @@
   	<script language="javascript" type="text/javascript" src="options.js"></script>
     <script language="javascript" type="text/javascript" src="parseUri.js"></script>
 
+    <!-- Bad words lists -->
+    <script language="javascript" type="text/javascript" src="bad_words/en.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/bigotry.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/profanity.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/obscenity.js"></script>
+
     <!-- jQuery UI stuff -->
     <script src="jquery-ui.js"></script>
     <link href="jquery-ui.css" rel="stylesheet">
@@ -65,8 +71,30 @@
             </tbody>
           </table>
         </div>
-        <input type="button" value="Do it up" id="save">
-        <input type="button" value="Burn it" id="clear">
+        <div id="bad_words_section" class="options_section">
+          <h2>Bad word Lists</h2>
+          <div class="word_list_area">
+            <h3>Profanity</h3> 
+            <input type="checkbox" id="profanity_check"><label for="profanity_check">Enabled</label>
+            <textarea readonly id="profanity_list"></textarea>
+          </div>
+          <div class="word_list_area">
+            <h3>Obscenity</h3> 
+            <input type="checkbox" id="obscenity_check"><label for="obscenity_check">Enabled</label>
+            <textarea readonly id="obscenity_list"></textarea>
+          </div>
+          <div class="word_list_area">
+            <h3>Bigotry</h3> 
+            <input type="checkbox" id="bigotry_check"><label for="bigotry_check">Enabled</label>
+            <textarea readonly id="bigotry_list"></textarea>
+          </div>
+          <div class="word_list_area">
+            <h3>Custom List</h3>
+            <textarea id="custom_list"></textarea>
+          </div>
+        </div>
+        <input type="button" value="Save" id="save">
+        <input type="button" value="Reset" id="reset">
       </form>
     </div>
   </body>

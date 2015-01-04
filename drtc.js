@@ -177,6 +177,9 @@ function styleShowHide(elt, showHideElt, element_id, ct) {
 	// How many of these are bad words?
 	var num_bad = 0;
 	for (bw of bad_words) {
+		if (bw === "") {
+			continue;
+		}
 		if (text.indexOf(bw) != -1) {
 			var re = new RegExp('\\b' + bw + '\\b',"g");
 			var count = (text.match(re) || []).length;
@@ -269,9 +272,12 @@ $(document).ready(function() {
 	// Load profile and template data
 
 	console.log("Getting data");
-	chrome.storage.sync.get(["profiles", "comment_threshold"], function(data) {
+	chrome.storage.sync.get(["profiles", "comment_threshold",
+		"custom_words", "word_lists_enabled"], function(data) {
 		profiles = data["profiles"];
 		comment_threshold = data["comment_threshold"]/10;
+		var custom_words = data["custom_words"];
+		var word_lists_enabled = data["word_lists_enabled"];
 
 		var domain = parseUri(window.location.href).authority;
 
@@ -306,6 +312,19 @@ $(document).ready(function() {
 				}
 			}
 		);
+
+		// Build bad word list
+		bad_words = custom_words;
+
+		if (word_lists_enabled["profanity"]) {
+			bad_words = bad_words.concat(profanity_words);
+		}
+		if (word_lists_enabled["obscenity"]) {
+			bad_words = bad_words.concat(obscenity_words);
+		}
+		if (word_lists_enabled["bigotry"]) {
+			bad_words = bad_words.concat(bigotry_words);
+		}
 
 		// Run all the DRTC code
 		drtcRun();
