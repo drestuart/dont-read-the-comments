@@ -1,12 +1,18 @@
-profanity_words = 
-["anilingus",
-"anus",
+profanity_words = [
 "arsehole",
 "ass",
 "asshole",
-"assmunch",
-"auto erotic",
-"autoerotic",
-"babeland",
+"bastard",
+"bitch",
+"cunt",
+"cock",
+"cocksucker",
+"dick",
 "fuck",
-"shit"];
+"motherfucker",
+"piss",
+"shit",
+"suck",
+"tit",
+"tosser"
+];
