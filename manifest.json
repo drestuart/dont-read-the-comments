@@ -18,9 +18,10 @@
     {
       "matches": ["*://*/*"],
       "css": ["drtc.css"],
-      "js": ["jquery-1.11.1.min.js", "parseUri.js",
+      "js": ["jquery-1.11.1.min.js", "jquery-ui.js", "parseUri.js",
             "bad_words/bigotry.js", "bad_words/profanity.js", "bad_words/obscenity.js",
-            "drtc.js"]
+            "drtc.js"],
+      "all_frames": true
     }
   ],
 

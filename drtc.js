@@ -50,11 +50,19 @@ showEltId = [];
 function hideComments(comment_selector) {
 	var comments = $(comment_selector);
 
-	// If the element we want isn't present on the page, do nothing
-	if (comments.length === 0) {
-		console.log("No comments found");
+	// Ignore empty selector
+	if (comment_selector.trim() === "") {
+		console.log("DRTC: no comment selector defined");
 		return;
 	}
+
+	// If the element we want isn't present on the page, do nothing
+	if (comments.length === 0) {
+		console.log("DRTC: no comments found for " + comment_selector);
+		return;
+	}
+
+	console.log("DRTC: comments found for " + comment_selector);
 
 	comments.each(function(index, elt) {
 		hideElement($(elt), comment_threshold);
@@ -64,13 +72,34 @@ function hideComments(comment_selector) {
 function hideCommentSection(section_selector) {
 	var section = $(section_selector);
 
-	// If the element we want isn't present on the page, do nothing
-	if (section.length === 0) {
-		console.log("No comment section found");
+	// Ignore empty selector
+	if (section_selector.trim() === "") {
+		console.log("DRTC: no comment section selector defined");
 		return;
 	}
 
+	// If the element we want isn't present on the page, do nothing
+	if (section.length === 0) {
+		console.log("DRTC: no comment section found for " + section_selector);
+		return;
+	}
+
+	console.log("DRTC: comment section found for " + section_selector);
+
 	hideElement(section);
+}
+
+function getZIndex(elt) {
+	var z = 0;
+
+	$(elt).parents().each(function(index, e) {
+		var zind = $(e).zIndex();
+		if (zind > z) {
+			z = zind;
+		}
+	});
+
+	return z;
 }
 
 function hideElement(elt, ct) {
@@ -84,7 +113,7 @@ function hideElement(elt, ct) {
 	var properties = ["background", "width", "height",
 		"margin", "border"];
 	var pos = elt.offset();
-	var z = parseInt(elt.css("z-index"));
+	var z = getZIndex(elt);
 	var element_id;
 
 	// Get this element's __drtc_id if it exists, define it if not
@@ -244,34 +273,28 @@ function showHide() {
 
 var siteProfile;
 var profiles;
-var refreshInterval = 1000;
+var refreshInterval = 5000;
 
 function drtcRun() {
 	// Delete all DRTC cover elements before running again
 	$(".__drtc_area").remove();
 
-	if (shouldRun()) {
-		// Message the background page to show the page action
-		chrome.runtime.sendMessage("pageActionEnabled");
+	// Message the background page to show the page action
+	chrome.runtime.sendMessage("pageActionEnabled");
 
-		if (siteProfile["mode"] === "all") {
-			section_selector = getSectionSelector();
-			hideCommentSection(section_selector);
-		}
-		else if (siteProfile["mode"] === "individual") {
-			comment_selector = getCommentSelector();
-			hideComments(comment_selector);
-		}
+	if (siteProfile["mode"] === "all") {
+		section_selector = getSectionSelector();
+		hideCommentSection(section_selector);
 	}
-	else {
-		chrome.runtime.sendMessage("pageActionDisabled");
+	else if (siteProfile["mode"] === "individual") {
+		comment_selector = getCommentSelector();
+		hideComments(comment_selector);
 	}
 }
 
 $(document).ready(function() {
 	// Load profile and template data
 
-	console.log("Getting data");
 	chrome.storage.sync.get(["profiles", "comment_threshold",
 		"custom_words", "word_lists_enabled"], function(data) {
 		profiles = data["profiles"];
@@ -313,23 +336,28 @@ $(document).ready(function() {
 			}
 		);
 
-		// Build bad word list
-		bad_words = custom_words;
+		if (shouldRun()) {
+			// Build bad word list
+			bad_words = custom_words;
 
-		if (word_lists_enabled["profanity"]) {
-			bad_words = bad_words.concat(profanity_words);
-		}
-		if (word_lists_enabled["obscenity"]) {
-			bad_words = bad_words.concat(obscenity_words);
-		}
-		if (word_lists_enabled["bigotry"]) {
-			bad_words = bad_words.concat(bigotry_words);
-		}
+			if (word_lists_enabled["profanity"]) {
+				bad_words = bad_words.concat(profanity_words);
+			}
+			if (word_lists_enabled["obscenity"]) {
+				bad_words = bad_words.concat(obscenity_words);
+			}
+			if (word_lists_enabled["bigotry"]) {
+				bad_words = bad_words.concat(bigotry_words);
+			}
 
-		// Run all the DRTC code
-		drtcRun();
+			// Run all the DRTC code
+			drtcRun();
 
-		// Run it again periodically
-		setInterval(drtcRun, refreshInterval);
+			// Run it again periodically
+			setInterval(drtcRun, refreshInterval);
+		}	
+		else {
+			chrome.runtime.sendMessage("pageActionDisabled");
+		}
 	});
 });
