@@ -35,7 +35,7 @@ function addProfileRow(data) {
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
-	$("table#profiles > tbody tr:last-child").before(rowHTML);
+	$("table#profiles > tbody").append(rowHTML);
 
 	var row = $('tr#profile' + numProfiles);
 
@@ -110,7 +110,7 @@ function addTemplateRow(data) {
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
-	$("table#templates > tbody tr:last-child").before(rowHTML);
+	$("table#templates > tbody").append(rowHTML);
 
 	if (typeof data !== 'undefined') {
 		var row = $('tr#template' + numTemplates);

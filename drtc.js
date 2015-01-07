@@ -48,7 +48,7 @@ id = 0;
 showEltId = [];
 
 function hideComments(comment_selector) {
-	var comments = $(comment_selector);
+	var comments = $(comment_selector + ":visible");
 
 	// Ignore empty selector
 	if (comment_selector.trim() === "") {
@@ -71,7 +71,7 @@ function hideComments(comment_selector) {
 }
 
 function hideCommentSection(section_selector) {
-	var section = $(section_selector);
+	var section = $(section_selector + ":visible");
 
 	// Ignore empty selector
 	if (section_selector.trim() === "") {

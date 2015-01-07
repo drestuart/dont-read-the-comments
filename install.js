@@ -10,6 +10,7 @@ function loadStartingData() {
 		{"domain": "yahoo.com", "mode": "all", "section_selector": "div.all-comments", "comment_selector": "li.comment", "template": ""},
 		{"domain": "independent.co.uk", "mode": "all", "section_selector": "div.comment-container", "comment_selector": "div.gig-comment", "template": ""},
 		{"domain": "dailykos.com", "mode": "all", "section_selector": "#rateAllForm > ul", "comment_selector": "#rateAllForm > ul li", "template": ""},
+		{"domain": "aol.com", "mode": "all", "section_selector": "#aol-comments", "comment_selector": "div.comment", "template": ""}
 		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
 		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
 		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
