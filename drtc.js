@@ -302,62 +302,62 @@ $(document).ready(function() {
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
-		var domain = parseUri(window.location.href).authority;
+		chrome.runtime.sendMessage("getTabUrl", function(response) {
+			var domain = parseUri(response).authority;
 
-		for (p of profiles) {
-			// Check if the profile's domain has a glob in it
-			if (p["domain"].indexOf('*') !== -1) {
-				// Build it into a regex
-				p["domain"] = p["domain"].replace(/\*/g, '[\\w\.-]*')  + '$';
+			for (p of profiles) {
+				// Check if the profile's domain has a glob in it
+				if (p["domain"].indexOf('*') !== -1) {
+					// Build it into a regex
+					p["domain"] = p["domain"].replace(/\*/g, '[\\w\.-]*')  + '$';
 
-				console.log("Matching " + p["domain"] + " against " + domain);
-
-				if (domain.match(p["domain"])) {
-					siteProfile = p;
-					break;
+					if (domain.match(p["domain"])) {
+						siteProfile = p;
+						break;
+					}
 				}
+				else {
+					if (domain.endsWith(p["domain"])) {
+						siteProfile = p;
+						break;
+					}
+				}
+			}
+
+			// Add a listener for the page action
+			chrome.runtime.onMessage.addListener(
+				function(request, sender, sendResponse) {
+					console.log(request);
+					if (request === "getSiteProfile") {
+						console.log("Returning site profile")
+						sendResponse(siteProfile);
+					}
+				}
+			);
+
+			if (shouldRun()) {
+				// Build bad word list
+				bad_words = custom_words;
+
+				if (word_lists_enabled["profanity"]) {
+					bad_words = bad_words.concat(profanity_words);
+				}
+				if (word_lists_enabled["obscenity"]) {
+					bad_words = bad_words.concat(obscenity_words);
+				}
+				if (word_lists_enabled["bigotry"]) {
+					bad_words = bad_words.concat(bigotry_words);
+				}
+
+				// Run all the DRTC code
+				drtcRun();
+
+				// Run it again periodically
+				setInterval(drtcRun, refreshInterval);
 			}
 			else {
-				if (domain.endsWith(p["domain"])) {
-					siteProfile = p;
-					break;
-				}
+				chrome.runtime.sendMessage("pageActionDisabled");
 			}
-		}
-
-		// Add a listener for the page action
-		chrome.runtime.onMessage.addListener(
-			function(request, sender, sendResponse) {
-				console.log(request);
-				if (request === "getSiteProfile") {
-					console.log("Returning site profile")
-					sendMessage(siteProfile);
-				}
-			}
-		);
-
-		if (shouldRun()) {
-			// Build bad word list
-			bad_words = custom_words;
-
-			if (word_lists_enabled["profanity"]) {
-				bad_words = bad_words.concat(profanity_words);
-			}
-			if (word_lists_enabled["obscenity"]) {
-				bad_words = bad_words.concat(obscenity_words);
-			}
-			if (word_lists_enabled["bigotry"]) {
-				bad_words = bad_words.concat(bigotry_words);
-			}
-
-			// Run all the DRTC code
-			drtcRun();
-
-			// Run it again periodically
-			setInterval(drtcRun, refreshInterval);
-		}	
-		else {
-			chrome.runtime.sendMessage("pageActionDisabled");
-		}
+		});
 	});
 });
