@@ -6,8 +6,8 @@ function loadStartingData() {
 		{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve.oba.HPa, .Ik.Wv", "template": ""},
 		{"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment", "template": ""},
 		{"domain": "npr.org", "mode": "all", "section_selector" : "", "comment_selector" : "", "template": "Disqus"},
-		{"domain": "foxnews.com", "mode": "all", "section_selector" : "#commenting", "comment_selector" : ".fyre-comment-wrapper", "template": ""},
-		// {"domain": "", "mode": "", "section_selector" : "", "comment_selector" : "", "template": ""},
+		{"domain": "foxnews.com", "mode": "all", "section_selector" : "", "comment_selector" : "", "template": "Livefyre"},
+		{"domain": "yahoo.com", "mode": "all", "section_selector" : "div.all-comments", "comment_selector" : "li.comment", "template": ""},
 		// {"domain": "", "mode": "", "section_selector" : "", "comment_selector" : "", "template": ""},
 		// {"domain": "", "mode": "", "section_selector" : "", "comment_selector" : "", "template": ""},
 		// {"domain": "", "mode": "", "section_selector" : "", "comment_selector" : "", "template": ""},
@@ -15,7 +15,8 @@ function loadStartingData() {
 
 	var templates = [
 		{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"},
-		{"system": "Facebook", "section_selector": "#fb_comments", "comment_selector": ".fb_comment"}
+		{"system": "Facebook", "section_selector": "#fb_comments", "comment_selector": ".fb_comment"},
+		{"system": "Livefyre", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper"}
 	];
 
 	var custom_words = [];

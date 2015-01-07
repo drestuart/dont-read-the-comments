@@ -74,6 +74,9 @@ $(document).ready(function() {
 			currentTab = tabs[0];
 			var domain = parseUri(currentTab.url).authority;
 
+			// Trim off the www from the front
+			domain = domain.replace(/^www\./, "");
+
 			// Fill in domain field whether we load anything or not
 			$("#domain").val(domain);
 
