@@ -17,3 +17,8 @@ td:first-child {
 #profile_not_found, #profile_found {
 	display: none;
 }
+
+#export_text {
+	display: none;
+	width: 100%;
+}

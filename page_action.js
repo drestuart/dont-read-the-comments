@@ -28,21 +28,26 @@ function fillInTemplateValues(element) {
 	}
 }
 
+function buildProfile() {
+	var profile = {};
+	var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+
+	for (f of fields) {
+		var value = $("#" + f).val().trim();
+
+		// Trim extraneous stuff from domain
+		if (f === "domain") {
+			value = parseUri(value).authority;
+		}
+
+		profile[f] = value;
+	}
+	return profile;
+}
+
 $(document).ready(function() {
 	$("#save").on('click', function() {
-		var profile = {};
-		var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
-
-		for (f of fields) {
-			var value = $("#" + f).val().trim();
-
-			// Trim extraneous stuff from domain
-			if (f === "domain") {
-				value = parseUri(value).authority;
-			}
-
-			profile[f] = value;
-		}
+		var profile = buildProfile();
 
 		if (siteIndex !== -1) {
 			profiles[siteIndex] = profile;
@@ -58,6 +63,14 @@ $(document).ready(function() {
 		$("#message").text("Saved");
 
 		chrome.tabs.reload();
+	});
+
+	$("#export").on('click', function() {
+		var profile = buildProfile();
+		var export_text = JSON.stringify(profile)
+			.replace(/:/g, ": ")
+			.replace(/,/g, ", ");
+		$("#export_text").val(export_text).show();
 	});
 
 	$("#template").on("input", function() {
