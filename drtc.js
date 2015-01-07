@@ -53,13 +53,13 @@ function hideComments(comment_selector) {
 	// Ignore empty selector
 	if (comment_selector.trim() === "") {
 		console.log("DRTC: no comment selector defined");
-		return;
+		return false;
 	}
 
 	// If the element we want isn't present on the page, do nothing
 	if (comments.length === 0) {
 		console.log("DRTC: no comments found for " + comment_selector);
-		return;
+		return false;
 	}
 
 	console.log("DRTC: comments found for " + comment_selector);
@@ -67,6 +67,7 @@ function hideComments(comment_selector) {
 	comments.each(function(index, elt) {
 		hideElement($(elt), comment_threshold);
 	});
+	return true;
 }
 
 function hideCommentSection(section_selector) {
@@ -75,18 +76,19 @@ function hideCommentSection(section_selector) {
 	// Ignore empty selector
 	if (section_selector.trim() === "") {
 		console.log("DRTC: no comment section selector defined");
-		return;
+		return false;
 	}
 
 	// If the element we want isn't present on the page, do nothing
 	if (section.length === 0) {
 		console.log("DRTC: no comment section found for " + section_selector);
-		return;
+		return false;
 	}
 
 	console.log("DRTC: comment section found for " + section_selector);
 
 	hideElement(section);
+	return true;
 }
 
 function getZIndex(elt) {
@@ -273,23 +275,33 @@ function showHide() {
 
 var siteProfile;
 var profiles;
-var refreshInterval = 5000;
 
 function drtcRun() {
+	var refreshInterval;
+
 	// Delete all DRTC cover elements before running again
 	$(".__drtc_area").remove();
 
-	// Message the background page to show the page action
-	chrome.runtime.sendMessage("pageActionEnabled");
-
 	if (siteProfile["mode"] === "all") {
 		section_selector = getSectionSelector();
-		hideCommentSection(section_selector);
+		if (hideCommentSection(section_selector)) {
+			refreshInterval = 5000;
+		}
+		else {
+			refreshInterval = 1000;
+		}
 	}
 	else if (siteProfile["mode"] === "individual") {
 		comment_selector = getCommentSelector();
-		hideComments(comment_selector);
+		if (hideComments(comment_selector)) {
+			refreshInterval = 5000;
+		} else {
+			refreshInterval = 1000;
+		}
 	}
+
+	// Run this function again periodically
+	setTimeout(drtcRun, refreshInterval);
 }
 
 $(document).ready(function() {
@@ -349,11 +361,11 @@ $(document).ready(function() {
 					bad_words = bad_words.concat(bigotry_words);
 				}
 
+				// Message the background page to show the page action
+				chrome.runtime.sendMessage("pageActionEnabled");
+
 				// Run all the DRTC code
 				drtcRun();
-
-				// Run it again periodically
-				setInterval(drtcRun, refreshInterval);
 			}
 			else {
 				chrome.runtime.sendMessage("pageActionDisabled");
