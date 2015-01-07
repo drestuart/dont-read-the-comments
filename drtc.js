@@ -285,23 +285,23 @@ function drtcRun() {
 	if (siteProfile["mode"] === "all") {
 		section_selector = getSectionSelector();
 		if (hideCommentSection(section_selector)) {
-			refreshInterval = 5000;
+			refreshInterval = 5; // seconds
 		}
 		else {
-			refreshInterval = 1000;
+			refreshInterval = 1;
 		}
 	}
 	else if (siteProfile["mode"] === "individual") {
 		comment_selector = getCommentSelector();
 		if (hideComments(comment_selector)) {
-			refreshInterval = 5000;
+			refreshInterval = 5;
 		} else {
-			refreshInterval = 1000;
+			refreshInterval = 1;
 		}
 	}
 
 	// Run this function again periodically
-	setTimeout(drtcRun, refreshInterval);
+	setTimeout(drtcRun, refreshInterval*1000);
 }
 
 $(document).ready(function() {
