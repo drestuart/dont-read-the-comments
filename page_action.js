@@ -77,6 +77,10 @@ $(document).ready(function() {
 		fillInTemplateValues(this);
 	});
 
+	$('#section_selector, #comment_selector').on('input', function() {
+		$('#template').val('');
+	});
+
 	$("#enable").on("click", function() {
 		$("#profile_not_found").hide();
 		$("#profile_found").show();
