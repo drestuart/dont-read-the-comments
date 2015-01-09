@@ -9,6 +9,10 @@ a {
 	color: #0000FF;
 }
 
+a#help_link {
+	float: right;
+}
+
 li {
 	font-weight: bold;
 }
@@ -32,7 +36,7 @@ h1 {
 	text-align: center;
 }
 
-div.options_section {
+div.options_section, div.help_section {
 	margin: 40px 0;
 	/*padding: 0 20px;*/
 }
