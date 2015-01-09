@@ -256,6 +256,12 @@ $(document).ready(function() {
 		addTemplateRow();
 	});
 
+	$(".textarea_show").on("click", function() {
+		var textarea_id = $(this).attr("data-for");
+		$("#" + textarea_id).show();
+		$(this).hide();
+	});
+
 	// Save options
 	$("#save").on('click', function() {
 		var data = {};

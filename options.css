@@ -4,6 +4,11 @@ h1, h2, h3 {
 	margin: 0 0 5px 0;
 }
 
+a {
+	text-decoration: none;
+	color: #0000FF;
+}
+
 li {
 	font-weight: bold;
 }
@@ -97,8 +102,13 @@ div.word_list_area {
 }
 
 div.word_list_area textarea {
+	max-height: 110px;
 	height: 110px;
 	width: 580px;
+}
+
+div.word_list_area textarea:not(#custom_list) {
+	display: none;
 }
 
 div.word_list_area h3 {
