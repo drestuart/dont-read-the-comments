@@ -50,12 +50,8 @@
           </tfoot>
           </tbody>
         </table>
-      </div>
-      <div id="comment_threshold_section" class="options_section">
-        <h3>Comment Severity Threshold</h3>
-        <label for="comment_threshold_value">Severity: </label>
-        <input type="text" id="comment_threshold_value" readonly>
-        <div id="comment_threshold"></div>
+        <p><input type="button" value="Export" id="export_profiles"><p>
+        <textarea class="export_area" id="profiles_textarea" readonly></textarea>
       </div>
       <div id="templates_section" class="options_section">
         <h2>Comment System Templates</h2>
@@ -78,6 +74,14 @@
             </tr>
           </tfoot>
         </table>
+        <p><input type="button" value="Export" id="export_templates"></p>
+        <textarea class="export_area" id="templates_textarea" readonly></textarea>
+      </div>
+      <div id="comment_threshold_section" class="options_section">
+        <h3>Comment Severity Threshold</h3>
+        <label for="comment_threshold_value">Severity: </label>
+        <input type="text" id="comment_threshold_value" readonly>
+        <div id="comment_threshold"></div>
       </div>
       <div id="bad_words_section" class="options_section">
         <h2>Bad word Lists</h2>

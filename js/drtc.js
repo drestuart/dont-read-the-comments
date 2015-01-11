@@ -212,7 +212,7 @@ function styleShowHide(elt, showHideElt, element_id, ct) {
 			continue;
 		}
 		if (text.indexOf(bw) != -1) {
-			var re = new RegExp('\\b' + bw + '\\b',"g");
+			var re = new RegExp(bw,"g");
 			var count = (text.match(re) || []).length;
 			num_bad += bw.split(" ").length * count;
 		}

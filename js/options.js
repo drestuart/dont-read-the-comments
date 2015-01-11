@@ -262,6 +262,19 @@ $(document).ready(function() {
 		$(this).hide();
 	});
 
+	// Export buttons
+	$("#export_profiles").on("click", function() {
+		var profiles_json = JSON.stringify(getProfileData());
+
+		$("#profiles_textarea").show().val(profiles_json);
+	});
+
+	$("#export_templates").on("click", function() {
+		var templates_json = JSON.stringify(getTemplateData());
+
+		$("#templates_textarea").show().val(templates_json);
+	});
+
 	// Save options
 	$("#save").on('click', function() {
 		var data = {};
