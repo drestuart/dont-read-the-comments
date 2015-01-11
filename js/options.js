@@ -17,7 +17,9 @@ $.fn.serializeObject = function()
    return o;
 };
 
-numProfiles = 0;
+var numProfiles = 0;
+var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
 	var rowHTML = '<tr id="profile' + numProfiles +'">' + 
@@ -47,7 +49,7 @@ function addProfileRow(data) {
 
 	// Populate supplied data
 	if (typeof data !== 'undefined') {
-		var fields = ["domain", "mode", "section_selector", "comment_selector"];
+		var fields = profileFields;
 
 		if (data['template'] !== '') {
 			fields = ["domain", "mode"];
@@ -135,7 +137,7 @@ function getProfileData() {
 
 	$("table#profiles > tbody").find("tr").each(function(ind, row) {
 		var profile = {};
-		var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+		var fields = profileFields;
 		var empty = true;
 
 		if ($(row).hasClass("control_row")) {
@@ -143,7 +145,6 @@ function getProfileData() {
 		}
 
 		for (f of fields) {
-			console.log(f);
 			var value = $(row).find("." + f).val().trim();
 
 			// Trim extraneous stuff from domain
@@ -172,7 +173,7 @@ function getTemplateData() {
 
 	$("table#templates > tbody").find("tr").each(function(ind, row) {
 		var template = {};
-		var fields = ["system", "section_selector", "comment_selector"];
+		var fields = templateFields;
 		var empty = true;
 
 		if ($(row).hasClass("control_row")) {
@@ -195,6 +196,159 @@ function getTemplateData() {
 	});
 
 	return retArr;
+}
+
+function importProfiles() {
+	var imp_profiles = JSON.parse($("#profiles_textarea").val());
+
+	// Validate input
+	if (Array.isArray(imp_profiles)) {
+		for (prof of imp_profiles) {
+			if (!validateProfile(prof)) {
+				console.log("Failed validation: ");
+				console.log(prof);
+				return;
+			}
+		}
+	}
+	else if (imp_profiles !== null && typeof imp_profiles === 'object') {
+		if (!validateProfile(imp_profiles)) {
+			console.log("Failed validation:");
+			console.log(imp_profiles);
+			return;
+		}
+		// Put it in an array
+		imp_profiles = [imp_profiles];
+	}
+	else {
+		alert("JSON parsing failed");
+		return;
+	}
+
+	// Import
+	console.log("Importing profiles: ");
+	console.log(imp_profiles);
+
+	var profiles = getProfileData();
+
+	for (iprof of imp_profiles) {
+		var overwrote = false;
+		for (var i = 0; i < profiles.length; i++) {
+			prof = profiles[i];
+
+			// Overwrite matching domains with the imported data
+			if (prof["domain"] === iprof["domain"]) {
+				overwrote = true;
+				profiles[i] = iprof;
+				break;
+			}
+		}
+
+		if (!overwrote) {
+			profiles.push(iprof);
+		}
+	}
+
+	// Save and reload
+	var data = {profiles : profiles};
+	chrome.storage.sync.set(data, function() {
+		console.log("Saved!");
+		location.reload();
+	});
+}
+
+function importTemplates() {
+	var imp_templates = JSON.parse($("#templates_textarea").val());
+
+	if (Array.isArray(imp_templates)) {
+		for (temp of imp_templates) {
+			if (!validateTemplate(temp)) {
+				console.log("Failed validation: ");
+				console.log(temp);
+				return;
+			}
+		}
+	}
+	else if (imp_templates !== null && typeof imp_templates === 'object') {
+		if (!validateTemplate(imp_templates)) {
+			console.log("Failed validation:");
+			console.log(imp_templates);
+			return;
+		}
+		// Put it in an array
+		imp_templates = [imp_templates];
+	}
+	else {
+		alert("JSON parsing failed");
+		return;
+	}
+
+	// Import
+	console.log("Importing templates: ");
+	console.log(imp_templates);
+
+	var temps = getTemplateData();
+	console.log("Existing templates:")
+	console.log(temps);
+
+	for (itemp of imp_templates) {
+		var overwrote = false;
+		for (var i = 0; i < temps.length; i++) {
+			temp = temps[i];
+
+			// Overwrite matching domains with the imported data
+			if (temp["system"] === itemp["system"]) {
+				overwrote = true;
+				temps[i] = itemp;
+				break;
+			}
+		}
+
+		if (!overwrote) {
+			temps.push(itemp);
+		}
+	}
+
+	// Save and reload
+	var data = {templates : temps};
+	chrome.storage.sync.set(data, function() {
+		console.log("Saved!");
+		location.reload();
+	});
+}
+
+function validateProfile(prof) {
+	var fields = profileFields;
+	return validateImport(prof, fields);
+}
+
+function validateTemplate(temp) {
+	var fields = templateFields;
+	return validateImport(temp, fields);
+}
+
+function validateImport(obj, fields) {
+	for (field in obj) {
+		console.log(field);
+		if (fields.indexOf(field) === -1) {
+			var msg = "Bad field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	for (field of fields) {
+		console.log(field);
+		if (typeof obj[field] === 'undefined') {
+			var msg = "Missing field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	return true;
 }
 
 $(document).ready(function() {
@@ -265,14 +419,38 @@ $(document).ready(function() {
 	// Export buttons
 	$("#export_profiles").on("click", function() {
 		var profiles_json = JSON.stringify(getProfileData());
-
-		$("#profiles_textarea").show().val(profiles_json);
+		$("#import_profiles_go").hide();
+		$("#profiles_textarea").show().val(profiles_json).prop('readonly', true);
 	});
 
 	$("#export_templates").on("click", function() {
 		var templates_json = JSON.stringify(getTemplateData());
+		$("#import_templates_go").hide();
+		$("#templates_textarea").show().val(templates_json).prop('readonly', true);
+	});
 
-		$("#templates_textarea").show().val(templates_json);
+	// Import buttons
+	$("#import_profiles").on("click", function() {
+		$("#import_profiles_go").show();
+		$("#profiles_textarea").show().val("").prop('readonly', false);
+	});
+
+	$("#import_templates").on("click", function() {
+		$("#import_templates_go").show();
+		$("#templates_textarea").show().val("").prop('readonly', false);
+	});
+
+	// Import trigger buttons
+	$("#import_profiles_go").on("click", function() {
+		if (confirm("This will overwrite any existing profiles with the same domain. Continue?")) {
+			importProfiles();
+		}
+	});
+
+	$("#import_templates_go").on("click", function() {
+		if (confirm("This will overwrite any existing templates with the same name. Continue?")) {
+			importTemplates();
+		}
 	});
 
 	// Save options

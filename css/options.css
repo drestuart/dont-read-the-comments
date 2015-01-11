@@ -37,8 +37,13 @@ h1 {
 }
 
 div.options_section, div.help_section {
-	margin: 40px 0;
-	/*padding: 0 20px;*/
+	/*margin: 40px 0;*/
+	border-bottom: 1px solid #666;
+	padding: 30px 0;
+}
+
+div.options_section:last-of-type, div.help_section:last-of-type {
+	border: none;
 }
 
 div.options_section input[type=button] {
@@ -123,4 +128,7 @@ textarea.export_area {
 	display: none;
 }
 
+input.import_go_button {
+	display: none;
+}
 
