@@ -22,3 +22,7 @@ td:first-child {
 	display: none;
 	width: 100%;
 }
+
+#help {
+	float: right;
+}
