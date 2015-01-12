@@ -460,7 +460,7 @@ $(document).ready(function() {
 	});
 
 	// Save options
-	$("#save").on('click', function() {
+	$(".save_button").on('click', function() {
 		var data = {};
 
 		data.profiles = getProfileData();
@@ -487,7 +487,7 @@ $(document).ready(function() {
 	});
 
 	// Reset options
-	$("#reset").on('click', function() {
+	$(".reset_button").on('click', function() {
 		if (confirm("This will reset all DRTC settings to their starting values. Are you sure?")) {
 			loadStartingData();
 		}

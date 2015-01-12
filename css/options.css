@@ -21,6 +21,14 @@ body {
 	background: #666;
 }
 
+.left {
+	float: left;
+}
+
+.clear {
+	clear: both;
+}
+
 #content {
 	width: 700px;
 	margin-left: auto;
@@ -29,7 +37,7 @@ body {
 	margin-bottom: 70px;
 	border-radius: 15px;
 	background: white;
-	padding: 10px;
+	padding: 20px 30px;
 }
 
 h1 {
@@ -40,6 +48,10 @@ div.options_section, div.help_section {
 	/*margin: 40px 0;*/
 	border-bottom: 1px solid #666;
 	padding: 30px 0;
+}
+
+div.options_section:first-of-type {
+	padding-top: 20px;
 }
 
 div.options_section:last-of-type, div.help_section:last-of-type {
