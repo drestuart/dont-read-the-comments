@@ -4,7 +4,6 @@ function loadStartingData() {
 	// Load up default website profiles
 	var profiles = [
 		{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve.oba.HPa, .Ik.Wv", "template": ""},
-		// {"domain": "drestuart.pythonanywhere.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment", "template": ""},
 		{"domain": "npr.org", "mode": "all", "section_selector": "", "comment_selector": "", "template": "Disqus"},
 		{"domain": "foxnews.com", "mode": "all", "section_selector": "", "comment_selector": "", "template": "Livefyre"},
 		{"domain": "yahoo.com", "mode": "all", "section_selector": "div.all-comments", "comment_selector": "li.comment", "template": ""},
@@ -12,13 +11,6 @@ function loadStartingData() {
 		{"domain": "dailykos.com", "mode": "all", "section_selector": "#rateAllForm > ul", "comment_selector": "#rateAllForm > ul li", "template": ""},
 		{"domain": "aol.com", "mode": "all", "section_selector": "#aol-comments", "comment_selector": "div.comment", "template": ""},
 		{"domain": "knowyourmeme.com", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
-		// {"domain": "", "mode": "", "section_selector": "", "comment_selector": "", "template": ""},
 	];
 
 	var templates = [
