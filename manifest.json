@@ -47,14 +47,10 @@
     "128": "images/logo_drtc_128.png"
   },
 
-  // Chrome <40
   "options_page": "options.html",
 
-  // Chrome 40+
   "options_ui": {
-    // Required.
     "page": "options.html",
-    // Recommended.
     "chrome_style": true
   }
 }
