@@ -113,7 +113,7 @@ function hideElement(elt, ct) {
 
 	// Get some parameters from the comments block
 	var properties = ["background", "width", "height",
-		"margin", "border"];
+		"border"];
 	var pos = elt.offset();
 	var z = getZIndex(elt);
 	var element_id;
@@ -276,6 +276,9 @@ function showHide() {
 var siteProfile;
 var profiles;
 
+var refreshIntervalElementFound = 5; // seconds
+var refreshIntervalNothingFound = 1;
+
 function drtcRun() {
 	var refreshInterval;
 
@@ -285,18 +288,18 @@ function drtcRun() {
 	if (siteProfile["mode"] === "all") {
 		section_selector = getSectionSelector();
 		if (hideCommentSection(section_selector)) {
-			refreshInterval = 5; // seconds
+			refreshInterval = refreshIntervalElementFound;
 		}
 		else {
-			refreshInterval = 1;
+			refreshInterval = refreshIntervalNothingFound;
 		}
 	}
 	else if (siteProfile["mode"] === "individual") {
 		comment_selector = getCommentSelector();
 		if (hideComments(comment_selector)) {
-			refreshInterval = 5;
+			refreshInterval = refreshIntervalElementFound;
 		} else {
-			refreshInterval = 1;
+			refreshInterval = refreshIntervalNothingFound;
 		}
 	}
 
