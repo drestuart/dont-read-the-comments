@@ -13,12 +13,16 @@ a#help_link {
 	float: right;
 }
 
-li {
-	font-weight: bold;
+p, label {
+	font-size: 14px;
 }
 
 body {
 	background: #666;
+}
+
+img {
+	border: 1px solid black;
 }
 
 .left {
@@ -116,6 +120,7 @@ div#comment_threshold {
 input#comment_threshold_value {
 	border:0;
 	font-weight:bold;
+	font-size: 12px;
 }
 
 div.word_list_area {
