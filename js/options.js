@@ -403,11 +403,17 @@ $(document).ready(function() {
 	// Add profile button
 	$("#add_profile").on('click', function() {
 		addProfileRow();
+
+		// Scroll table to the bottom
+		$("#profiles tbody").scrollTop($("#profiles tbody")[0].scrollHeight);
 	});
 
 	// Add template button
 	$("#add_template").on('click', function() {
 		addTemplateRow();
+
+		// Scroll table to the bottom
+		$("#templates tbody").scrollTop($("#templates tbody")[0].scrollHeight);
 	});
 
 	$(".textarea_show").on("click", function() {
