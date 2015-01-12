@@ -398,6 +398,9 @@ $(document).ready(function() {
 			}
 	    });
 	    $("#comment_threshold_value").val($("#comment_threshold").slider("value"));
+	    if (ct === 0) {
+		    $("#comment_threshold_value").val($("#comment_threshold").slider("value") + " (hide everything)");
+	    }
 	});
 
 	// Add profile button
