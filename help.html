@@ -10,19 +10,60 @@
   <body>
     <div id="content">
       <h1>Don't Read the Comments! Help</h1>
+      <div id="_section" class="help_section">
+        <p>What DRTC! actually does and stuff here.</p>
+      </div>
 
       <div id="page_action_section" class="help_section">
         <h2>Page Action</h2>
+        <p>A <i>page action</i> is an icon in Chrome's omnibar. DRTC!'s page action shows a yellow diamond icon when DRTC! is enabled on the current page, and a greyed-out version when it is not.</p>
+        <figure>
+          <img src="images/page_action_icon_disabled.png">
+          <figcaption>Disabled</figcaption>
+        </figure>
+        <figure>
+          <img src="images/page_action_icon_enabled.png">
+          <figcaption>Enabled</figcaption>
+        </figure>
+        <p>Clicking DTRC!'s page action lets you see and configure the DRTC! profile for the current page.</p>
+        <img src="images/page_action_not_enabled.png">
+        <p>When DRTC! does not have a website profile matching the current page, it will show this message. You can click on "Enable" to start creating a profile.</p>
+        <img src="images/page_action_new.png">
+        <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) Clicking "Save" will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
       </div>
 
       <div id="options_section" class="help_section">
         <h2>Options Page</h2>
+        <p>The options page controls global settings for DRTC!.</p>
+        <h3>Website Profiles</h3>
+        <p>This table lists all <a href="#profile_section">website profiles</a> defined by DRTC!. You can add more using the "+" button at the bottom, or change any current profiles right in the table.  Remember to click "Save" to save your changes!</p>
+        <h3>Comment System Templates</h3>
+        <p>Here you can add and edit <a href="#template_section">comment system templates</a>, just like in the profiles table. You'll need to save a new template before it can be used in a website profile.</p>
+        <h3>Comment Severity Threshold</h3>
+        <p>When using Individual mode, DRTC! uses this setting to decide whether to hide an individual comment, based on what proportion of the words in it are in one of the bad word lists. A threshold of 0 (the default) causes DRTC! to hide all comments, and it can go up to 5.</p>
+        <h3>Bad Word Lists</h3>
+        <p>This section contains the bad word lists which DRTC! uses. The lists can be disabled individually, and additional words can be added to the custom list.</p>
       </div>
 
-      <div id="creating_profile_section" class="help_section">
-        <h2>Creating a New Website Profile</h2>
+      <div id="profile_section" class="help_section">
+        <h2>Website Profiles</h2>
+        <p></p>
+        <h3>Domain</h3>
+        <p></p>
+        <h3>Template</h3>
+        <p></p>
+        <h3>Mode</h3>
+        <p></p>
+        <h3>Section Selector</h3>
+        <p></p>
+        <h3>Comment Selector</h3>
         <p></p>
         <p>Learn more about using CSS selectors <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank">here</a>.
+      </div>
+
+      <div id="template_section" class="help_section">
+        <h2>Comment System Templates</h2>
+        <p></p>
       </div>
 
       <div id="philosophy_section" class="help_section">
