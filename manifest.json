@@ -16,11 +16,13 @@
     "tabs"
   ],
 
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+
   "content_scripts": [
     {
       "matches": ["*://*/*"],
       "css": ["drtc.css"],
-      "js": ["js/jquery-1.11.1.min.js", "js/jquery-ui.js", "js/parseUri.js",
+      "js": ["js/jquery-1.11.1.min.js", "js/jquery-ui.js", "js/parseUri.js", "js/ga.js",
             "bad_words/bigotry.js", "bad_words/profanity.js", "bad_words/obscenity.js",
             "js/drtc.js"],
       "all_frames": true
