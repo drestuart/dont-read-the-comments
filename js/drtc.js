@@ -2,6 +2,10 @@ String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
+String.prototype.startsWith = function(prefix) {
+    return this.indexOf(prefix) === 0;
+};
+
 function getElementHeight(elt, margin) {
 	if (typeof margin === 'undefined') {
 		margin = false;
@@ -318,7 +322,14 @@ $(document).ready(function() {
 		var word_lists_enabled = data["word_lists_enabled"];
 
 		chrome.runtime.sendMessage("getTabUrl", function(response) {
-			var domain = parseUri(response).authority;
+			var uri = parseUri(response);
+			var protocol = uri.protocol;
+			var domain = uri.authority;
+
+			// Run on http(s) pages only
+			if (!protocol.startsWith("http")) {
+				return;
+			}
 
 			for (p of profiles) {
 				// Check if the profile's domain has a glob in it
