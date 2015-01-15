@@ -226,28 +226,9 @@ function importProfiles() {
 	}
 
 	// Import
-	console.log("Importing profiles: ");
-	console.log(imp_profiles);
-
 	var profiles = getProfileData();
 
-	for (iprof of imp_profiles) {
-		var overwrote = false;
-		for (var i = 0; i < profiles.length; i++) {
-			prof = profiles[i];
-
-			// Overwrite matching domains with the imported data
-			if (prof["domain"] === iprof["domain"]) {
-				overwrote = true;
-				profiles[i] = iprof;
-				break;
-			}
-		}
-
-		if (!overwrote) {
-			profiles.push(iprof);
-		}
-	}
+	profiles = Tools.mergeProfiles(profiles, imp_profiles);
 
 	// Save and reload
 	var data = {profiles : profiles};
@@ -288,26 +269,8 @@ function importTemplates() {
 	console.log(imp_templates);
 
 	var temps = getTemplateData();
-	console.log("Existing templates:")
-	console.log(temps);
 
-	for (itemp of imp_templates) {
-		var overwrote = false;
-		for (var i = 0; i < temps.length; i++) {
-			temp = temps[i];
-
-			// Overwrite matching domains with the imported data
-			if (temp["system"] === itemp["system"]) {
-				overwrote = true;
-				temps[i] = itemp;
-				break;
-			}
-		}
-
-		if (!overwrote) {
-			temps.push(itemp);
-		}
-	}
+	temps = Tools.mergeTemplates(temps, imp_templates);
 
 	// Save and reload
 	var data = {templates : temps};
