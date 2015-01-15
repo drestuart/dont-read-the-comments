@@ -8,6 +8,8 @@ chrome.runtime.onInstalled.addListener(function(details){
     else if(details.reason == "update") {
         var thisVersion = chrome.runtime.getManifest().version;
         console.log("Updated from " + details.previousVersion + " to " + thisVersion);
+
+        importStartingData();
     }
 });
 

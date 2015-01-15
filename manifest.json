@@ -30,7 +30,7 @@
   ],
 
   "background": {
-    "scripts": ["js/install.js", "js/background.js"],
+    "scripts": ["js/tools.js", "js/install.js", "js/background.js"],
     "persistent": true
   },
 
