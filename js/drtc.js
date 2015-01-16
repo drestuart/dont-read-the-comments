@@ -314,14 +314,13 @@ function drtcRun() {
 $(document).ready(function() {
 	// Load profile and template data
 
-	chrome.storage.sync.get(["profiles", "comment_threshold",
-		"custom_words", "word_lists_enabled"], function(data) {
+	Browser.getContentScriptData(function(data) {
 		profiles = data["profiles"];
 		comment_threshold = data["comment_threshold"]/10;
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
-		chrome.runtime.sendMessage("getTabUrl", function(response) {
+		Browser.sendMessage("getTabUrl", function(response) {
 			var uri = parseUri(response);
 			var protocol = uri.protocol;
 			var domain = uri.authority;
@@ -351,7 +350,7 @@ $(document).ready(function() {
 			}
 
 			// Add a listener for the page action
-			chrome.runtime.onMessage.addListener(
+			Browser.addListener(
 				function(request, sender, sendResponse) {
 					console.log(request);
 					if (request === "getSiteProfile") {
@@ -376,13 +375,13 @@ $(document).ready(function() {
 				}
 
 				// Message the background page to show the page action
-				chrome.runtime.sendMessage("pageActionEnabled");
+				Browser.sendMessage("pageActionEnabled", null);
 
 				// Run all the DRTC code
 				drtcRun();
 			}
 			else {
-				chrome.runtime.sendMessage("pageActionDisabled");
+				Browser.sendMessage("pageActionDisabled", null);
 			}
 		});
 	});

@@ -232,7 +232,7 @@ function importProfiles() {
 
 	// Save and reload
 	var data = {profiles : profiles};
-	chrome.storage.sync.set(data, function() {
+	Browser.save(data, function() {
 		console.log("Saved!");
 		location.reload();
 	});
@@ -274,7 +274,7 @@ function importTemplates() {
 
 	// Save and reload
 	var data = {templates : temps};
-	chrome.storage.sync.set(data, function() {
+	Browser.save(data, function() {
 		console.log("Saved!");
 		location.reload();
 	});
@@ -317,8 +317,7 @@ function validateImport(obj, fields) {
 $(document).ready(function() {
 
 	// Load up comment system templates and profiles
-	chrome.storage.sync.get(["profiles", "templates", "comment_threshold", 
-		"custom_words", "word_lists_enabled"], function(data) {
+	Browser.getOptionsPageData(function(data) {
 
 		templates = data["templates"];
 		ct = data["comment_threshold"];
@@ -446,7 +445,7 @@ $(document).ready(function() {
 
 		data.word_lists_enabled = word_lists_enabled;
 
-		chrome.storage.sync.set(data, function() {
+		Browser.save(data, function() {
 			console.log("Saved!");
 		});
 		location.reload();

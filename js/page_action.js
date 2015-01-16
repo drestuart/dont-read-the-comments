@@ -56,13 +56,13 @@ $(document).ready(function() {
 			profiles.push(profile);
 		}
 		
-		chrome.storage.sync.set({"profiles" : profiles}, function() {
+		Browser.save({"profiles" : profiles}, function() {
 			console.log("Saved!");
 		});
 
 		$("#message").text("Saved");
 
-		chrome.tabs.reload();
+		Browser.reload();
 	});
 
 	$("#export").on('click', function() {
@@ -86,18 +86,15 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
-	chrome.tabs.query({currentWindow: true, active: true},
-		function (tabs) {
-			currentTab = tabs[0];
-			var domain = parseUri(currentTab.url).authority;
-
+	Browser.tabsQuery({currentWindow: true, active: true},
+		function (domain) {
 			// Trim off the www from the front
 			domain = domain.replace(/^www\./, "");
 
 			// Fill in domain field whether we load anything or not
 			$("#domain").val(domain);
 
-			chrome.storage.sync.get(["profiles", "templates"], function(data) {
+			Browser.getPageActionData(function(data) {
 				profiles = data["profiles"];
 				templates = data["templates"];
 				

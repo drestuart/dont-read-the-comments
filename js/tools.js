@@ -45,5 +45,3 @@ Tools.mergeTemplates = function(existing, new_tempaltes) {
 
 	return existing;
 }
-
-

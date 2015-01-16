@@ -33,7 +33,7 @@ function loadStartingData() {
 	fresh_data.custom_words = starting_custom_words;
 	fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
-	chrome.storage.sync.set(fresh_data, 
+	Browser.save(fresh_data, 
     	function() {
             console.log("Installed fresh data");
     	}
@@ -42,8 +42,7 @@ function loadStartingData() {
 
 function importStartingData() {
 	// Get current data
-	chrome.storage.sync.get(["profiles", "templates",
-		"word_lists_enabled"], function(data) {
+	Browser.getBackgroundPageData(function(data) {
 
 			var existing_profiles = data["profiles"];
 			var existing_templates = data["templates"];
@@ -66,7 +65,7 @@ function importStartingData() {
 			}
 
 			// Save data
-			chrome.storage.sync.set(save_data, function() {
+			Browser.save(save_data, function() {
 				console.log("Import complete!");
 			});
 
