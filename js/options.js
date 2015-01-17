@@ -453,10 +453,9 @@ $(document).ready(function() {
 
 	// Reset options
 	$(".reset_button").on('click', function() {
-		if (confirm("This will reset all DRTC settings to their starting values. Are you sure?")) {
-			loadStartingData();
+		if (confirm("This will re-import DRTC's starting settings. Are you sure?")) {
+			importStartingData();
 		}
-		location.reload();
 	});
 });
 

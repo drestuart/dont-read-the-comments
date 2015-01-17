@@ -9,8 +9,10 @@ Tools.mergeProfiles = function(existing, new_profiles) {
 
 			// Overwrite matching domains with the imported data
 			if (prof["domain"] === newprof["domain"]) {
-				overwrote = true;
+				// Keep the existing 'mode' field
+				newprof['mode'] = prof['mode'];
 				existing[i] = newprof;
+				overwrote = true;
 				break;
 			}
 		}

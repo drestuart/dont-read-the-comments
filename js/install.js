@@ -44,31 +44,33 @@ function importStartingData() {
 	// Get current data
 	Browser.getBackgroundPageData(function(data) {
 
-			var existing_profiles = data["profiles"];
-			var existing_templates = data["templates"];
-			var existing_word_lists_enabled = data["word_lists_enabled"];
+		var existing_profiles = data["profiles"];
+		var existing_templates = data["templates"];
+		var existing_word_lists_enabled = data["word_lists_enabled"];
+		console.log(existing_profiles.length);
 
-			// Merge in starting data
-			var save_data = {};
-			save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
-			save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
-			save_data.word_lists_enabled = {};
+		// Merge in starting data
+		var save_data = {};
+		save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
+		save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
+		save_data.word_lists_enabled = {};
+		console.log(save_data.profiles.length);
 
-			for (var list in starting_word_lists_enabled) {
-				var existing_val = existing_word_lists_enabled[list];
-				if (typeof existing_val !== 'undefined') {
-					save_data.word_lists_enabled[list] = existing_val;
-				}
-				else {
-					save_data.word_lists_enabled = starting_word_lists_enabled[list];
-				}
+		for (var list in starting_word_lists_enabled) {
+			var existing_val = existing_word_lists_enabled[list];
+			if (typeof existing_val !== 'undefined') {
+				save_data.word_lists_enabled[list] = existing_val;
 			}
-
-			// Save data
-			Browser.save(save_data, function() {
-				console.log("Import complete!");
-			});
-
+			else {
+				save_data.word_lists_enabled = starting_word_lists_enabled[list];
+			}
+		}
+		console.log("Done!");
+		// Save data
+		Browser.save(save_data, function() {
+			console.log("Import complete!");
+		});
+		location.reload();
 	});
 }
 
