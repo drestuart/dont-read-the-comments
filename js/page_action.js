@@ -67,9 +67,7 @@ $(document).ready(function() {
 
 	$("#export").on('click', function() {
 		var profile = buildProfile();
-		var export_text = JSON.stringify(profile)
-			.replace(/:/g, ": ")
-			.replace(/,/g, ", ");
+		var export_text = Tools.exportProfile(profile);
 		$("#export_text").val(export_text).show();
 	});
 

@@ -47,3 +47,32 @@ Tools.mergeTemplates = function(existing, new_tempaltes) {
 
 	return existing;
 }
+
+Tools.cleanProfile = function(profile) {
+	if (profile['template'] !== '') {
+		delete profile['section_selector'];
+		delete profile['comment_selector'];
+	}
+	return profile;
+}
+
+Tools.exportProfile = function(profile) {
+	profile = Tools.cleanProfile(profile);
+
+	return JSON.stringify(profile)
+		.replace(/:/g, ": ")
+		.replace(/,/g, ", ");
+}
+
+Tools.exportProfiles = function(profiles) {
+	for (var profile of profiles) {
+		profile = Tools.cleanProfile(profile);
+	}
+
+	return JSON.stringify(profiles)
+		.replace(/:/g, ": ")
+		.replace(/,/g, ", ");
+}
+
+
+

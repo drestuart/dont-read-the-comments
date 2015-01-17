@@ -198,6 +198,13 @@ function getTemplateData() {
 	return retArr;
 }
 
+function exportProfiles() {
+	profiles_json = Tools.exportProfiles(getProfileData());
+	$("#import_profiles_go").hide();
+	$("#profiles_textarea").show().val(profiles_json).prop('readonly', true);
+}
+
+
 function importProfiles() {
 	var imp_profiles = JSON.parse($("#profiles_textarea").val());
 
@@ -388,11 +395,7 @@ $(document).ready(function() {
 	});
 
 	// Export buttons
-	$("#export_profiles").on("click", function() {
-		var profiles_json = JSON.stringify(getProfileData());
-		$("#import_profiles_go").hide();
-		$("#profiles_textarea").show().val(profiles_json).prop('readonly', true);
-	});
+	$("#export_profiles").on("click", exportProfiles);
 
 	$("#export_templates").on("click", function() {
 		var templates_json = JSON.stringify(getTemplateData());

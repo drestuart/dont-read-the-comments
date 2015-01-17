@@ -1,13 +1,21 @@
 // Starting data
 var starting_profiles = [
 	{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve.oba.HPa, .Ik.Wv", "template": ""},
-	{"domain": "npr.org", "mode": "all", "section_selector": "", "comment_selector": "", "template": "Disqus"},
-	{"domain": "foxnews.com", "mode": "all", "section_selector": "", "comment_selector": "", "template": "Livefyre"},
+	{"domain": "npr.org", "mode": "all", "template": "Disqus"},
+	{"domain": "foxnews.com", "mode": "all", "template": "Livefyre"},
 	{"domain": "yahoo.com", "mode": "all", "section_selector": "div.all-comments", "comment_selector": "li.comment", "template": ""},
 	{"domain": "independent.co.uk", "mode": "all", "section_selector": "div.comment-container", "comment_selector": "div.gig-comment", "template": ""},
 	{"domain": "dailykos.com", "mode": "all", "section_selector": "#rateAllForm > ul", "comment_selector": "#rateAllForm > ul li", "template": ""},
 	{"domain": "aol.com", "mode": "all", "section_selector": "#aol-comments", "comment_selector": "div.comment", "template": ""},
-	{"domain": "knowyourmeme.com", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": ""},
+	{"domain": "knowyourmeme.com", "mode": "all", "template": "Facebook"},
+	{"domain": "vice.com", "mode": "all", "template": "Facebook"},
+	{"domain": "cbsnews.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "huffingtonpost.com", "mode": "all", "template": "Facebook"},
+	{"domain": "america.aljazeera.com", "mode": "all", "section_selector": "#commentsDiv", "comment_selector": ".gig-comments-comment", "template": ""},
+	{"domain": "rawstory.com", "mode": "all", "template": "Disqus"},
+	{"domain": "metro.co.uk", "mode": "all", "template": "Facebook"},
+	{"domain": "dailymail.co.uk", "mode": "all", "section_selector": "#reader-comments", "comment_selector": ".comment", "template": ""},
+	{"domain": "thedailybeast.com", "mode": "all", "template": "Livefyre"}
 ];
 
 var starting_templates = [
