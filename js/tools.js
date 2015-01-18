@@ -74,5 +74,26 @@ Tools.exportProfiles = function(profiles) {
 		.replace(/,/g, ", ");
 }
 
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
+String.prototype.startsWith = function(prefix) {
+    return this.indexOf(prefix) === 0;
+};
+
+function getElementHeight(elt, margin) {
+	if (typeof margin === 'undefined') {
+		margin = false;
+	}
+	return $(elt).outerHeight(margin);
+}
+
+function getElementWidth(elt, margin) {
+	if (typeof margin === 'undefined') {
+		margin = false;
+	}
+	return $(elt).outerWidth(margin);
+}
 
 

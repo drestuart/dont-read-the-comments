@@ -1,25 +1,3 @@
-String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
-
-String.prototype.startsWith = function(prefix) {
-    return this.indexOf(prefix) === 0;
-};
-
-function getElementHeight(elt, margin) {
-	if (typeof margin === 'undefined') {
-		margin = false;
-	}
-	return $(elt).outerHeight(margin);
-}
-
-function getElementWidth(elt, margin) {
-	if (typeof margin === 'undefined') {
-		margin = false;
-	}
-	return $(elt).outerWidth(margin);
-}
-
 function shouldRun() {
 	if (typeof siteProfile === "undefined") {
 		return false;
@@ -172,7 +150,9 @@ function hideElement(elt, ct) {
 
 	// Style the background if the comment area
 	// doesn't have a style explicitly set
-	if (elt.css("background-color") === "rgba(0, 0, 0, 0)") {
+	var bgc = elt.css("background-color");
+
+	if (bgc === "rgba(0, 0, 0, 0)") {
 		// Default if we don't find a background to use
 		cover.css("background-color", "#fff");
 
@@ -180,12 +160,19 @@ function hideElement(elt, ct) {
 		for (var i = 0 ; i < parents.length ; i++) {
 			elt = $(parents[i]);
 
-			var bgc = elt.css("background-color");
+			bgc = elt.css("background-color");
 			if (bgc !== "rgba(0, 0, 0, 0)") {
 				cover.css("background-color", bgc);
 				break;
 			}
 		}
+	}
+
+	// If the background has an alpha value specified, 
+	// set it to 1.0 (fully opaque)
+	if (bgc.startsWith("rgba") || bgc.startsWith("hsla")) {
+		bgc = bgc.replace(/\d\.\d+\)$/, "1.0)");
+		cover.css("background-color", bgc);
 	}
 
 	// Style the show/hide control

@@ -15,7 +15,8 @@ var starting_profiles = [
 	{"domain": "rawstory.com", "mode": "all", "template": "Disqus"},
 	{"domain": "metro.co.uk", "mode": "all", "template": "Facebook"},
 	{"domain": "dailymail.co.uk", "mode": "all", "section_selector": "#reader-comments", "comment_selector": ".comment", "template": ""},
-	{"domain": "thedailybeast.com", "mode": "all", "template": "Livefyre"}
+	{"domain": "thedailybeast.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "mediaite.com", "mode": "all", "template": "Disqus"}
 ];
 
 var starting_templates = [
