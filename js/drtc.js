@@ -94,7 +94,7 @@ function hideElement(elt, ct) {
 	var css_obj = {};
 
 	// Get some parameters from the comments block
-	var properties = ["background", "width", "height",
+	var properties = ["background", "width", "height", "padding",
 		"border"];
 	var pos = elt.offset();
 	var z = getZIndex(elt);
@@ -182,36 +182,44 @@ function hideElement(elt, ct) {
 }
 
 function styleShowHide(elt, showHideElt, element_id, ct) {
-	// Get the words into an array
-	var num_words = 0;
+	var bad_ratio;
 
-	var text = elt.text()
-		.split(/\W+/)
-		// The filter throws out empty strings
-		.filter(Boolean)
-		// lowercase
-		.map(function(value) {
-			// Count words while we're at it
-			num_words++;
-    		return value.toLowerCase();
-		})
-		// join back into a string with spaces
-		.join(" ");
-
-	// How many of these are bad words?
-	var num_bad = 0;
-	for (bw of bad_words) {
-		if (bw === "") {
-			continue;
-		}
-		if (text.indexOf(bw) != -1) {
-			var re = new RegExp(bw,"g");
-			var count = (text.match(re) || []).length;
-			num_bad += bw.split(" ").length * count;
-		}
+	if (typeof elt.attr("__drtc_ratio") !== 'undefined') {
+		bad_ratio = elt.attr("__drtc_ratio");
 	}
+	else {
+		// Get the words into an array
+		var num_words = 0;
 
-	var bad_ratio = num_bad/num_words;
+		var text = elt.text()
+			.split(/\W+/)
+			// The filter throws out empty strings
+			.filter(Boolean)
+			// lowercase
+			.map(function(value) {
+				// Count words while we're at it
+				num_words++;
+				return value.toLowerCase();
+			})
+			// join back into a string with spaces
+			.join(" ");
+
+		// How many of these are bad words?
+		var num_bad = 0;
+		for (bw of bad_words) {
+			if (bw === "") {
+				continue;
+			}
+			if (text.indexOf(bw) != -1) {
+				var re = new RegExp(bw,"g");
+				var count = (text.match(re) || []).length;
+				num_bad += bw.split(" ").length * count;
+			}
+		}
+
+		bad_ratio = num_bad/num_words;
+		elt.attr("__drtc_ratio", bad_ratio);
+	}
 
 	color = getShowHideColor(bad_ratio);
 	showHideElt.css({
@@ -266,7 +274,7 @@ function showHide() {
 	}
 }
 
-var siteProfile;
+var siteProfile = undefined;
 var profiles;
 
 var refreshIntervalElementFound = 5; // seconds
@@ -339,7 +347,7 @@ $(document).ready(function() {
 				}
 			}
 
-			if (siteProfile["template"] !== "") {
+			if (siteProfile && siteProfile["template"] !== "") {
 				for (t of templates) {
 					if (t["system"] === siteProfile["template"]) {
 						siteProfile["section_selector"] = t["section_selector"];
