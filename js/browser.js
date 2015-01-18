@@ -5,7 +5,7 @@ Browser.getFromStorage = function(fields, func) {
 }
 
 Browser.getContentScriptData = function(func) {
-	Browser.getFromStorage(["profiles", "comment_threshold",
+	Browser.getFromStorage(["profiles", "templates", "comment_threshold",
 		"custom_words", "word_lists_enabled"], func);
 }
 

@@ -302,7 +302,8 @@ $(document).ready(function() {
 	// Load profile and template data
 
 	Browser.getContentScriptData(function(data) {
-		profiles = data["profiles"];
+		var profiles = data["profiles"];
+		var templates = data["templates"];
 		comment_threshold = data["comment_threshold"]/10;
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
@@ -331,6 +332,16 @@ $(document).ready(function() {
 				else {
 					if (domain.endsWith(p["domain"])) {
 						siteProfile = p;
+						break;
+					}
+				}
+			}
+
+			if (siteProfile["template"] !== "") {
+				for (t of templates) {
+					if (t["system"] === siteProfile["template"]) {
+						siteProfile["section_selector"] = t["section_selector"];
+						siteProfile["comment_selector"] = t["comment_selector"];
 						break;
 					}
 				}
