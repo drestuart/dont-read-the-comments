@@ -152,16 +152,18 @@ function hideElement(elt, ct) {
 	// doesn't have a style explicitly set
 	var bgc = elt.css("background-color");
 
-	if (bgc === "rgba(0, 0, 0, 0)") {
+	if (bgc === "rgba(0, 0, 0, 0)" || bgc === "hsla(0, 0, 0, 0)") {
 		// Default if we don't find a background to use
-		cover.css("background-color", "#fff");
+		bgc = "#fff";
+		cover.css("background-color", bgc);
 
 		var parents = elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
 			elt = $(parents[i]);
 
-			bgc = elt.css("background-color");
-			if (bgc !== "rgba(0, 0, 0, 0)") {
+			bgci = elt.css("background-color");
+			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)") {
+				bgc = bgci;
 				cover.css("background-color", bgc);
 				break;
 			}
