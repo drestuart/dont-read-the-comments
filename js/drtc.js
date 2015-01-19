@@ -94,8 +94,7 @@ function hideElement(elt, ct) {
 	var css_obj = {};
 
 	// Get some parameters from the comments block
-	var properties = ["background", "width", "height", "padding",
-		"border"];
+	var properties = ["background", "height", "border"];
 	var pos = elt.offset();
 	var z = getZIndex(elt);
 	var element_id;
@@ -138,7 +137,8 @@ function hideElement(elt, ct) {
 
 	cover.css(css_obj);
 	cover.css({
-		top: - getElementHeight(showHide)
+		top: - getElementHeight(showHide),
+		width: getElementWidth(elt)
 	});
 
 	showHide.css({
