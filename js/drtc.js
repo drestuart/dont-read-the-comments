@@ -76,14 +76,31 @@ function hideCommentSection(section_selector) {
 function getZIndex(elt) {
 	var z = 0;
 
-	$(elt).parents().each(function(index, e) {
-		var zind = $(e).zIndex();
-		if (zind > z) {
-			z = zind;
-		}
-	});
+	if (typeof elt.attr("__drtc_z_index") !== 'undefined') {
+		z = elt.attr("__drtc_z_index");
+	}
+	else {
+		// Search parents
+		$(elt).parents().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
 
-	return z;
+		// Search children
+		$(elt).find().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
+
+		// Store z-index on the element so we don't have to calculate it again
+		elt.attr("__drtc_z_index", z);
+	}
+
+	return z + 1;
 }
 
 function hideElement(elt, ct) {

@@ -7,7 +7,7 @@ var starting_profiles = [
 	{"domain": "independent.co.uk", "mode": "all", "section_selector": "div.comment-container", "comment_selector": "div.gig-comment", "template": ""},
 	{"domain": "dailykos.com", "mode": "all", "section_selector": "#rateAllForm > ul", "comment_selector": "#rateAllForm > ul li", "template": ""},
 	{"domain": "aol.com", "mode": "all", "section_selector": "#aol-comments", "comment_selector": "div.comment", "template": ""},
-	{"domain": "knowyourmeme.com", "mode": "all", "template": "Facebook"},
+	{"domain": "knowyourmeme.com", "mode": "all", "section_selector": "div.fbFeedbackContent,  #comments", "comment_selector": "div.postContainer.fsl.fwb.fcb,  .comment.rel", "template": ""},
 	{"domain": "vice.com", "mode": "all", "template": "Facebook"},
 	{"domain": "cbsnews.com", "mode": "all", "template": "Livefyre"},
 	{"domain": "huffingtonpost.com", "mode": "all", "template": "Facebook"},
