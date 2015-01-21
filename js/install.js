@@ -16,13 +16,23 @@ var starting_profiles = [
 	{"domain": "metro.co.uk", "mode": "all", "template": "Facebook"},
 	{"domain": "dailymail.co.uk", "mode": "all", "section_selector": "#reader-comments", "comment_selector": ".comment", "template": ""},
 	{"domain": "thedailybeast.com", "mode": "all", "template": "Livefyre"},
-	{"domain": "mediaite.com", "mode": "all", "template": "Disqus"}
+	{"domain": "mediaite.com", "mode": "all", "template": "Disqus"},
+	{"domain": "pbs.org", "mode": "all", "template": "Disqus"},
+	{"domain": "deadspin.com", "mode": "all", "template": "Kinja"},
+	{"domain": "gawker.com", "mode": "all", "template": "Kinja"},
+	{"domain": "jezebel.com", "mode": "all", "template": "Kinja"},
+	{"domain": "io9.com", "mode": "all", "template": "Kinja"},
+	{"domain": "gizmodo.com", "mode": "all", "template": "Kinja"},
+	{"domain": "jalopnik.com", "mode": "all", "template": "Kinja"},
+	{"domain": "kotaku.com", "mode": "all", "template": "Kinja"},
+	{"domain": "lifehacker.com", "mode": "all", "template": "Kinja"}
 ];
 
 var starting_templates = [
 	{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"},
 	{"system": "Facebook", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb"},
-	{"system": "Livefyre", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper"}
+	{"system": "Livefyre", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper"},
+	{"system": "Kinja", "section_selector": "section.js_replies", "comment_selector": "article.js_reply.reply"}
 ];
 
 var starting_custom_words = [];
