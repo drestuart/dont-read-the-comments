@@ -34,13 +34,13 @@ function hideComments(comment_selector) {
 
 	// Ignore empty selector
 	if (comment_selector.trim() === "") {
-		console.log("DRTC: no comment selector defined");
+		// console.log("DRTC: no comment selector defined");
 		return false;
 	}
 
 	// If the element we want isn't present on the page, do nothing
 	if (comments.length === 0) {
-		console.log("DRTC: no comments found for " + comment_selector);
+		// console.log("DRTC: no comments found for " + comment_selector);
 		return false;
 	}
 
@@ -57,13 +57,13 @@ function hideCommentSection(section_selector) {
 
 	// Ignore empty selector
 	if (section_selector.trim() === "") {
-		console.log("DRTC: no comment section selector defined");
+		// console.log("DRTC: no comment section selector defined");
 		return false;
 	}
 
 	// If the element we want isn't present on the page, do nothing
 	if (section.length === 0) {
-		console.log("DRTC: no comment section found for " + section_selector);
+		// console.log("DRTC: no comment section found for " + section_selector);
 		return false;
 	}
 
@@ -325,6 +325,19 @@ function drtcRun() {
 	setTimeout(drtcRun, refreshInterval*1000);
 }
 
+var oldURL;
+
+function detectLocationChange() {
+	var url = location.href;
+
+	// Delete all DRTC covers immediately if we've changed location
+	if (typeof oldURL !== 'undefined' && oldURL != url) {
+		$(".__drtc_area").remove();
+	}
+
+	oldURL = url;
+}
+
 $(document).ready(function() {
 	// Load profile and template data
 
@@ -401,6 +414,9 @@ $(document).ready(function() {
 
 				// Message the background page to show the page action
 				Browser.sendMessage("pageActionEnabled", null);
+
+				// Location change handler
+				setInterval(detectLocationChange, 100);
 
 				// Run all the DRTC code
 				drtcRun();
