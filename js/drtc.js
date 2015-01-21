@@ -297,6 +297,8 @@ var profiles;
 var refreshIntervalElementFound = 5; // seconds
 var refreshIntervalNothingFound = 1;
 
+var drtcTimeout;
+
 function drtcRun() {
 	var refreshInterval;
 
@@ -322,7 +324,7 @@ function drtcRun() {
 	}
 
 	// Run this function again periodically
-	setTimeout(drtcRun, refreshInterval*1000);
+	drtcTimeout = setTimeout(drtcRun, refreshInterval*1000);
 }
 
 var oldURL;
@@ -330,9 +332,10 @@ var oldURL;
 function detectLocationChange() {
 	var url = location.href;
 
-	// Delete all DRTC covers immediately if we've changed location
 	if (typeof oldURL !== 'undefined' && oldURL != url) {
-		$(".__drtc_area").remove();
+		// Clear the old drtcTimeout and run again immediately
+		clearTimeout(drtcTimeout);
+		drtcRun();
 	}
 
 	oldURL = url;
