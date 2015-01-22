@@ -25,7 +25,12 @@ var starting_profiles = [
 	{"domain": "gizmodo.com", "mode": "all", "template": "Kinja"},
 	{"domain": "jalopnik.com", "mode": "all", "template": "Kinja"},
 	{"domain": "kotaku.com", "mode": "all", "template": "Kinja"},
-	{"domain": "lifehacker.com", "mode": "all", "template": "Kinja"}
+	{"domain": "lifehacker.com", "mode": "all", "template": "Kinja"},
+	{"domain": "mlive.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "amazon.com", "mode": "all", "section_selector": "#revMH", "comment_selector": "#revMHRL > .a-section.celwidget", "template": ""},
+	{"domain": "slashdot.org", "mode": "all", "section_selector": "#commentwrap", "comment_selector": ".cw", "template": ""},
+	{"domain": "buzzfeed.com", "mode": "all", "template": "Facebook"},
+	{"domain": "blogspot.com", "mode": "all", "section_selector": "#Blog1_comments-block-wrapper", "comment_selector": ".comment-body", "template": ""}
 ];
 
 var starting_templates = [
