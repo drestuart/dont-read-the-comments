@@ -24,13 +24,13 @@
       "css": ["drtc.css"],
       "js": ["js/jquery-1.11.1.min.js", "js/jquery-ui.js", "js/parseUri.js", "js/ga.js",
             "bad_words/bigotry.js", "bad_words/profanity.js", "bad_words/obscenity.js",
-            "js/browser.js", "js/tools.js", "js/drtc.js"],
+            "js/browser-chrome.js", "js/tools.js", "js/drtc.js"],
       "all_frames": true
     }
   ],
 
   "background": {
-    "scripts": ["js/tools.js", "js/browser.js", "js/install.js", "js/background.js"],
+    "scripts": ["js/tools.js", "js/browser-chrome.js", "js/install.js", "js/background-chrome.js"],
     "persistent": true
   },
 
@@ -53,6 +53,7 @@
 
   "options_ui": {
     "page": "options.html",
-    "chrome_style": true
+    "chrome_style": false,
+    "open_in_tab": true
   }
 }
