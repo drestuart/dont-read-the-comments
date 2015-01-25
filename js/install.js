@@ -98,4 +98,9 @@ function importStartingData() {
 	});
 }
 
+// Export for Firefox
+exports.Install = {
+	loadStartingData: loadStartingData,
+	importStartingData: importStartingData
+};
 

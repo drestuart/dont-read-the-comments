@@ -1,6 +1,10 @@
 var buttons = require('sdk/ui/button/action');
 var tabs = require("sdk/tabs");
 var self = require("sdk/self");
+var Browser = require("browser-ff");
+var Install = require("install");
+var Tools = require("tools");
+var parseUri = require("parseUri");
 
 var activeIcons = {
 	"16": self.data.url("logo_drtc_16.png"),
