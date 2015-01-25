@@ -27,13 +27,13 @@ function pageAction(state) {
 }
 
 function DRTCInactive() {
-	button.state("window", {
+	button.state("tab", {
 		icon: inactiveIcons
 	});
 }
 
 function DRTCActive() {
-	button.state("window", {
+	button.state("tab", {
 		icon: activeIcons
 	});
 }
