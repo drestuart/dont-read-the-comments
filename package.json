@@ -10,7 +10,6 @@
   "icon": "images/logo_drtc_48.png",
   "homepage": "https://github.com/drestuart/dont-read-the-comments",
   "lib": "js",
-  "main": "main.js",
-
-
+  "data": "images",
+  "main": "firefox.js"
 }
