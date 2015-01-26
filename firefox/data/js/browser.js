@@ -11,7 +11,9 @@ var data = {
 				"template": ""
 			}
 			],
-		templates: {},
+		templates: [
+			{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"}
+		],
 		comment_threshold: 0,
 		custom_words: [],
 		word_lists_enabled: {
@@ -76,6 +78,3 @@ Browser.tabsQuery = function(data, func) {
 	var domain = "youtube.com";
 	func(domain);
 }
-
-// Export code
-exports.Browser = Browser

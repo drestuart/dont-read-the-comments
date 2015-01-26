@@ -7,8 +7,7 @@
   "license": "GPL 3.0",
   "version": "0.3",
 
-  "icon": "data/logo_drtc_48.png",
+  "icon": "data/images/logo_drtc_48.png",
   "homepage": "https://github.com/drestuart/dont-read-the-comments",
-  "lib": "js",
-  "main": "firefox.js"
+  "main": "main.js"
 }

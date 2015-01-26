@@ -95,6 +95,3 @@ function getElementWidth(elt, margin) {
 	}
 	return $(elt).outerWidth(margin);
 }
-
-// Export for Firefox
-exports.Tools = Tools;
