@@ -1,0 +1,28 @@
+html {
+	width: 200px;
+}
+
+input[type="text"], select {
+	width: 100px;
+}
+
+tr {
+	min-height: 2em;
+}
+
+td:first-child {
+	width: 70px;
+}
+
+#profile_not_found, #profile_found {
+	display: none;
+}
+
+#export_text {
+	display: none;
+	width: 100%;
+}
+
+#help {
+	float: right;
+}

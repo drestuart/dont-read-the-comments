@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="css/options.css"/>
+
+    <!-- External -->
+  	<script language="javascript" type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/parseUri.js"></script>
+
+    <!-- Internal -->
+    <script language="javascript" type="text/javascript" src="js/install.js"></script>
+    <script language="javascript" type="text/javascript" src="js/tools.js"></script>
+  	<script language="javascript" type="text/javascript" src="js/options.js"></script>
+    <script language="javascript" type="text/javascript" src="js/browser-chrome.js"></script>
+
+    <!-- Bad words lists -->
+    <script language="javascript" type="text/javascript" src="bad_words/en.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/bigotry.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/profanity.js"></script>
+    <script language="javascript" type="text/javascript" src="bad_words/obscenity.js"></script>
+
+    <!-- jQuery UI stuff -->
+    <script src="js/jquery-ui.js"></script>
+    <link href="css/jquery-ui.css" rel="stylesheet">
+
+    <!-- Analytics -->
+    <script src="js/ga.js"></script>
+    
+  </head>
+  <body>
+    <div id="content">
+      <h1>Don't Read the Comments! Options</h1>
+      <a href="help.html" target="_blank" id="help_link">Help</a>
+      
+      <div id="profiles_section" class="options_section">
+        <input type="button" value="Save" class="save_button">
+        <input type="button" value="Reset" class="reset_button">
+        <br>
+        <br>
+        <h2>Website Profiles</h2>
+        <table id="profiles" class="opt_table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Mode</th>
+              <th>Section Selector</th>
+              <th>Comment Selector</th>
+              <th>Template</th>
+              <th class="delete_col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+            <tr class="control_row">
+              <td><input type="button" value="+" id="add_profile" class="add_row"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+          </tbody>
+        </table>
+        <p>
+          <input type="button" value="Export" id="export_profiles">
+          <input type="button" value="Import" id="import_profiles">
+        <p>
+        <textarea class="export_area" id="profiles_textarea"></textarea>
+        <p><input type="button" value="Go" id="import_profiles_go" class="import_go_button"></p>
+      </div>
+      <div id="templates_section" class="options_section">
+        <h2>Comment System Templates</h2>
+        <table id="templates" class="opt_table">
+          <thead>
+            <tr>
+              <th>Comment System</th>
+              <th>Section Selector</th>
+              <th>Comment Selector</th>
+              <th class="delete_col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>  
+          <tfoot>
+            <tr class="control_row">
+              <td><input type="button" value="+" id="add_template" class="add_row"></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+        <p>
+          <input type="button" value="Export" id="export_templates">
+          <input type="button" value="Import" id="import_templates">
+        </p>
+        <textarea class="export_area" id="templates_textarea"></textarea>
+        <p><input type="button" value="Go" id="import_templates_go" class="import_go_button"></p>
+      </div>
+      <div id="comment_threshold_section" class="options_section">
+        <h3>Comment Severity Threshold</h3>
+        <input type="text" id="comment_threshold_value" readonly>
+        <div id="comment_threshold"></div>
+      </div>
+      <div id="bad_words_section" class="options_section">
+        <h2>Bad Word Lists</h2>
+        <div class="word_list_area">
+          <h3>Profanity</h3>
+          <input type="checkbox" id="profanity_check"><label for="profanity_check">Enabled</label>
+          <p><a id="profanity_show" href="javascript:void()" class="textarea_show" data-for="profanity_list">Show</a></p>
+          <textarea readonly id="profanity_list"></textarea>
+        </div>
+        <div class="word_list_area">
+          <h3>Obscenity</h3>
+          <input type="checkbox" id="obscenity_check"><label for="obscenity_check">Enabled</label>
+          <p><a id="obscenity_show" href="javascript:void()" class="textarea_show" data-for="obscenity_list">Show</a></p>
+          <textarea readonly id="obscenity_list"></textarea>
+        </div>
+        <div class="word_list_area">
+          <h3>Bigotry</h3>
+          <input type="checkbox" id="bigotry_check"><label for="bigotry_check">Enabled</label>
+          <p><a id="bigotry_show" href="javascript:void()" class="textarea_show" data-for="bigotry_list">Show</a></p>
+          <textarea readonly id="bigotry_list"></textarea>
+        </div>
+        <div class="word_list_area">
+          <h3>Custom List</h3>
+          <textarea id="custom_list"></textarea>
+        </div>
+      </div>
+      <input type="button" value="Save" class="save_button">
+      <input type="button" value="Reset" class="reset_button">
+    </div>
+  </body>
+</html>
+

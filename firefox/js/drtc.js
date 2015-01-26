@@ -1,0 +1,432 @@
+function shouldRun() {
+	if (typeof siteProfile === "undefined") {
+		return false;
+	}
+
+	if (siteProfile["mode"] !== "disabled") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function getSectionSelector() {
+	return siteProfile["section_selector"];
+}
+
+function getCommentSelector() {
+	return siteProfile["comment_selector"];
+}
+
+showText = "Show &#8595;";
+hideText = "Hide &#8593;";
+
+coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
+				"<div class='__drtc_showhide' __drtc_id='%id%'>" + showText + "</div>" +
+				"<div class='__drtc_cover' id='__drtc_cover%id%'></div>" +
+			"</div>";
+id = 0;
+showEltId = [];
+
+function hideComments(comment_selector) {
+	var comments = $(comment_selector + ":visible");
+
+	// Ignore empty selector
+	if (comment_selector.trim() === "") {
+		// console.log("DRTC: no comment selector defined");
+		return false;
+	}
+
+	// If the element we want isn't present on the page, do nothing
+	if (comments.length === 0) {
+		// console.log("DRTC: no comments found for " + comment_selector);
+		return false;
+	}
+
+	console.log("DRTC: comments found for " + comment_selector);
+
+	comments.each(function(index, elt) {
+		hideElement($(elt), comment_threshold);
+	});
+	return true;
+}
+
+function hideCommentSection(section_selector) {
+	var section = $(section_selector + ":visible");
+
+	// Ignore empty selector
+	if (section_selector.trim() === "") {
+		// console.log("DRTC: no comment section selector defined");
+		return false;
+	}
+
+	// If the element we want isn't present on the page, do nothing
+	if (section.length === 0) {
+		// console.log("DRTC: no comment section found for " + section_selector);
+		return false;
+	}
+
+	console.log("DRTC: comment section found for " + section_selector);
+
+	hideElement(section);
+	return true;
+}
+
+function getZIndex(elt) {
+	var z = 0;
+
+	if (typeof elt.attr("__drtc_z_index") !== 'undefined') {
+		z = elt.attr("__drtc_z_index");
+	}
+	else {
+		// Search parents
+		$(elt).parents().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
+
+		// Search children
+		$(elt).find().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
+
+		// Store z-index on the element so we don't have to calculate it again
+		elt.attr("__drtc_z_index", z);
+	}
+
+	return z + 1;
+}
+
+function hideElement(elt, ct) {
+	if (typeof(ct) === 'undefined') {
+		ct = 0;
+	}
+
+	var css_obj = {};
+
+	// Get some parameters from the comments block
+	var properties = ["background", "height", "border"];
+	var pos = elt.offset();
+	var z = getZIndex(elt);
+	var element_id;
+
+	// Get this element's __drtc_id if it exists, define it if not
+	if (typeof elt.attr("__drtc_id") !== 'undefined') {
+		element_id = parseInt(elt.attr("__drtc_id"));
+	}
+	else {
+		element_id = id;
+		elt.attr("__drtc_id", element_id);
+		id++;
+	}
+
+	if (isNaN(z)) {
+		z = 0;
+	}
+
+	// Fill in styles to impersonate
+	for (p of properties) {
+		css_obj[p] = elt.css(p);
+	}
+
+	// Put the area number into the html
+	var drtcArea = $(coverHTML.replace(/%id%/g, element_id.toString()));
+
+	// Add our div to the page
+	$("body").append(drtcArea);
+
+	// Style and position our area div
+	$(drtcArea).css({
+		'z-index': (z + 1).toString(),
+		left: pos.left,
+		top: pos.top,
+	});
+
+	// Get some of the children
+	var cover = drtcArea.find(".__drtc_cover");
+	var showHide = drtcArea.find(".__drtc_showhide");
+
+	cover.css(css_obj);
+	cover.css({
+		top: - getElementHeight(showHide),
+		width: getElementWidth(elt)
+	});
+
+	showHide.css({
+		// Put the show/hide control at 1 higher z-index
+		'z-index': (z + 2).toString(),
+		// Move the control over to the right
+		'margin-left': parseInt(getElementWidth(elt)) - parseInt(getElementWidth(showHide))
+	});
+
+	// Style the background if the comment area
+	// doesn't have a style explicitly set
+	var bgc = elt.css("background-color");
+
+	if (bgc === "rgba(0, 0, 0, 0)" || bgc === "hsla(0, 0, 0, 0)") {
+		// Default if we don't find a background to use
+		bgc = "#fff";
+		cover.css("background-color", bgc);
+
+		var parents = elt.parents();
+		for (var i = 0 ; i < parents.length ; i++) {
+			elt = $(parents[i]);
+
+			bgci = elt.css("background-color");
+			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)") {
+				bgc = bgci;
+				cover.css("background-color", bgc);
+				break;
+			}
+		}
+	}
+
+	// If the background has an alpha value specified, 
+	// set it to 1.0 (fully opaque)
+	if (bgc.startsWith("rgba") || bgc.startsWith("hsla")) {
+		bgc = bgc.replace(/\d\.\d+\)$/, "1.0)");
+		cover.css("background-color", bgc);
+	}
+
+	// Style the show/hide control
+	styleShowHide(elt, showHide, element_id, ct);
+}
+
+function styleShowHide(elt, showHideElt, element_id, ct) {
+	var bad_ratio;
+
+	if (typeof elt.attr("__drtc_ratio") !== 'undefined') {
+		bad_ratio = elt.attr("__drtc_ratio");
+	}
+	else {
+		// Get the words into an array
+		var num_words = 0;
+
+		var text = elt.text()
+			.split(/\W+/)
+			// The filter throws out empty strings
+			.filter(Boolean)
+			// lowercase
+			.map(function(value) {
+				// Count words while we're at it
+				num_words++;
+				return value.toLowerCase();
+			})
+			// join back into a string with spaces
+			.join(" ");
+
+		// How many of these are bad words?
+		var num_bad = 0;
+		for (bw of bad_words) {
+			if (bw === "") {
+				continue;
+			}
+			if (text.indexOf(bw) != -1) {
+				var re = new RegExp(bw,"g");
+				var count = (text.match(re) || []).length;
+				num_bad += bw.split(" ").length * count;
+			}
+		}
+
+		bad_ratio = num_bad/num_words;
+		elt.attr("__drtc_ratio", bad_ratio);
+	}
+
+	color = getShowHideColor(bad_ratio);
+	showHideElt.css({
+		background: color,
+	});
+
+	showHideElt.off("click").on("click", showHide);
+
+	shown = false;
+
+	// Keep track of the show/hide status of this element
+	if(typeof showEltId[element_id] === 'undefined') {
+		showEltId.push(shown);
+
+		// Show or hide based on comment threshold or previous setting
+		if (bad_ratio < ct) {
+			showHideElt.trigger("click");
+		}
+	}
+	else if (showEltId[element_id]) {
+		showHideElt.trigger("click");
+	}
+}
+
+color_map = {
+			0.4 : "#f00",
+			0.2 : "orange",
+			0 : "#bbb"};
+ratios = [0.4, 0.2, 0];
+
+function getShowHideColor(ratio) {
+	for (var r of ratios) {
+		if (ratio >= r) {
+			return color_map[r];
+		}
+	}
+}
+
+function showHide() {
+	var id = parseInt($(this).attr("__drtc_id"));
+	var cover = $(this).siblings(".__drtc_cover");
+	cover.toggle();
+
+	// Update text and track show/hide status of this element
+	if (cover.css("display") == 'none') {
+		$(this).html(hideText);
+		showEltId[id] = true;
+	}
+	else {
+		$(this).html(showText);
+		showEltId[id] = false;
+	}
+}
+
+var siteProfile = undefined;
+var profiles;
+
+var refreshIntervalElementFound = 5; // seconds
+var refreshIntervalNothingFound = 1;
+
+var drtcTimeout;
+
+function drtcRun() {
+	var refreshInterval;
+
+	// Delete all DRTC cover elements before running again
+	$(".__drtc_area").remove();
+
+	if (siteProfile["mode"] === "all") {
+		section_selector = getSectionSelector();
+		if (hideCommentSection(section_selector)) {
+			refreshInterval = refreshIntervalElementFound;
+		}
+		else {
+			refreshInterval = refreshIntervalNothingFound;
+		}
+	}
+	else if (siteProfile["mode"] === "individual") {
+		comment_selector = getCommentSelector();
+		if (hideComments(comment_selector)) {
+			refreshInterval = refreshIntervalElementFound;
+		} else {
+			refreshInterval = refreshIntervalNothingFound;
+		}
+	}
+
+	// Run this function again periodically
+	drtcTimeout = setTimeout(drtcRun, refreshInterval*1000);
+}
+
+var oldURL;
+
+function detectLocationChange() {
+	var url = location.href;
+
+	if (typeof oldURL !== 'undefined' && oldURL != url) {
+		// Clear the old drtcTimeout and run again immediately
+		clearTimeout(drtcTimeout);
+		drtcRun();
+	}
+
+	oldURL = url;
+}
+
+$(document).ready(function() {
+	// Load profile and template data
+
+	Browser.getContentScriptData(function(data) {
+		var profiles = data["profiles"];
+		var templates = data["templates"];
+		comment_threshold = data["comment_threshold"]/10;
+		var custom_words = data["custom_words"];
+		var word_lists_enabled = data["word_lists_enabled"];
+
+		Browser.sendMessage("getTabUrl", function(response) {
+			var uri = parseUri(response);
+			var protocol = uri.protocol;
+			var domain = uri.authority;
+
+			// Run on http(s) pages only
+			if (!protocol.startsWith("http")) {
+				return;
+			}
+
+			for (p of profiles) {
+				// Check if the profile's domain has a glob in it
+				if (p["domain"].indexOf('*') !== -1) {
+					// Build it into a regex
+					p["domain"] = p["domain"].replace(/\*/g, '[\\w\.-]*')  + '$';
+
+					if (domain.match(p["domain"])) {
+						siteProfile = p;
+						break;
+					}
+				}
+				else {
+					if (domain.endsWith(p["domain"])) {
+						siteProfile = p;
+						break;
+					}
+				}
+			}
+
+			if (siteProfile && siteProfile["template"] !== "") {
+				for (t of templates) {
+					if (t["system"] === siteProfile["template"]) {
+						siteProfile["section_selector"] = t["section_selector"];
+						siteProfile["comment_selector"] = t["comment_selector"];
+						break;
+					}
+				}
+			}
+
+			// Add a listener for the page action
+			Browser.addListener(
+				function(request, sender, sendResponse) {
+					console.log(request);
+					if (request === "getSiteProfile") {
+						console.log("Returning site profile")
+						sendResponse(siteProfile);
+					}
+				}
+			);
+
+			if (shouldRun()) {
+				// Build bad word list
+				bad_words = custom_words;
+
+				if (word_lists_enabled["profanity"]) {
+					bad_words = bad_words.concat(profanity_words);
+				}
+				if (word_lists_enabled["obscenity"]) {
+					bad_words = bad_words.concat(obscenity_words);
+				}
+				if (word_lists_enabled["bigotry"]) {
+					bad_words = bad_words.concat(bigotry_words);
+				}
+
+				// Message the background page to show the page action
+				Browser.sendMessage("pageActionEnabled", null);
+
+				// Location change handler
+				setInterval(detectLocationChange, 100);
+
+				// Run all the DRTC code
+				drtcRun();
+			}
+			else {
+				Browser.sendMessage("pageActionDisabled", null);
+			}
+		});
+	});
+});

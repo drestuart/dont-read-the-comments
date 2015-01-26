@@ -1,0 +1,171 @@
+h1, h2, h3 {
+	/*margin-top: 0;*/
+	/*margin-bottom: 5px;*/
+	margin: 0 0 5px 0;
+}
+
+a {
+	text-decoration: none;
+	color: #0000FF;
+}
+
+a#help_link {
+	float: right;
+}
+
+p, label, li {
+	font-size: 14px;
+}
+
+body {
+	background: #666;
+}
+
+img {
+	border: 1px solid black;
+	max-width: 650px;
+}
+
+img, figure {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+ul {
+	margin: 20px 0;
+}
+
+li {
+	margin: 10px 0;
+}
+
+code {
+	background-color: #ddd;
+}
+
+.left {
+	float: left;
+}
+
+.clear {
+	clear: both;
+}
+
+#content {
+	width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 70px;
+	border-radius: 15px;
+	background: white;
+	padding: 20px 30px;
+}
+
+h1 {
+	text-align: center;
+}
+
+div.options_section, div.help_section {
+	/*margin: 40px 0;*/
+	border-bottom: 1px solid #666;
+	padding: 30px 0;
+}
+
+div.options_section:first-of-type {
+	padding-top: 20px;
+}
+
+div.options_section:last-of-type, div.help_section:last-of-type {
+	border: none;
+}
+
+div.options_section input[type=button] {
+	/*margin-left: 7px;*/
+}
+
+table.opt_table thead, table.opt_table tbody {
+	display: block;
+	width: 670px;
+}
+
+table.opt_table tbody {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+table#profiles .delete_col, table#templates .delete_col {
+	width: 20px;
+}
+
+table#profiles th, table#profiles td {
+	width: 130px;
+}
+
+table#templates th, table#templates td {
+	width: 200px;
+}
+
+table.opt_table th {
+	font-size: 16px;
+}
+
+table.opt_table td input, table.opt_table td select {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+table.opt_table td input.add_row {
+	width: auto;
+}
+
+table#profiles input.add_row {
+	margin: 0 0 0 2px;
+}
+
+table#templates input.add_row {
+	margin: 0 0 0 6px;
+}
+
+div#comment_threshold {
+	margin: 10px 0;
+	width: 300px;
+}
+
+input#comment_threshold_value {
+	border:0;
+	font-weight:bold;
+	font-size: 12px;
+}
+
+div.word_list_area {
+	margin: 15px 20px;
+}
+
+div.word_list_area textarea, textarea.export_area {
+	max-height: 110px;
+	height: 110px;
+	width: 580px;
+}
+
+div.word_list_area textarea:not(#custom_list) {
+	display: none;
+}
+
+div.word_list_area h3 {
+	display: inline;
+}
+
+textarea.export_area {
+	display: none;
+}
+
+input.import_go_button {
+	display: none;
+}
+
