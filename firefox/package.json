@@ -5,7 +5,7 @@
   "description": "Hide the comments",
   "author": "Dan Stuart",
   "license": "GPL 3.0",
-  "version": "0.2",
+  "version": "0.3",
 
   "icon": "data/logo_drtc_48.png",
   "homepage": "https://github.com/drestuart/dont-read-the-comments",
