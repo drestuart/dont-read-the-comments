@@ -8,7 +8,7 @@ var data = require("sdk/self").data;
 // Local libs
 var Install = require("install");
 var Messages = require("messages").Messages;
-var PageAction = require("page_action").PageAction;
+var PageAction = require("page_action_setup").PageAction;
 
 // Turn off warnings god damn your eyes
 require("sdk/preferences/service").set("javascript.options.strict", false);

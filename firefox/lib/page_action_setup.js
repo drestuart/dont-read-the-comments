@@ -3,6 +3,8 @@ var self = require("sdk/self");
 var data = require("sdk/self").data;
 var panel = require("sdk/panel");
 
+var DataStore = require("data").DataStore;
+
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
 	width: 202,
@@ -21,21 +23,7 @@ PageAction.page_action = panel.Panel({
 
 PageAction.page_action.port.on("pageActionDataRequest", function() {
 	// Get the data for the page action
-	var pageActionData = {
-		profiles: [
-			{
-				"domain": "youtube.com", 
-				"mode": "all", 
-				"section_selector": "#watch-discussion", 
-				"comment_selector": ".ve.oba.HPa, .Ik.Wv", 
-				"template": ""
-			}
-		],
-		templates: [
-			{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"}
-		],
-	};
-
+	var pageActionData = DataStore.getPageActionData();
 	PageAction.page_action.port.emit("pageActionDataResponse", pageActionData);
 });
 
