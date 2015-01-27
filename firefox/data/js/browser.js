@@ -40,8 +40,11 @@ Browser.getOptionsPageData = function(func) {
 }
 
 Browser.getPageActionData = function(func) {
-	// Browser.getFromStorage(["profiles", "templates"], func);
-	func(data);
+	self.port.on("pageActionDataResponse", function(pageActionData) {
+		func(pageActionData);
+	})
+
+	self.port.emit("pageActionDataRequest");
 }
 
 Browser.getBackgroundPageData = function(func) {
@@ -58,6 +61,7 @@ Browser.save = function(data, func) {
 
 Browser.sendMessage = function(message, func) {
 	// chrome.runtime.sendMessage(chrome.runtime.id, message, func);
+	self.port.emit("myContentScriptMessage", myContentScriptMessagePayload);
 }
 
 Browser.addListener = function(func) {
