@@ -30,7 +30,15 @@ var starting_profiles = [
 	{"domain": "amazon.com", "mode": "all", "section_selector": "#revMH", "comment_selector": "#revMHRL > .a-section.celwidget", "template": ""},
 	{"domain": "slashdot.org", "mode": "all", "section_selector": "#commentwrap", "comment_selector": ".cw", "template": ""},
 	{"domain": "buzzfeed.com", "mode": "all", "template": "Facebook"},
-	{"domain": "blogspot.com", "mode": "all", "section_selector": "#Blog1_comments-block-wrapper", "comment_selector": ".comment-body", "template": ""}
+	{"domain": "blogspot.com", "mode": "all", "section_selector": "#Blog1_comments-block-wrapper", "comment_selector": ".comment-body", "template": ""},
+	{"domain": "dailydot.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "vanityfair.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "motherjones.com", "mode": "all", "template": "Disqus"},
+	{"domain": "thehill.com", "mode": "all", "template": "Disqus"},
+	{"domain": "talkingpointsmemo.com", "mode": "all", "section_selector": "#comments", "comment_selector": "#comments div.clearfix", "template": ""},
+	{"domain": "mediamatters.org", "mode": "all", "template": "Disqus"},
+	{"domain": "bloombergview.com", "mode": "all", "template": "Disqus"},
+	{"domain": "economist.com", "mode": "all", "section_selector": "#comments-area", "comment_selector": ".single-comment", "template": ""}
 ];
 
 var starting_templates = [
