@@ -22,14 +22,14 @@ Messages.listen();
 
 var activeIcons = {
 	"16": data.url("images/logo_drtc_16.png"),
-    "19": data.url("images/logo_drtc_19.png"),
-    "38": data.url("images/logo_drtc_38.png"),
-    "48": data.url("images/logo_drtc_48.png")
+    "32": data.url("images/logo_drtc_32.png"),
+    "64": data.url("images/logo_drtc_64.png")
 };
 
 var inactiveIcons = {
 	"19": data.url("images/logo_drtc_gs_19.png"),
-	"38": data.url("images/logo_drtc_gs_38.png"),
+	"32": data.url("images/logo_drtc_gs_32.png"),
+	"64": data.url("images/logo_drtc_gs_64.png"),
 };
 
 // Toolbar button for page action
