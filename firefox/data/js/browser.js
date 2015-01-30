@@ -1,42 +1,19 @@
 Browser = {};
 
-// Temporary data
-var data = {
-		profiles: [
-			{
-				"domain": "youtube.com", 
-				"mode": "all", 
-				"section_selector": "#watch-discussion", 
-				"comment_selector": ".ve.oba.HPa, .Ik.Wv", 
-				"template": ""
-			}
-			],
-		templates: [
-			{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"}
-		],
-		comment_threshold: 0,
-		custom_words: [],
-		word_lists_enabled: {
-			"profanity": true,
-			"obscenity": true,
-			"bigotry": true
-		},
-	};
-
-Browser.getFromStorage = function(fields, func) {
-	// chrome.storage.sync.get(fields, func);
-}
-
 Browser.getContentScriptData = function(func) {
-	// Browser.getFromStorage(["profiles", "templates", "comment_threshold",
-	// 	"custom_words", "word_lists_enabled"], func);
-	func(data);
+	self.port.on("contentScriptDataResponse", function(pageActionData) {
+		func(pageActionData);
+	})
+
+	self.port.emit("contentScriptDataRequest");
 }
 
 Browser.getOptionsPageData = function(func) {
-	// Browser.getFromStorage(["profiles", "templates", "comment_threshold", 
-	// 	"custom_words", "word_lists_enabled"], func);
-	func(data);
+	self.port.on("optionsPageDataResponse", function(pageActionData) {
+		func(pageActionData);
+	})
+
+	self.port.emit("optionsPageDataRequest");
 }
 
 Browser.getPageActionData = function(func) {
@@ -47,25 +24,13 @@ Browser.getPageActionData = function(func) {
 	self.port.emit("pageActionDataRequest");
 }
 
-Browser.getBackgroundPageData = function(func) {
-	// Browser.getFromStorage(["profiles", "templates",
-	// 	"word_lists_enabled"], func);
-	func(data);
-}
-
 Browser.save = function(data, func) {
-	// chrome.storage.sync.set(data, func);
-	console.log("Saved data!");
-	func();
-}
+	self.port.on("saveDataResponse", function(pageActionData) {
+		console.log("Saved data!");
+		func(pageActionData);
+	})
 
-Browser.sendMessage = function(message, func) {
-	// chrome.runtime.sendMessage(chrome.runtime.id, message, func);
-	self.port.emit("myContentScriptMessage", myContentScriptMessagePayload);
-}
-
-Browser.addListener = function(func) {
-	// chrome.runtime.onMessage.addListener(func);
+	self.port.emit("saveDataRequest");
 }
 
 Browser.reload = function() {

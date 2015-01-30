@@ -24,6 +24,18 @@ DataStore.getBackgroundPageData = function() {
 	return retData;
 }
 
+DataStore.getOptionsPageData = function() {
+	var retData = {};
+
+	retData.profiles = storage.profiles;
+	retData.templates = storage.templates;
+	retData.comment_threshold = storage.comment_threshold;
+	retData.custom_words = storage.custom_words;
+	retData.word_lists_enabled = storage.word_lists_enabled;
+
+	return retData;
+}
+
 DataStore.save = function(data) {
 	for (var field of fields) {
 		if (typeof data[field] !== 'undefined') {
