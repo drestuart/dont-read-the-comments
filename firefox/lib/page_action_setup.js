@@ -4,6 +4,7 @@ var data = require("sdk/self").data;
 var panel = require("sdk/panel");
 
 var DataStore = require("data").DataStore;
+var OptionsPage = require("options_setup").OptionsPage;
 
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
@@ -25,6 +26,11 @@ PageAction.page_action.port.on("pageActionDataRequest", function() {
 	// Get the data for the page action
 	var pageActionData = DataStore.getPageActionData();
 	PageAction.page_action.port.emit("pageActionDataResponse", pageActionData);
+});
+
+PageAction.page_action.port.on("openOptionsPageRequest", function() {
+	OptionsPage.open();
+	PageAction.page_action.hide();
 });
 
 PageAction.ShowHidePageAction = function(state) {

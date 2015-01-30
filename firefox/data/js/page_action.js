@@ -84,6 +84,11 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
+	// Options page link
+	$("#options").on('click', function() {
+		self.port.emit("openOptionsPageRequest");
+	});
+
 	Browser.tabsQuery({currentWindow: true, active: true},
 		function (domain) {
 			// Trim off the www from the front
