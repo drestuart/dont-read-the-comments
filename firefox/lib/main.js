@@ -4,9 +4,10 @@ var tabs = require("sdk/tabs");
 var self = require("sdk/self");
 var pageMod = require("sdk/page-mod");
 var data = require("sdk/self").data;
+var storage = require("sdk/simple-storage").storage;
 
 // Local libs
-var Install = require("install");
+var Install = require("install").Install;
 var Messages = require("messages").Messages;
 var PageAction = require("page_action_setup").PageAction;
 
@@ -16,6 +17,11 @@ require("sdk/preferences/service").set("javascript.options.strict", false);
 // Reason the addon was loaded
 // https://developer.mozilla.org/en-US/Add-ons/SDK/High-Level_APIs/self
 console.log("loadReason: " + self.loadReason);
+
+// Load starting data on install
+if (self.loadReason === 'install') {
+	Install.loadStartingData();
+}
 
 // Start listening for messages
 Messages.listen();

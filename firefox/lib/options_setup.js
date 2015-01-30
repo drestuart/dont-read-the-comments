@@ -6,8 +6,9 @@ var tabs = require("sdk/tabs");
 var pageMod = require("sdk/page-mod");
 
 var DataStore = require("data").DataStore;
+var Install = require("install").Install;
 
-pageMod.PageMod({
+OptionsPage.pagemod = pageMod.PageMod({
 	include: data.url("html/options.html"),
 	contentScriptFile: [
 		data.url("js/jquery-1.11.1.min.js"), 
@@ -25,7 +26,12 @@ pageMod.PageMod({
 	contentStyleFile: [
 		data.url("css/options.css"),
 		data.url("css/jquery-ui.css")
-	]
+	],
+	onAttach: function(worker) {
+		worker.port.on('importStartingDataRequest', function() {
+			Install.importStartingData();
+		});
+	}
 });
 
 OptionsPage.open = function() {

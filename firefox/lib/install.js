@@ -1,3 +1,5 @@
+var DataStore = require("data").DataStore;
+
 // Starting data
 var starting_profiles = [
 	{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve.oba.HPa, .Ik.Wv", "template": ""},
@@ -65,45 +67,38 @@ function loadStartingData() {
 	fresh_data.custom_words = starting_custom_words;
 	fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
-	Browser.save(fresh_data, 
-    	function() {
-            console.log("Installed fresh data");
-    	}
-    );
+	DataStore.save(fresh_data);
+    console.log("Installed fresh data");
 }
 
 function importStartingData() {
 	// Get current data
-	Browser.getBackgroundPageData(function(data) {
+	var data = DataStore.getBackgroundPageData();
 
-		var existing_profiles = data["profiles"];
-		var existing_templates = data["templates"];
-		var existing_word_lists_enabled = data["word_lists_enabled"];
-		console.log(existing_profiles.length);
+	var existing_profiles = data["profiles"];
+	var existing_templates = data["templates"];
+	var existing_word_lists_enabled = data["word_lists_enabled"];
+	console.log(existing_profiles.length);
 
-		// Merge in starting data
-		var save_data = {};
-		save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
-		save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
-		save_data.word_lists_enabled = {};
-		console.log(save_data.profiles.length);
+	// Merge in starting data
+	var save_data = {};
+	save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
+	save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
+	save_data.word_lists_enabled = {};
+	console.log(save_data.profiles.length);
 
-		for (var list in starting_word_lists_enabled) {
-			var existing_val = existing_word_lists_enabled[list];
-			if (typeof existing_val !== 'undefined') {
-				save_data.word_lists_enabled[list] = existing_val;
-			}
-			else {
-				save_data.word_lists_enabled = starting_word_lists_enabled[list];
-			}
+	for (var list in starting_word_lists_enabled) {
+		var existing_val = existing_word_lists_enabled[list];
+		if (typeof existing_val !== 'undefined') {
+			save_data.word_lists_enabled[list] = existing_val;
 		}
-		console.log("Done!");
-		// Save data
-		Browser.save(save_data, function() {
-			console.log("Import complete!");
-		});
-		location.reload();
-	});
+		else {
+			save_data.word_lists_enabled = starting_word_lists_enabled[list];
+		}
+	}
+	console.log("Done!");
+	// Save data
+	DataStore.save(save_data);
 }
 
 // Export for Firefox
