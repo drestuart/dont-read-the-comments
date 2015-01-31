@@ -90,12 +90,29 @@ $(document).ready(function() {
 	});
 });
 
-self.port.on("pageActionOpen", function(domain) {
+// Clear out any old listeners
+self.port.removeListener("pageActionOpen", setUpPageAction);
+
+self.port.on("pageActionOpen", setUpPageAction);
+
+function setUpPageAction(url) {
+	var domain = parseUri(url).authority;
 	// Trim off the www from the front
 	domain = domain.replace(/^www\./, "");
 
 	// Fill in domain field whether we load anything or not
 	$("#domain").val(domain);
+
+	// Set up the panel
+
+	// Empty the template menu
+	var template_menu = $('select#template');
+	template_menu.html("");
+	template_menu.append('<option value="">None</option>');
+
+	// Hide sections, will show later as needed
+	$("#profile_found").hide();
+	$("#profile_not_found").hide();
 
 	Browser.getPageActionData(function(data) {
 		profiles = data["profiles"];
@@ -125,7 +142,6 @@ self.port.on("pageActionOpen", function(domain) {
 		}
 
 		// Fill in template menu
-		var template_menu = $('select#template');
 		for (t of templates) {
 			var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
 			template_menu.append(optionHTML);
@@ -150,4 +166,4 @@ self.port.on("pageActionOpen", function(domain) {
 			$("#profile_not_found").show();
 		}
 	});
-});
+}
