@@ -2,6 +2,7 @@ var PageAction = {};
 var self = require("sdk/self");
 var data = require("sdk/self").data;
 var panel = require("sdk/panel");
+var tabs = require("sdk/tabs");
 
 var DataStore = require("data").DataStore;
 var OptionsPage = require("options_setup").OptionsPage;
@@ -33,7 +34,12 @@ PageAction.page_action.port.on("openOptionsPageRequest", function() {
 	PageAction.page_action.hide();
 });
 
+PageAction.page_action.port.on("getUrlRequest", function() {
+	PageAction.page_action.port.emit("getUrlResponse", tabs.activeTab.url);
+});
+
 PageAction.ShowHidePageAction = function(state) {
+	PageAction.page_action.port.emit("pageActionOpen", tabs.activeTab.url);
 	if (PageAction.page_action.isShowing) {
 		PageAction.page_action.hide();
 	}

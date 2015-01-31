@@ -39,11 +39,7 @@ DataStore.getOptionsPageData = function() {
 DataStore.save = function(data) {
 	for (var field of fields) {
 		if (typeof data[field] !== 'undefined') {
-			console.log("Saving " + field);
 			storage[field] = data[field];
-		}
-		else {
-			console.log("Not saving " + field);
 		}
 	}
 }

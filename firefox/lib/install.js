@@ -96,7 +96,7 @@ function importStartingData() {
 			save_data.word_lists_enabled = starting_word_lists_enabled[list];
 		}
 	}
-	console.log("Done!");
+	console.log("Imported starting data!");
 	// Save data
 	DataStore.save(save_data);
 }
