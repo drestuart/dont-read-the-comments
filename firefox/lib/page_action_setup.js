@@ -7,6 +7,20 @@ var tabs = require("sdk/tabs");
 var DataStore = require("data").DataStore;
 var OptionsPage = require("options_setup").OptionsPage;
 
+var buttons = require('sdk/ui/button/action');
+
+var activeIcons = {
+	"16": data.url("images/logo_drtc_16.png"),
+    "32": data.url("images/logo_drtc_32.png"),
+    "64": data.url("images/logo_drtc_64.png")
+};
+
+var inactiveIcons = {
+	"19": data.url("images/logo_drtc_gs_19.png"),
+	"32": data.url("images/logo_drtc_gs_32.png"),
+	"64": data.url("images/logo_drtc_gs_64.png"),
+};
+
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
 	width: 202,
@@ -40,7 +54,17 @@ PageAction.page_action.port.on("getUrlRequest", function() {
 
 PageAction.page_action.port.on("closePageActionRequest", function() {
 	PageAction.page_action.hide();
-})
+});
+
+PageAction.page_action.port.on("pageActionEnabledRequest", function() {
+	// ActionButton.DRTCActive();
+	PageAction.DRTCActive();
+});
+
+PageAction.page_action.port.on("pageActionDisabledRequest", function() {
+	// ActionButton.DRTCInactive();
+	PageAction.DRTCInactive();
+});
 
 PageAction.ShowHidePageAction = function(state) {
 	PageAction.page_action.port.emit("pageActionOpen", tabs.activeTab.url);
@@ -50,6 +74,26 @@ PageAction.ShowHidePageAction = function(state) {
 	else {
 		PageAction.page_action.show();
 	}
+}
+
+// Toolbar button for page action
+var button = buttons.ActionButton({
+	id: "drtc-page-action",
+	label: "DRTC!",
+	icon: activeIcons,
+	onClick: PageAction.ShowHidePageAction
+});
+
+PageAction.DRTCInactive = function() {
+	button.state("tab", {
+		icon: inactiveIcons
+	});
+}
+
+PageAction.DRTCActive = function() {
+	button.state("tab", {
+		icon: activeIcons
+	});
 }
 
 // Export for Firefox

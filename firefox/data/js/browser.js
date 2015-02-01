@@ -33,6 +33,10 @@ Browser.save = function(data, func) {
 	self.port.emit("saveDataRequest");
 }
 
+Browser.pageActionDisabled = function() {
+	self.port.emit("pageActionDisabledRequest");
+}
+
 Browser.reload = function() {
 	// chrome.tabs.reload();
 }

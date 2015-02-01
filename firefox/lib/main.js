@@ -1,14 +1,9 @@
 // SDK libs
-var buttons = require('sdk/ui/button/action');
-var tabs = require("sdk/tabs");
 var self = require("sdk/self");
-var pageMod = require("sdk/page-mod");
-var data = require("sdk/self").data;
-var storage = require("sdk/simple-storage").storage;
 
 // Local libs
 var Install = require("install").Install;
-var Messages = require("messages").Messages;
+// var ActionButton = require("button_setup").ActionButton;
 var PageAction = require("page_action_setup").PageAction;
 
 // Turn off warnings god damn your eyes
@@ -23,40 +18,7 @@ if (self.loadReason === 'install') {
 	Install.loadStartingData();
 }
 
-// Start listening for messages
-Messages.listen();
 
-var activeIcons = {
-	"16": data.url("images/logo_drtc_16.png"),
-    "32": data.url("images/logo_drtc_32.png"),
-    "64": data.url("images/logo_drtc_64.png")
-};
-
-var inactiveIcons = {
-	"19": data.url("images/logo_drtc_gs_19.png"),
-	"32": data.url("images/logo_drtc_gs_32.png"),
-	"64": data.url("images/logo_drtc_gs_64.png"),
-};
-
-// Toolbar button for page action
-var button = buttons.ActionButton({
-	id: "drtc-page-action",
-	label: "DRTC!",
-	icon: activeIcons,
-	onClick: PageAction.ShowHidePageAction
-});
-
-function DRTCInactive() {
-	button.state("tab", {
-		icon: inactiveIcons
-	});
-}
-
-function DRTCActive() {
-	button.state("tab", {
-		icon: activeIcons
-	});
-}
 
 // Inject DRTC script with pageMod
 // pageMod.PageMod({

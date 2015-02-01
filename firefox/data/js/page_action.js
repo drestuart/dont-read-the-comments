@@ -164,6 +164,9 @@ function setUpPageAction(url) {
 		}
 		else {
 			$("#profile_not_found").show();
+
+			// Send a message to the background script to show the disabled version of the button
+			Browser.pageActionDisabled();
 		}
 	});
 }
