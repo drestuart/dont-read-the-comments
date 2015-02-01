@@ -1,11 +1,7 @@
 <!doctype html>
 <html>
   <head>
-  	<link rel="stylesheet" type="text/css" href="css/options.css"/>
-  	<script language="javascript" type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-    <!-- jQuery UI stuff -->
-    <script src="js/jquery-ui.js"></script>
-    <link href="css/jquery-ui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/options.css"/>
   </head>
   <body>
     <div id="content">
@@ -18,7 +14,7 @@
         <h2>Website Profiles</h2>
         <p>DRTC! uses profiles to know which page elements to block on a website.</p>
         <p><a href="create.html" target="_blank">How to create your own profiles</a></p>
-        <img src="images/profiles_table.png">
+        <img src="../images/profiles_table.png">
         <h3>Domain</h3>
         <p>DRTC! determines which site your browser is on by using the domain part of the currently displayed page's URL. For example, if you're on <a href="http://www.bbc.com/news/">http://www.bbc.com/news</a>, the domain is <i>www.bbc.com</i>.</p>
         <p>Each DRTC! profile has a domain parameter which determines which pages it will be applied to. A profile with the domain <i>bbc.com</i>, for example, will apply to any page with a URL beginning with <i>bbc.com</i>, but not <i>bbc.co.uk</i>.</p>
@@ -41,7 +37,7 @@
 
       <div id="template_section" class="help_section">
         <h2>Comment System Templates</h2>
-        <img src="images/templates_table.png">
+        <img src="../images/templates_table.png">
         <p>Comment system templates are similar to profiles, in that they define a pair of section and comment selectors. When applied to a website profile, a template sets the profiles selectors to match its own.  A template's selectors, as well as its name, can be edited just like a profile.</p>
       </div>
 
@@ -49,17 +45,17 @@
         <h2>Page Action</h2>
         <p>A <i>page action</i> is an icon in Chrome's omnibar. DRTC!'s page action shows a yellow diamond icon when DRTC! is enabled on the current page, and a grayed-out version when it is not.</p>
         <figure>
-          <img src="images/page_action_icon_disabled.png">
+          <img src="../images/page_action_icon_disabled.png">
           <figcaption>Disabled</figcaption>
         </figure>
         <figure>
-          <img src="images/page_action_icon_enabled.png">
+          <img src="../images/page_action_icon_enabled.png">
           <figcaption>Enabled</figcaption>
         </figure>
         <p>Clicking DTRC!'s page action lets you see and configure the DRTC! profile for the current page.</p>
-        <img src="images/page_action_not_enabled.png">
+        <img src="../images/page_action_not_enabled.png">
         <p>When DRTC! does not have a website profile matching the current page, it will show this message. You can click on "Enable" to start creating a profile.</p>
-        <img src="images/page_action_new.png">
+        <img src="../images/page_action_new.png">
         <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) Clicking "Save" will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
       </div>
 
