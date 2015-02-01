@@ -38,6 +38,10 @@ PageAction.page_action.port.on("getUrlRequest", function() {
 	PageAction.page_action.port.emit("getUrlResponse", tabs.activeTab.url);
 });
 
+PageAction.page_action.port.on("closePageActionRequest", function() {
+	PageAction.page_action.hide();
+})
+
 PageAction.ShowHidePageAction = function(state) {
 	PageAction.page_action.port.emit("pageActionOpen", tabs.activeTab.url);
 	if (PageAction.page_action.isShowing) {

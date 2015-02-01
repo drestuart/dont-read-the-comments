@@ -84,9 +84,9 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
-	// Options page link
-	$("#options").on('click', function() {
-		self.port.emit("openOptionsPageRequest");
+	// Close page action on link click
+	$("a").on('click', function() {
+		self.port.emit("closePageActionRequest");
 	});
 });
 
