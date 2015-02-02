@@ -1,16 +1,16 @@
 Browser = {};
 
 Browser.getContentScriptData = function(func) {
-	self.port.once("contentScriptDataResponse", function(pageActionData) {
-		func(pageActionData);
+	self.port.once("contentScriptDataResponse", function(contentScriptData) {
+		func(contentScriptData);
 	})
 
 	self.port.emit("contentScriptDataRequest");
 }
 
 Browser.getOptionsPageData = function(func) {
-	self.port.once("optionsPageDataResponse", function(pageActionData) {
-		func(pageActionData);
+	self.port.once("optionsPageDataResponse", function(optionsPageData) {
+		func(optionsPageData);
 	})
 
 	self.port.emit("optionsPageDataRequest");
@@ -25,12 +25,12 @@ Browser.getPageActionData = function(func) {
 }
 
 Browser.save = function(data, func) {
-	self.port.once("saveDataResponse", function(pageActionData) {
+	self.port.once("saveDataResponse", function() {
 		console.log("Saved data!");
-		func(pageActionData);
+		func();
 	});
 
-	self.port.emit("saveDataRequest");
+	self.port.emit("saveDataRequest", data);
 }
 
 Browser.pageActionDisabled = function() {

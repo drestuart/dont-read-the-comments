@@ -41,6 +41,9 @@ DataStore.save = function(data) {
 		if (typeof data[field] !== 'undefined') {
 			storage[field] = data[field];
 		}
+		else {
+			console.log("Not saving " + field);
+		}
 	}
 }
 
