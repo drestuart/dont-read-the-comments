@@ -38,6 +38,6 @@ Browser.pageActionDisabled = function() {
 }
 
 Browser.reload = function() {
-	// chrome.tabs.reload();
+	self.port.emit("reloadActiveTabRequest");
 }
 

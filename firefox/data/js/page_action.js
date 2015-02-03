@@ -114,6 +114,10 @@ function setUpPageAction(url) {
 	$("#profile_found").hide();
 	$("#profile_not_found").hide();
 
+	// Empty the message and export box
+	$("#message").text("");
+	$("#export_text").val("").hide();
+
 	Browser.getPageActionData(function(data) {
 		profiles = data["profiles"];
 		templates = data["templates"];

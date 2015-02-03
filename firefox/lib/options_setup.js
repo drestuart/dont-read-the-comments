@@ -35,6 +35,7 @@ tabs.on("ready", function(tab) {
 
 		worker.port.on("saveDataRequest", function(saveData) {
 			DataStore.save(saveData);
+			worker.port.emit("saveDataResponse");
 		});
 	}
 });

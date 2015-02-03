@@ -57,13 +57,21 @@ PageAction.page_action.port.on("closePageActionRequest", function() {
 });
 
 PageAction.page_action.port.on("pageActionEnabledRequest", function() {
-	// ActionButton.DRTCActive();
 	PageAction.DRTCActive();
 });
 
 PageAction.page_action.port.on("pageActionDisabledRequest", function() {
-	// ActionButton.DRTCInactive();
 	PageAction.DRTCInactive();
+});
+
+PageAction.page_action.port.on("saveDataRequest", function(saveData) {
+	DataStore.save(saveData);
+	PageAction.page_action.port.emit("saveDataResponse");
+});
+
+PageAction.page_action.port.on("reloadActiveTabRequest", function() {
+	PageAction.page_action.hide();
+	tabs.activeTab.reload();
 });
 
 PageAction.ShowHidePageAction = function(state) {
