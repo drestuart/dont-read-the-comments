@@ -287,9 +287,34 @@ function importTemplates() {
 	});
 }
 
-function validateProfile(prof) {
+function validateProfile(obj) {
 	var fields = profileFields;
-	return validateImport(prof, fields);
+	
+	for (field in obj) {
+		if (fields.indexOf(field) === -1) {
+			var msg = "Bad field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	for (field of fields) {
+		if (typeof obj[field] === 'undefined') {
+			// These fields can be missing if we have a template defined
+			if ((field === 'section_selector' || field === 'comment_selector') &&
+				(typeof obj["template"] !== 'undefined' && obj["template"] !== "")) {
+				continue;
+			}
+
+			var msg = "Missing field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function validateTemplate(temp) {
