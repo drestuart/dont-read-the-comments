@@ -450,8 +450,8 @@ $(document).ready(function() {
 
 		Browser.save(data, function() {
 			console.log("Saved!");
+			location.reload();
 		});
-		location.reload();
 	});
 
 	// Reset options
