@@ -17,6 +17,9 @@ console.log("loadReason: " + self.loadReason);
 if (self.loadReason === 'install') {
 	Install.loadStartingData();
 }
+else if (self.loadReason === 'upgrade' || self.loadReason === 'downgrade') {
+	Install.importStartingData();
+}
 
 
 

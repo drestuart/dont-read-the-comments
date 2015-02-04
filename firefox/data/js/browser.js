@@ -24,6 +24,34 @@ Browser.getPageActionData = function(func) {
 	self.port.emit("pageActionDataRequest");
 }
 
+Browser.importStartingData = function(func) {
+	self.port.once("importDataResponse", function() {
+		func();
+	});
+
+	self.port.emit("importDataRequest");
+}
+
+Browser.importProfiles = function(profiles, imp_profiles, func) {
+	self.port.once("importProfileResponse", function() {
+		console.log("Imported profiles!");
+		func();
+	});
+
+	var data = {existing: profiles, importing: imp_profiles};
+	self.port.emit("importProfileRequest", data);
+}
+
+Browser.importTemplates = function(temps, imp_templates, func) {
+	self.port.once("importTemplateResponse", function() {
+		console.log("Imported templates!");
+		func();
+	});
+
+	var data = {existing: templates, importing: imp_templates};
+	self.port.emit("importTemplateRequest", data);
+}
+
 Browser.save = function(data, func) {
 	self.port.once("saveDataResponse", function() {
 		console.log("Saved data!");

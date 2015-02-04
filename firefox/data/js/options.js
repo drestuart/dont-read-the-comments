@@ -235,11 +235,7 @@ function importProfiles() {
 	// Import
 	var profiles = getProfileData();
 
-	profiles = Tools.mergeProfiles(profiles, imp_profiles);
-
-	// Save and reload
-	var data = {profiles : profiles};
-	Browser.save(data, function() {
+	profiles = Browser.importProfiles(profiles, imp_profiles, function() {
 		console.log("Saved!");
 		location.reload();
 	});
@@ -272,34 +268,18 @@ function importTemplates() {
 	}
 
 	// Import
-	console.log("Importing templates: ");
-	console.log(imp_templates);
-
 	var temps = getTemplateData();
 
-	temps = Tools.mergeTemplates(temps, imp_templates);
-
-	// Save and reload
-	var data = {templates : temps};
-	Browser.save(data, function() {
+	temps = Browser.importTemplates(temps, imp_templates, function() {
 		console.log("Saved!");
 		location.reload();
 	});
 }
 
-function validateProfile(prof) {
+function validateProfile(obj) {
 	var fields = profileFields;
-	return validateImport(prof, fields);
-}
 
-function validateTemplate(temp) {
-	var fields = templateFields;
-	return validateImport(temp, fields);
-}
-
-function validateImport(obj, fields) {
 	for (field in obj) {
-		console.log(field);
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
 			console.log(msg);
@@ -309,7 +289,39 @@ function validateImport(obj, fields) {
 	}
 
 	for (field of fields) {
-		console.log(field);
+		if (typeof obj[field] === 'undefined') {
+			// These fields can be missing if we have a template defined
+			if ((field === 'section_selector' || field === 'comment_selector') &&
+				(typeof obj["template"] !== 'undefined' && obj["template"] !== "")) {
+				continue;
+			}
+
+			var msg = "Missing field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function validateTemplate(temp) {
+	var fields = templateFields;
+	return validateImport(temp, fields);
+}
+
+function validateImport(obj, fields) {
+	for (field in obj) {
+		if (fields.indexOf(field) === -1) {
+			var msg = "Bad field: " + field;
+			console.log(msg);
+			alert("Import failed. " + msg);
+			return false;
+		}
+	}
+
+	for (field of fields) {
 		if (typeof obj[field] === 'undefined') {
 			var msg = "Missing field: " + field;
 			console.log(msg);
@@ -457,7 +469,10 @@ $(document).ready(function() {
 	// Reset options
 	$(".reset_button").on('click', function() {
 		if (confirm("This will re-import DRTC's starting settings. Are you sure?")) {
-			importStartingData();
+			Browser.importStartingData(function() {
+				console.log("Imported starting data!");
+				location.reload();
+			});
 		}
 	});
 });

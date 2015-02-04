@@ -25,12 +25,24 @@ tabs.on("ready", function(tab) {
 				data.url("bad_words/obscenity.js")
 			],
 		});
-		worker.port.on('importStartingDataRequest', function() {
-			Install.importStartingData();
-		});
 
 		worker.port.on("optionsPageDataRequest", function() {
 			worker.port.emit("optionsPageDataResponse", DataStore.getOptionsPageData());
+		});
+
+		worker.port.on("importDataRequest", function() {
+			Install.importStartingData();
+			worker.port.emit("importDataResponse");
+		});
+
+		worker.port.on("importProfileRequest", function(data) {
+			DataStore.importProfiles(data);
+			worker.port.emit("importProfileResponse");
+		});
+
+		worker.port.on("importTemplateRequest", function(data) {
+			DataStore.importTemplates(data);
+			worker.port.emit("importTemplateResponse");
 		});
 
 		worker.port.on("saveDataRequest", function(saveData) {

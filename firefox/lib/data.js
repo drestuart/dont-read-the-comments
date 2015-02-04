@@ -36,13 +36,76 @@ DataStore.getOptionsPageData = function() {
 	return retData;
 }
 
+DataStore.mergeProfiles = function(existing, new_profiles) {
+
+	for (newprof of new_profiles) {
+		var overwrote = false;
+		for (var i = 0; i < existing.length; i++) {
+			prof = existing[i];
+
+			// Overwrite matching domains with the imported data
+			if (prof["domain"] === newprof["domain"]) {
+				// Keep the existing 'mode' field
+				newprof['mode'] = prof['mode'];
+				existing[i] = newprof;
+				overwrote = true;
+				break;
+			}
+		}
+
+		if (!overwrote) {
+			existing.push(newprof);
+		}
+	}
+
+	return existing;
+}
+
+DataStore.mergeTemplates = function(existing, new_templates) {
+
+	for (newtemp of new_templates) {
+		var overwrote = false;
+		for (var i = 0; i < existing.length; i++) {
+			temp = existing[i];
+
+			// Overwrite matching domains with the imported data
+			if (temp["system"] === newtemp["system"]) {
+				overwrote = true;
+				existing[i] = newtemp;
+				break;
+			}
+		}
+
+		if (!overwrote) {
+			existing.push(newtemp);
+		}
+	}
+
+	return existing;
+}
+
+DataStore.importProfiles = function(profile_data) {
+	var existing = profile_data.existing;
+	var new_profiles = profile_data.importing;
+
+	var merged = DataStore.mergeProfiles(existing, new_profiles);
+
+	DataStore.save({profiles: merged});
+}
+
+DataStore.importTemplates = function(template_data) {
+	var existing = template_data.existing;
+	var new_templates = template_data.importing;
+
+	var merged = DataStore.mergeTemplates(existing, new_templates);
+
+	DataStore.save({templates: merged});
+}
+
 DataStore.save = function(data) {
 	for (var field of fields) {
 		if (typeof data[field] !== 'undefined') {
 			storage[field] = data[field];
-		}
-		else {
-			console.log("Not saving " + field);
 		}
 	}
 }

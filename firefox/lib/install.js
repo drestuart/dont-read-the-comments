@@ -78,14 +78,12 @@ function importStartingData() {
 	var existing_profiles = data["profiles"];
 	var existing_templates = data["templates"];
 	var existing_word_lists_enabled = data["word_lists_enabled"];
-	console.log(existing_profiles.length);
 
 	// Merge in starting data
 	var save_data = {};
-	save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
-	save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
+	save_data.profiles = DataStore.mergeProfiles(existing_profiles, starting_profiles);
+	save_data.templates = DataStore.mergeTemplates(existing_templates, starting_templates);
 	save_data.word_lists_enabled = {};
-	console.log(save_data.profiles.length);
 
 	for (var list in starting_word_lists_enabled) {
 		var existing_val = existing_word_lists_enabled[list];
