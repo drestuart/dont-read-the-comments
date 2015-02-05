@@ -38,7 +38,14 @@ var starting_profiles = [
 	{"domain": "talkingpointsmemo.com", "mode": "all", "section_selector": "#comments", "comment_selector": "#comments div.clearfix", "template": ""},
 	{"domain": "mediamatters.org", "mode": "all", "template": "Disqus"},
 	{"domain": "bloombergview.com", "mode": "all", "template": "Disqus"},
-	{"domain": "economist.com", "mode": "all", "section_selector": "#comments-area", "comment_selector": ".single-comment", "template": ""}
+	{"domain": "economist.com", "mode": "all", "section_selector": "#comments-area", "comment_selector": ".single-comment", "template": ""},
+	{"domain": "washingtonpost.com", "mode": "all", "section_selector": "div.echo-streamserver-controls-stream", "comment_selector": "div.echo-streamserver-controls-stream-item-container", "template": ""},
+	{"domain": "escapistmagazine.com", "mode": "all", "template": "Facebook"},
+	{"domain": "collegehumor.com", "mode": "all", "template": "Facebook"},
+	{"domain": "mashable.com", "mode": "all", "template": "Livefyre"},
+	{"domain": "*.wikia.com", "mode": "all", "section_selector": "#article-comments", "comment_selector": "li.comment", "template": ""},
+	{"domain": "diply.com", "mode": "all", "template": "Facebook"},
+	{"domain": "instructables.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment-entry", "template": ""}
 ];
 
 var starting_templates = [
