@@ -126,9 +126,10 @@ function setUpPageAction(url) {
 			// Check if the profile's domain has a glob in it
 			if (p["domain"].indexOf('*') !== -1) {
 				// Build it into a regex
-				p["domain"] = p["domain"].replace(/\*/g, '[\\w\.-]*')  + '$';
+				var checkDomain = p["domain"];
+				checkDomain = checkDomain.replace(/\*/g, '[\\w\.-]*')  + '$';
 
-				if (domain.match(p["domain"])) {
+				if (domain.match(checkDomain)) {
 					siteProfile = p;
 					siteIndex = i;
 					break;
