@@ -353,13 +353,7 @@ $(document).ready(function() {
 
 		Browser.sendMessage("getTabUrl", function(response) {
 			var uri = parseUri(response);
-			var protocol = uri.protocol;
 			var domain = uri.authority;
-
-			// Run on http(s) pages only
-			if (!protocol.startsWith("http")) {
-				return;
-			}
 
 			for (p of profiles) {
 				// Check if the profile's domain has a glob in it

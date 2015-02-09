@@ -48,9 +48,10 @@ PageAction.page_action.port.on("openOptionsPageRequest", function() {
 	PageAction.page_action.hide();
 });
 
-PageAction.page_action.port.on("getUrlRequest", function() {
-	PageAction.page_action.port.emit("getUrlResponse", tabs.activeTab.url);
-});
+// Not needed?
+// PageAction.page_action.port.on("getUrlRequest", function() {
+// 	PageAction.page_action.port.emit("getUrlResponse", tabs.activeTab.url);
+// });
 
 PageAction.page_action.port.on("closePageActionRequest", function() {
 	PageAction.page_action.hide();

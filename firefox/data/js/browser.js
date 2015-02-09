@@ -3,7 +3,7 @@ Browser = {};
 Browser.getContentScriptData = function(func) {
 	self.port.once("contentScriptDataResponse", function(contentScriptData) {
 		func(contentScriptData);
-	})
+	});
 
 	self.port.emit("contentScriptDataRequest");
 }
@@ -11,7 +11,7 @@ Browser.getContentScriptData = function(func) {
 Browser.getOptionsPageData = function(func) {
 	self.port.once("optionsPageDataResponse", function(optionsPageData) {
 		func(optionsPageData);
-	})
+	});
 
 	self.port.emit("optionsPageDataRequest");
 }
@@ -52,6 +52,14 @@ Browser.importTemplates = function(temps, imp_templates, func) {
 	self.port.emit("importTemplateRequest", data);
 }
 
+Browser.getTabUrl = function(func) {
+	self.port.once("getUrlResponse", function(response) {
+		func(response);
+	});
+
+	self.port.emit("getUrlRequest");
+}
+
 Browser.save = function(data, func) {
 	self.port.once("saveDataResponse", function() {
 		console.log("Saved data!");
@@ -59,6 +67,10 @@ Browser.save = function(data, func) {
 	});
 
 	self.port.emit("saveDataRequest", data);
+}
+
+Browser.pageActionEnabled = function() {
+	self.port.emit("pageActionEnabledRequest");
 }
 
 Browser.pageActionDisabled = function() {
