@@ -34,6 +34,36 @@ coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
 id = 0;
 showEltId = [];
 
+function getZIndex(elt) {
+	var z = 0;
+
+	if (typeof elt.attr("__drtc_z_index") !== 'undefined') {
+		z = elt.attr("__drtc_z_index");
+	}
+	else {
+		// Search parents
+		$(elt).parents().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
+
+		// Search children
+		$(elt).find().each(function(index, e) {
+			var zind = $(e).zIndex();
+			if (zind > z) {
+				z = zind;
+			}
+		});
+
+		// Store z-index on the element so we don't have to calculate it again
+		elt.attr("__drtc_z_index", z);
+	}
+
+	return z + 1;
+}
+
 function hideComments(comment_selector) {
 	var comments = $(comment_selector + ":visible");
 
@@ -76,36 +106,6 @@ function hideCommentSection(section_selector) {
 
 	hideElement(section);
 	return true;
-}
-
-function getZIndex(elt) {
-	var z = 0;
-
-	if (typeof elt.attr("__drtc_z_index") !== 'undefined') {
-		z = elt.attr("__drtc_z_index");
-	}
-	else {
-		// Search parents
-		$(elt).parents().each(function(index, e) {
-			var zind = $(e).zIndex();
-			if (zind > z) {
-				z = zind;
-			}
-		});
-
-		// Search children
-		$(elt).find().each(function(index, e) {
-			var zind = $(e).zIndex();
-			if (zind > z) {
-				z = zind;
-			}
-		});
-
-		// Store z-index on the element so we don't have to calculate it again
-		elt.attr("__drtc_z_index", z);
-	}
-
-	return z + 1;
 }
 
 function hideElement(elt, ct) {
@@ -174,19 +174,17 @@ function hideElement(elt, ct) {
 	// doesn't have a style explicitly set
 	var bgc = elt.css("background-color");
 
-	if (bgc === "rgba(0, 0, 0, 0)" || bgc === "hsla(0, 0, 0, 0)") {
+	if (bgc === "rgba(0, 0, 0, 0)" || bgc === "hsla(0, 0, 0, 0)" || bgc === "transparent") {
 		// Default if we don't find a background to use
 		bgc = "#fff";
-		cover.css("background-color", bgc);
 
 		var parents = elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
 			elt = $(parents[i]);
 
 			bgci = elt.css("background-color");
-			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)") {
+			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)" && bgci !== "transparent") {
 				bgc = bgci;
-				cover.css("background-color", bgc);
 				break;
 			}
 		}
@@ -196,8 +194,10 @@ function hideElement(elt, ct) {
 	// set it to 1.0 (fully opaque)
 	if (bgc.startsWith("rgba") || bgc.startsWith("hsla")) {
 		bgc = bgc.replace(/\d\.\d+\)$/, "1.0)");
-		cover.css("background-color", bgc);
 	}
+
+	// Finally, set the cover background
+	cover.css("background-color", bgc);
 
 	// Style the show/hide control
 	styleShowHide(elt, showHide, element_id, ct);
@@ -348,7 +348,6 @@ function detectLocationChange() {
 
 $(document).ready(function() {
 	// Load profile and template data
-	console.log("Getting content script data");
 	Browser.getContentScriptData(function(data) {
 		var profiles = data["profiles"];
 		var templates = data["templates"];
@@ -356,12 +355,9 @@ $(document).ready(function() {
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
-		console.log("Getting URL");
 		Browser.getTabUrl(function(response) {
 			var uri = parseUri(response);
 			var domain = uri.authority;
-
-			console.log("Looking for profile");
 
 			for (p of profiles) {
 				// Check if the profile's domain has a glob in it
@@ -394,7 +390,6 @@ $(document).ready(function() {
 			}
 
 			if (shouldRun()) {
-				console.log("Found profile");
 				// Build bad word list
 				bad_words = custom_words;
 
@@ -418,7 +413,6 @@ $(document).ready(function() {
 				drtcRun();
 			}
 			else {
-				console.log("No profile");
 				Browser.pageActionDisabled();
 			}
 		});
