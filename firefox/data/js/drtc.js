@@ -409,7 +409,7 @@ $(document).ready(function() {
 				}
 
 				// Message the background page to show the page action
-				Browser.pageActionEnabled());
+				Browser.pageActionEnabled();
 
 				// Location change handler
 				setInterval(detectLocationChange, 100);
