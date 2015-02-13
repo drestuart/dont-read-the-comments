@@ -11,7 +11,6 @@ var Install = require("install").Install;
 
 tabs.on("ready", function(tab) {
 	if (tab.url === data.url("html/options.html")) {
-		console.log("Attaching to options page!");
 		worker = tab.attach({
 			contentScriptFile: [
 				data.url("js/jquery-1.11.1.min.js"),
