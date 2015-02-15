@@ -58,11 +58,9 @@ $(document).ready(function() {
 		
 		Browser.save({"profiles" : profiles}, function() {
 			console.log("Saved!");
+			$("#message").text("Saved");
+			Browser.reload();
 		});
-
-		$("#message").text("Saved");
-
-		Browser.reload();
 	});
 
 	$("#export").on('click', function() {
