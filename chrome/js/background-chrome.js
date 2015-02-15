@@ -38,8 +38,7 @@ chrome.runtime.onMessage.addListener(
             chrome.pageAction.show(sender.tab.id);
         }
         else if (request === "getTabUrl") {
-            var thisTab = sender.tab;
-            sendResponse(thisTab.url);
+            sendResponse(sender.tab.url);
         }
     }
 );

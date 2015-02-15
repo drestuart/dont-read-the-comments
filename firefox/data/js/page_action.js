@@ -82,6 +82,11 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
+	$("#showme").on("click", function() {
+		$("#mode").val("disabled");
+		$("#save").trigger("click");
+	});
+
 	// Close page action on link click
 	$("a").on('click', function() {
 		self.port.emit("closePageActionRequest");

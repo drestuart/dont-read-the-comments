@@ -82,8 +82,12 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
-	Browser.getTabUrl(function(response) {
+	$("#showme").on("click", function() {
+		$("#mode").val("disabled");
+		$("#save").trigger("click");
+	});
 
+	Browser.tabsQuery(function(response) {
 		var uri = parseUri(response);
 		var domain = uri.authority;
 		// Trim off the www from the front

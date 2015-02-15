@@ -53,4 +53,13 @@ Browser.getTabUrl = function(func) {
 	});
 }
 
+Browser.tabsQuery = function(func) {
+	chrome.tabs.query({active: true}, function(tabs) {
+        console.log("tabs.query");
+        tab = tabs[0];
+        url = tab.url;
+        func(url);
+    });
+}
+
 
