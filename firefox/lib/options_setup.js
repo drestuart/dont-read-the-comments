@@ -1,6 +1,6 @@
 var OptionsPage = {};
 var self = require("sdk/self");
-var data = require("sdk/self").data;
+var data = self.data;
 var panel = require("sdk/panel");
 var tabs = require("sdk/tabs");
 var pageMod = require("sdk/page-mod");

@@ -4,12 +4,20 @@ chrome.runtime.onInstalled.addListener(function(details){
         console.log("First install!");
 
         loadStartingData();
+
+        // Open help page
+        chrome.tabs.create({url: "help.html", active: true});
     }
     else if(details.reason == "update") {
         var thisVersion = chrome.runtime.getManifest().version;
         console.log("Updated from " + details.previousVersion + " to " + thisVersion);
 
         importStartingData();
+
+        // Open help page
+        if (thisVersion === '0.4') {
+            chrome.tabs.create({url: "help.html", active: true});
+        }
     }
 });
 
