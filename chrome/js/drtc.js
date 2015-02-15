@@ -348,7 +348,6 @@ function detectLocationChange() {
 
 $(document).ready(function() {
 	// Load profile and template data
-
 	Browser.getContentScriptData(function(data) {
 		var profiles = data["profiles"];
 		var templates = data["templates"];
@@ -356,7 +355,7 @@ $(document).ready(function() {
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
-		Browser.sendMessage("getTabUrl", function(response) {
+		Browser.getTabUrl(function(response) {
 			var uri = parseUri(response);
 			var domain = uri.authority;
 
@@ -390,17 +389,6 @@ $(document).ready(function() {
 				}
 			}
 
-			// Add a listener for the page action
-			Browser.addListener(
-				function(request, sender, sendResponse) {
-					console.log(request);
-					if (request === "getSiteProfile") {
-						console.log("Returning site profile")
-						sendResponse(siteProfile);
-					}
-				}
-			);
-
 			if (shouldRun()) {
 				// Build bad word list
 				bad_words = custom_words;
@@ -416,7 +404,7 @@ $(document).ready(function() {
 				}
 
 				// Message the background page to show the page action
-				Browser.sendMessage("pageActionEnabled", null);
+				Browser.pageActionEnabled();
 
 				// Location change handler
 				setInterval(detectLocationChange, 100);
@@ -425,7 +413,7 @@ $(document).ready(function() {
 				drtcRun();
 			}
 			else {
-				Browser.sendMessage("pageActionDisabled", null);
+				Browser.pageActionDisabled();
 			}
 		});
 	});

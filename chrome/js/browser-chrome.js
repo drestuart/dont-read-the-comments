@@ -31,6 +31,14 @@ Browser.sendMessage = function(message, func) {
 	chrome.runtime.sendMessage(chrome.runtime.id, message, func);
 }
 
+Browser.pageActionEnabled = function() {
+	Browser.sendMessage("pageActionEnabled", null);
+}
+
+Browser.pageActionDisabled = function() {
+	Browser.sendMessage("pageActionDisabled", null);
+}
+
 Browser.addListener = function(func) {
 	chrome.runtime.onMessage.addListener(func);
 }
@@ -39,11 +47,10 @@ Browser.reload = function() {
 	chrome.tabs.reload();
 }
 
-Browser.tabsQuery = function(data, func) {
-	chrome.tabs.query(data, function(tabs) {
-		currentTab = tabs[0];
-		var domain = parseUri(currentTab.url).authority;
-
-		func(domain);
+Browser.getTabUrl = function(func) {
+	Browser.sendMessage("getTabUrl", function(response) {
+		func(response);
 	});
 }
+
+

@@ -84,68 +84,69 @@ $(document).ready(function() {
 		$("#profile_found").show();
 	});
 
-	Browser.tabsQuery({currentWindow: true, active: true},
-		function (domain) {
-			// Trim off the www from the front
-			domain = domain.replace(/^www\./, "");
+	Browser.getTabUrl(function(response) {
 
-			// Fill in domain field whether we load anything or not
-			$("#domain").val(domain);
+		var uri = parseUri(response);
+		var domain = uri.authority;
+		// Trim off the www from the front
+		domain = domain.replace(/^www\./, "");
 
-			Browser.getPageActionData(function(data) {
-				profiles = data["profiles"];
-				templates = data["templates"];
-				
-				// Retrieve the profile matching this site
-				for (i = 0 ; i < profiles.length ; i++) {
-					p = profiles[i];
-					// Check if the profile's domain has a glob in it
-					if (p["domain"].indexOf('*') !== -1) {
-						// Build it into a regex
-						var checkDomain = p["domain"];
-						checkDomain = checkDomain.replace(/\*/g, '[\\w\.-]*')  + '$';
+		// Fill in domain field whether we load anything or not
+		$("#domain").val(domain);
 
-						if (domain.match(checkDomain)) {
-							siteProfile = p;
-							siteIndex = i;
-							break;
-						}
-					}
-					else {
-						if (domain.endsWith(p["domain"])) {
-							siteProfile = p;
-							siteIndex = i;
-							break;
-						}
-					}
-				}
+		Browser.getPageActionData(function(data) {
+			profiles = data["profiles"];
+			templates = data["templates"];
+			
+			// Retrieve the profile matching this site
+			for (i = 0 ; i < profiles.length ; i++) {
+				p = profiles[i];
+				// Check if the profile's domain has a glob in it
+				if (p["domain"].indexOf('*') !== -1) {
+					// Build it into a regex
+					var checkDomain = p["domain"];
+					checkDomain = checkDomain.replace(/\*/g, '[\\w\.-]*')  + '$';
 
-				// Fill in template menu
-				var template_menu = $('select#template');
-				for (t of templates) {
-					var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
-					template_menu.append(optionHTML);
-				}
-
-				// Fill in form fields
-				if (siteProfile !== null) {
-					$("#profile_found").show();
-					var fields = ["domain", "mode", "section_selector", "comment_selector"];
-
-					if (siteProfile['template'] !== '') {
-						fields = ["domain", "mode"];
-						template_menu.val(siteProfile['template']);
-						fillInTemplateValues(template_menu);
-					}
-
-					for (f of fields) {
-						$("#" + f).val(siteProfile[f]);
+					if (domain.match(checkDomain)) {
+						siteProfile = p;
+						siteIndex = i;
+						break;
 					}
 				}
 				else {
-					$("#profile_not_found").show();
+					if (domain.endsWith(p["domain"])) {
+						siteProfile = p;
+						siteIndex = i;
+						break;
+					}
 				}
-			});
-		}
-	);
+			}
+
+			// Fill in template menu
+			var template_menu = $('select#template');
+			for (t of templates) {
+				var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+				template_menu.append(optionHTML);
+			}
+
+			// Fill in form fields
+			if (siteProfile !== null) {
+				$("#profile_found").show();
+				var fields = ["domain", "mode", "section_selector", "comment_selector"];
+
+				if (siteProfile['template'] !== '') {
+					fields = ["domain", "mode"];
+					template_menu.val(siteProfile['template']);
+					fillInTemplateValues(template_menu);
+				}
+
+				for (f of fields) {
+					$("#" + f).val(siteProfile[f]);
+				}
+			}
+			else {
+				$("#profile_not_found").show();
+			}
+		});
+	});
 });
