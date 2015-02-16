@@ -192,7 +192,7 @@ function hideElement(elt, ct) {
 
 	// If the background has an alpha value specified, 
 	// set it to 1.0 (fully opaque)
-	if (bgc.startsWith("rgba") || bgc.startsWith("hsla")) {
+	if (startsWith(bgc, "rgba") || startsWith(bgc, "hsla")) {
 		bgc = bgc.replace(/\d\.\d+\)$/, "1.0)");
 	}
 
@@ -372,7 +372,7 @@ $(document).ready(function() {
 					}
 				}
 				else {
-					if (domain.endsWith(p["domain"])) {
+					if (endsWith(domain,p["domain"])) {
 						siteProfile = p;
 						break;
 					}

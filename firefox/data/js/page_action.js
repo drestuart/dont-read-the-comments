@@ -1,6 +1,6 @@
-String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
+function endsWith(str, suffix) {
+	return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
 
 var profiles = [];
 var templates = [];
@@ -141,7 +141,7 @@ function setUpPageAction(url) {
 				}
 			}
 			else {
-				if (domain.endsWith(p["domain"])) {
+				if (endsWith(domain, p["domain"])) {
 					siteProfile = p;
 					siteIndex = i;
 					break;

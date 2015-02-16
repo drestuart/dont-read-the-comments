@@ -26,13 +26,13 @@ Tools.exportProfiles = function(profiles) {
 		.replace(/,/g, ", ");
 }
 
-String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
+function endsWith(str, suffix) {
+	return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
 
-String.prototype.startsWith = function(prefix) {
-    return this.indexOf(prefix) === 0;
-};
+function startsWith(str, prefix) {
+	return str.indexOf(prefix) === 0;
+}
 
 function getElementHeight(elt, margin) {
 	if (typeof margin === 'undefined') {
