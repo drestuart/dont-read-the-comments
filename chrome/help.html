@@ -10,8 +10,37 @@
   <body>
     <div id="content">
       <h1>Don't Read the Comments! Help</h1>
-      <div id="_section" class="help_section">
-        <p>What DRTC! actually does and stuff here.</p>
+      <div id="summary_section" class="help_section">
+        <p>Thank you for installing Don't Read The Comments!.</p>
+        <p>Don't Read The Comments! is a browser extension which hides comment sections.  It's configurable to work with any site and comes with settings for many sites built-in.</p>
+        <p>This page will tell you more about DRTC!'s features and capabilities, but you don't need to read it to get started. In fact, it's already running now!</p>
+      </div>
+
+      <div id="cover_section" class="help_section">
+        <h2>DRTC! In Action</h2>
+        <img src="images/section hidden.png">
+        <p>DRTC! works by simply placing an opaque cover over the comments section of the page you're viewing. The comments are still there; if you want to see them you can click the <strong>Show</strong> control in the top right.</p>
+        <img src="images/all comments covered.png">
+        <p>DRTC! can also be set to hide individual comments, and optionally show the less profane or abusive ones.</p>
+      </div>
+
+      <div id="page_action_section" class="help_section">
+        <h2>Page Action</h2>
+        <p>A <i>page action</i> is an icon in Chrome's omnibar. DRTC!'s page action shows a yellow diamond icon when DRTC! is enabled on the current page, and a grayed-out version when it is not.</p>
+        <figure>
+          <img src="images/page_action_icon_disabled.png">
+          <figcaption>Disabled</figcaption>
+        </figure>
+        <figure>
+          <img src="images/page_action_icon_enabled.png">
+          <figcaption>Enabled</figcaption>
+        </figure>
+        <p>Clicking DTRC!'s page action lets you see and configure the DRTC! profile for the current page.</p>
+        <img src="images/page_action_not_enabled.png">
+        <p>When DRTC! does not have a website profile matching the current page, it will show this message. You can click on "Enable" to start creating a profile.</p>
+        <img src="images/page_action_new.png">
+        <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) Clicking <strong>Save</strong> will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
+        <p>You can also use <strong>Show Me The Comments!</strong> to immediately disable DRTC! on the current site.</p>
       </div>
 
       <div id="profile_section" class="help_section">
@@ -43,25 +72,6 @@
         <h2>Comment System Templates</h2>
         <img src="images/templates_table.png">
         <p>Comment system templates are similar to profiles, in that they define a pair of section and comment selectors. When applied to a website profile, a template sets the profiles selectors to match its own.  A template's selectors, as well as its name, can be edited just like a profile.</p>
-      </div>
-
-      <div id="page_action_section" class="help_section">
-        <h2>Page Action</h2>
-        <p>A <i>page action</i> is an icon in Chrome's omnibar. DRTC!'s page action shows a yellow diamond icon when DRTC! is enabled on the current page, and a grayed-out version when it is not.</p>
-        <figure>
-          <img src="images/page_action_icon_disabled.png">
-          <figcaption>Disabled</figcaption>
-        </figure>
-        <figure>
-          <img src="images/page_action_icon_enabled.png">
-          <figcaption>Enabled</figcaption>
-        </figure>
-        <p>Clicking DTRC!'s page action lets you see and configure the DRTC! profile for the current page.</p>
-        <img src="images/page_action_not_enabled.png">
-        <p>When DRTC! does not have a website profile matching the current page, it will show this message. You can click on "Enable" to start creating a profile.</p>
-        <img src="images/page_action_new.png">
-        <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) Clicking <strong>Save</strong> will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
-        <p>You can also use <strong>Show Me The Comments!</strong> to immediately disable DRTC! on the current site.</p>
       </div>
 
       <div id="options_section" class="help_section">
