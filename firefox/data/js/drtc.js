@@ -355,6 +355,10 @@ $(document).ready(function() {
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
+		var profanity_words = data["profanity"];
+		var obscenity_words = data["obscenity"];
+		var bigotry_words = data["bigotry"];
+
 		Browser.getTabUrl(function(response) {
 			var uri = parseUri(response);
 			var domain = uri.authority;

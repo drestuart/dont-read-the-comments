@@ -1,5 +1,6 @@
 var DataStore = {};
 var self = require("sdk/self");
+var data = self.data;
 var storage = require("sdk/simple-storage").storage;
 
 var fields = ["profiles", "templates", "word_lists_enabled",
@@ -33,6 +34,10 @@ DataStore.getOptionsPageData = function() {
 	retData.custom_words = storage.custom_words;
 	retData.word_lists_enabled = storage.word_lists_enabled;
 
+	retData.profanity = JSON.parse(data.load('bad_words/profanity.json'));
+	retData.obscenity = JSON.parse(data.load('bad_words/obscenity.json'));
+	retData.bigotry = JSON.parse(data.load('bad_words/bigotry.json'));
+
 	return retData;
 }
 
@@ -44,6 +49,10 @@ DataStore.getContentScriptData = function() {
 	retData.comment_threshold = storage.comment_threshold;
 	retData.custom_words = storage.custom_words;
 	retData.word_lists_enabled = storage.word_lists_enabled;
+
+	retData.profanity = JSON.parse(data.load('bad_words/profanity.json'));
+	retData.obscenity = JSON.parse(data.load('bad_words/obscenity.json'));
+	retData.bigotry = JSON.parse(data.load('bad_words/bigotry.json'));
 
 	return retData;
 }

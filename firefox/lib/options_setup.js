@@ -19,9 +19,6 @@ tabs.on("ready", function(tab) {
 				data.url("js/browser.js"),
 				data.url("js/options.js"),
 				data.url("js/tools.js"),
-				data.url("bad_words/bigotry.js"),
-				data.url("bad_words/profanity.js"),
-				data.url("bad_words/obscenity.js")
 			],
 		});
 

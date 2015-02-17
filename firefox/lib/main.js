@@ -26,4 +26,3 @@ else if (self.loadReason === 'upgrade' || self.loadReason === 'downgrade') {
 if (self.loadReason === 'install' || (self.loadReason === 'upgrade' && self.version === '0.4')) {
 	tabs.open(data.url("html/help.html"));
 }
-

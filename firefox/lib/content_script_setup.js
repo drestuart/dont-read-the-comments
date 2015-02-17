@@ -18,9 +18,6 @@ pageMod.PageMod({
 		data.url("js/parseUri.js"),
 		data.url("js/browser.js"),
 		data.url("js/tools.js"),
-		data.url("bad_words/bigotry.js"),
-		data.url("bad_words/profanity.js"),
-		data.url("bad_words/obscenity.js"),
 		data.url("js/drtc.js")
 	],
 	contentStyleFile: [
