@@ -62,4 +62,8 @@ Browser.tabsQuery = function(func) {
     });
 }
 
+Browser.openOptionsPage = function() {
+	chrome.tabs.create({url: "chrome://extensions/?options=ohjehbcchmjagodhlgboaadkkdpegega"});
+}
+
 
