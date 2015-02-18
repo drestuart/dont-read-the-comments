@@ -12,7 +12,7 @@ var starting_profiles = [
 	{"domain": "knowyourmeme.com", "mode": "all", "section_selector": "div.fbFeedbackContent,  #comments", "comment_selector": "div.postContainer.fsl.fwb.fcb,  .comment.rel", "template": ""},
 	{"domain": "vice.com", "mode": "all", "template": "Facebook"},
 	{"domain": "cbsnews.com", "mode": "all", "template": "Livefyre"},
-	{"domain": "huffingtonpost.com", "mode": "all", "template": "Facebook"},
+	{"domain": "huffingtonpost.co*", "mode": "all", "template": "Facebook"},
 	{"domain": "america.aljazeera.com", "mode": "all", "section_selector": "#commentsDiv", "comment_selector": ".gig-comments-comment", "template": ""},
 	{"domain": "rawstory.com", "mode": "all", "template": "Disqus"},
 	{"domain": "metro.co.uk", "mode": "all", "template": "Facebook"},
@@ -47,7 +47,12 @@ var starting_profiles = [
 	{"domain": "mashable.com", "mode": "all", "template": "Livefyre"},
 	{"domain": "*.wikia.com", "mode": "all", "section_selector": "#article-comments", "comment_selector": "li.comment", "template": ""},
 	{"domain": "diply.com", "mode": "all", "template": "Facebook"},
-	{"domain": "instructables.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment-entry", "template": ""}
+	{"domain": "instructables.com", "mode": "all", "section_selector": "#comments", "comment_selector": "div.comment-entry", "template": ""},
+	{"domain": "avclub.com", "mode": "all", "template": "Disqus"},
+	{"domain": "gamasutra.com", "mode": "all", "section_selector": "#dynamiccomments", "comment_selector": ".parentComment,  .replyComment", "template": ""},
+	{"domain": "clientsfromhell.net", "mode": "all", "template": "Disqus"},
+	{"domain": "theatlantic.com", "mode": "all", "template": "Disqus"},
+	{"domain": "arstechnica.com", "mode": "all", "section_selector": "#comments-area", "comment_selector": ".comment", "template": ""}
 ];
 
 var starting_templates = [
