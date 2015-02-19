@@ -2,7 +2,7 @@
   "name": "dont-read-the-comments",
   "title": "Don't Read The Comments!",
   "id": "jid1-iyp4oNA51UBDxw",
-  "description": "Hide the comments",
+  "description": "A free browser extension which hides comment sections.  It’s configurable to work with any site and comes with settings for many sites built-in.",
   "author": "Dan Stuart",
   "license": "GPL 3.0",
   "version": "0.4.1",
