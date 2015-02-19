@@ -15,6 +15,9 @@
           <td>
             <input type="text" id="domain" name="domain">
           </td>
+          <td>
+            <span class="contextual_help" title="Which site your browser is on, e.g. google.com">[?]</span>
+          </td>
         </tr>
         <tr>
           <td>
@@ -27,6 +30,9 @@
               <option value="disabled">Disabled</option>
             </select>
           </td>
+          <td>
+            <span class="contextual_help" title="All: hide all comments at once. Individual: hide comments individually. Disabled: hide nothing.">[?]</span>
+          </td>
         </tr>
         <tr>
           <td>
@@ -35,6 +41,9 @@
           <td>
             <input type="text" id="section_selector" name="section_selector">
           </td>
+          <td>
+            <span class="contextual_help" title="CSS selector for comment section">[?]</span>
+          </td>
         </tr>
         <tr>
           <td>
@@ -42,6 +51,9 @@
           </td>
           <td>
             <input type="text" id="comment_selector" name="comment_selector">
+          </td>
+          <td>
+            <span class="contextual_help" title="CSS selector for individual comments">[?]</span>
           </td>
         </tr>
         <tr>
@@ -53,23 +65,33 @@
               <option value="">None</option>
             </select>
           </td>
+          <td>
+            <span class="contextual_help" title="Pre-defined comment system template">[?]</span>
+          </td>
         </tr>
         <tr>
           <td colspan="2"><input type="button" id="showme" value="Show Me The Comments!"></td>
+          <td>
+            <span class="contextual_help" title="Disable DRTC! on this site">[?]</span>
+          </td>
         </tr>
         <tr>
           <td></td>
           <td><input type="button" id="save" value="Save" autofocus></td>
+          <td></td>
         </tr>
         <tr>
           <td></td>
           <td><input type="button" id="export" value="Export"></td>
+          <td>
+            <span class="contextual_help" title="Encode website profile in text to share">[?]</span>
+          </td>
         </tr>
         <tr>
-          <td colspan="2"><input type="text" id="export_text"></td>
+          <td colspan="3"><input type="text" id="export_text"></td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="3">
             <p id="message"></p>
           </td>
         </tr>

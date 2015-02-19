@@ -26,3 +26,8 @@ td:first-child {
 #help {
 	float: right;
 }
+
+.contextual_help {
+	cursor: help;
+	color: #999;
+}
