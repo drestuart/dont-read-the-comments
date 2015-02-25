@@ -49,9 +49,8 @@ Tools.mergeTemplates = function(existing, new_tempaltes) {
 }
 
 Tools.cleanProfile = function(profile) {
-	if (profile['template'] !== '') {
-		delete profile['section_selector'];
-		delete profile['comment_selector'];
+	if (profile['template'] === 'none') {
+		profile['template'] = '';
 	}
 	return profile;
 }

@@ -19,6 +19,8 @@ $.fn.serializeObject = function()
 
 var numProfiles = 0;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+var profileFieldsWithoutTemplate = ["domain", "mode", "section_selector", "comment_selector"];
+var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
@@ -33,7 +35,7 @@ function addProfileRow(data) {
 		'</td>' + 
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
-		'<td><select class="template" name="template"><option value="">None</option></select></td>' +
+		'<td><select class="template" name="template"><option value="none">None</option></select></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
@@ -51,15 +53,27 @@ function addProfileRow(data) {
 	if (typeof data !== 'undefined') {
 		var fields = profileFields;
 
-		if (data['template'] !== '') {
-			fields = ["domain", "mode"];
+		if (data['template'] !== 'none' && data['template'] !== '') {
 			var template_selector = row.find('.template');
 			template_selector.val(data['template']);
-			fillInTemplateValues(template_selector);
+
+			// If we got a valid template, fill in the selector values
+			if (fillInTemplateValues(template_selector)) {
+				fields = profileFieldsWithTemplate;
+			}
+			// If not, don't fill in the erroneous template value
+			else {
+				fields = profileFieldsWithoutTemplate;
+			}
 		}
 
 		for (f of fields) {
-			row.find("." + f).val(data[f]);
+			if (f === 'template' && data[f] === '') {
+				row.find("." + f).val('none');
+			}
+			else {
+				row.find("." + f).val(data[f]);
+			}
 		}
 	}
 
@@ -75,7 +89,7 @@ function addProfileRow(data) {
 
 	// Wire up other fields
 	row.find('.section_selector, .comment_selector').on('input', function() {
-		row.find('.template').val('');
+		row.find('.template').val('none');
 	});
 
 	numProfiles++;
@@ -84,7 +98,7 @@ function addProfileRow(data) {
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
 	var row = $(element).parents("tr");
-	if (template_name !== '') {
+	if (template_name !== 'none') {
 		var selected_template = null;
 
 		for (t of templates) {
@@ -98,6 +112,12 @@ function fillInTemplateValues(element) {
 		if (selected_template != null) {
 			row.find('.section_selector').val(selected_template['section_selector']);
 			row.find('.comment_selector').val(selected_template['comment_selector']);
+			return true;
+		}
+		// Didn't find the specified template for some reason
+		else {
+			$(element).val('none');
+			return false;
 		}
 	}
 }
@@ -150,6 +170,9 @@ function getProfileData() {
 			// Trim extraneous stuff from domain
 			if (f === "domain") {
 				value = parseUri(value).authority;
+			}
+			else if (f === 'template' && value == 'none') {
+				value = '';
 			}
 
 			profile[f] = value;
