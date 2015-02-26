@@ -1,5 +1,9 @@
+* {
+	font-family: Helvetica, sans-serif;
+}
+
 h1, h2, h3 {
-	margin: 0 0 5px 0;
+	margin: 15px 0;
 }
 
 a {
