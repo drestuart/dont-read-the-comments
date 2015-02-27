@@ -93,6 +93,7 @@ function addProfileRow(data) {
 	// Wire up other fields
 	row.find('.section_selector, .comment_selector').on('input', function() {
 		row.find('.template').val('none');
+		row.find('.template').selectmenu("refresh");
 	});
 
 	numProfiles++;

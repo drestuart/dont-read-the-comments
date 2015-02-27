@@ -46,7 +46,7 @@ function buildProfile() {
 }
 
 $(document).ready(function() {
-	$("#save").on('click', function() {
+	$("#save").button().on('click', function() {
 		var profile = buildProfile();
 
 		if (siteIndex !== -1) {
@@ -67,25 +67,27 @@ $(document).ready(function() {
 		var profile = buildProfile();
 		var export_text = Tools.exportProfile(profile);
 		$("#export_text").val(export_text).show();
-	});
+	}).button();
 
-	$("#template").on("input", function() {
+	$("#template").on("selectmenuchange", function() {
 		fillInTemplateValues(this);
 	});
 
 	$('#section_selector, #comment_selector').on('input', function() {
+		console.log("Selector update!");
 		$('#template').val('');
+		$('#template').selectmenu("refresh");
 	});
 
 	$("#enable").on("click", function() {
 		$("#profile_not_found").hide();
 		$("#profile_found").show();
-	});
+	}).button();
 
 	$("#showme").on("click", function() {
 		$("#mode").val("disabled");
 		$("#save").trigger("click");
-	});
+	}).button();
 
 	$("#options").on("click", Browser.openOptionsPage);
 
@@ -151,6 +153,9 @@ $(document).ready(function() {
 			else {
 				$("#profile_not_found").show();
 			}
+
+			// Apply jQueryUI
+			$('#template, #mode').selectmenu();
 		});
 	});
 });
