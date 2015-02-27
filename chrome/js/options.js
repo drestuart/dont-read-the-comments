@@ -506,11 +506,25 @@ $(document).ready(function() {
 	});
 
 	// Reset options
-	$(".reset_button").button().click(function(event) {
-		console.log("Resetting!");
-		if (confirm("This will re-import DRTC's starting settings. Are you sure?")) {
-			importStartingData();
+	var resetConfirm = $("#reset-confirm").dialog({
+		resizable: false,
+		// height: 160,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"Reset": function() {
+				console.log("Resetting!");
+				importStartingData();
+				$(this).dialog("close");
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			}
 		}
+	});
+
+	$(".reset_button").button().click(function(event) {
+		resetConfirm.dialog("open");
 	});
 });
 
