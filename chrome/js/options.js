@@ -80,10 +80,13 @@ function addProfileRow(data) {
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
 		$(this).parents("tr").remove();
-	});
+	}).button();
+
+	// Apply jQueryUI
+	row.find('.template, .mode').selectmenu();
 
 	// Wire up profile select
-	row.find('.template').on('change', function() {
+	row.find('.template').on('selectmenuchange', function() {
 		fillInTemplateValues(this);
 	});
 
@@ -146,7 +149,7 @@ function addTemplateRow(data) {
 	// Wire up the delete button
 	$('#template' + numTemplates + ' .delete_row').on('click', function() {
 		$(this).parents("tr").remove();
-	});
+	}).button();
 
 	numTemplates++;
 }
@@ -426,7 +429,7 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#profiles tbody").scrollTop($("#profiles tbody")[0].scrollHeight);
-	});
+	}).button();
 
 	// Add template button
 	$("#add_template").on('click', function() {
@@ -434,7 +437,7 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#templates tbody").scrollTop($("#templates tbody")[0].scrollHeight);
-	});
+	}).button();
 
 	$(".textarea_show").on("click", function() {
 		var textarea_id = $(this).attr("data-for");
@@ -443,40 +446,40 @@ $(document).ready(function() {
 	});
 
 	// Export buttons
-	$("#export_profiles").on("click", exportProfiles);
+	$("#export_profiles").on("click", exportProfiles).button();
 
 	$("#export_templates").on("click", function() {
 		var templates_json = JSON.stringify(getTemplateData());
 		$("#import_templates_go").hide();
 		$("#templates_textarea").show().val(templates_json).prop('readonly', true);
-	});
+	}).button();
 
 	// Import buttons
 	$("#import_profiles").on("click", function() {
 		$("#import_profiles_go").show();
 		$("#profiles_textarea").show().val("").prop('readonly', false);
-	});
+	}).button();
 
 	$("#import_templates").on("click", function() {
 		$("#import_templates_go").show();
 		$("#templates_textarea").show().val("").prop('readonly', false);
-	});
+	}).button();
 
 	// Import trigger buttons
 	$("#import_profiles_go").on("click", function() {
 		if (confirm("This will overwrite any existing profiles with the same domain. Continue?")) {
 			importProfiles();
 		}
-	});
+	}).button();
 
 	$("#import_templates_go").on("click", function() {
 		if (confirm("This will overwrite any existing templates with the same name. Continue?")) {
 			importTemplates();
 		}
-	});
+	}).button();
 
 	// Save options
-	$(".save_button").on('click', function() {
+	$(".save_button").button().click(function(event) {
 		var data = {};
 
 		data.profiles = getProfileData();
@@ -498,12 +501,13 @@ $(document).ready(function() {
 
 		Browser.save(data, function() {
 			console.log("Saved!");
+			location.reload();
 		});
-		location.reload();
 	});
 
 	// Reset options
-	$(".reset_button").on('click', function() {
+	$(".reset_button").button().click(function(event) {
+		console.log("Resetting!");
 		if (confirm("This will re-import DRTC's starting settings. Are you sure?")) {
 			importStartingData();
 		}
