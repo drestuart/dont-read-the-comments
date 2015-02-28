@@ -21,7 +21,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "css": ["drtc.css"],
+      "css": ["css/drtc.css"],
       "js": ["js/jquery-1.11.1.min.js", "js/jquery-ui.js", "js/parseUri.js", "js/ga.js",
             "bad_words/bigotry.js", "bad_words/profanity.js", "bad_words/obscenity.js",
             "js/browser-chrome.js", "js/tools.js", "js/drtc.js"],
