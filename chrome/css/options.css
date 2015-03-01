@@ -165,7 +165,20 @@ input.import_go_button {
 	display: none;
 }
 
+/* jQuery UI overrides */
+
 .ui-slider-range {
 	background: #023557;
 }
 
+.ui-selectmenu-button span.ui-selectmenu-text {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.ui-selectmenu-button {
+	width: 115px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}

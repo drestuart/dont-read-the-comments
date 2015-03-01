@@ -3,7 +3,7 @@
 }
 
 html {
-	width: 200px;
+	width: 215px;
 }
 
 input[type="text"], select {
@@ -34,4 +34,17 @@ td:first-child {
 .contextual_help {
 	cursor: help;
 	color: #999;
+}
+
+/* jQueryUI overrides */
+
+.ui-selectmenu-button span.ui-selectmenu-text {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.ui-selectmenu-button {
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }

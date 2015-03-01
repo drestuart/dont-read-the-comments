@@ -91,6 +91,8 @@ $(document).ready(function() {
 
 	$("#options").on("click", Browser.openOptionsPage);
 
+	$(document).tooltip();
+
 	Browser.tabsQuery(function(response) {
 		var uri = parseUri(response);
 		var domain = uri.authority;
