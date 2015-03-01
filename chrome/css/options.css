@@ -165,3 +165,7 @@ input.import_go_button {
 	display: none;
 }
 
+.ui-slider-range {
+	background: #023557;
+}
+

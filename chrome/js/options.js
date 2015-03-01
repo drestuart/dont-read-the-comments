@@ -399,9 +399,28 @@ $(document).ready(function() {
 		$("#bigotry_list").val(bigotry_words.join(", "));
 
 		// Fill in word list check boxes
-		$("#profanity_check").prop('checked', word_lists_enabled["profanity"]);
-		$("#obscenity_check").prop('checked', word_lists_enabled["obscenity"]);
-		$("#bigotry_check").prop('checked', word_lists_enabled["bigotry"]);
+		$("#profanity_check").prop('checked', word_lists_enabled["profanity"]).button();
+		$("#obscenity_check").prop('checked', word_lists_enabled["obscenity"]).button();
+		$("#bigotry_check").prop('checked', word_lists_enabled["bigotry"]).button();
+
+		$("#profanity_check, #obscenity_check, #bigotry_check").each(function() {
+			setCheckboxLabel(this);
+		});
+		$("#profanity_check, #obscenity_check, #bigotry_check").on('click', function() {
+			setCheckboxLabel(this);
+		});
+
+		function setCheckboxLabel(elt) {
+			var text;
+			if ($(elt).prop('checked')) {
+				text = "Enabled";
+			}
+			else {
+				text = "Disabled";
+			}
+			console.log("Setting text " + text + " for label[for=" + $(elt).attr('id') + "]");
+			$("label[for=" + $(elt).attr('id') + "] span.ui-button-text").text(text);
+		}
 
 		// Set up slider
 	    $("#comment_threshold").slider({
@@ -409,6 +428,8 @@ $(document).ready(function() {
 			min: 0,
 			max: 5,
 			step: 0.5,
+			range: "min",
+			orientation: "horizontal",
 			slide: function( event, ui ) {
 				if (ui.value === 0) {
 					$("#comment_threshold_value").val(ui.value + " (hide everything)");

@@ -396,6 +396,8 @@ $(document).ready(function() {
 			min: 0,
 			max: 5,
 			step: 0.5,
+			range: "min",
+			orientation: "horizontal",
 			slide: function( event, ui ) {
 				if (ui.value === 0) {
 					$("#comment_threshold_value").val(ui.value + " (hide everything)");
