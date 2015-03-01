@@ -24,17 +24,20 @@ var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
-	var rowHTML = '<tr id="profile' + numProfiles +'">' + 
-		'<td><input type="text" class="domain" name="domain"></td>' + 
-		'<td>' + 
-		  '<select class="mode" name="mode">' + 
-		    '<option value="all">All</option>' + 
-		    '<option value="individual">Individual</option>' + 
-		    '<option value="disabled">Disabled</option>' + 
-		  '</select>' + 
-		'</td>' + 
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+	var rowHTML = '<tr id="profile' + numProfiles +'">' +
+		'<td><input type="text" class="domain" name="domain"></td>' +
+		'<td class="mode_group">' +
+			'<div class="mode_buttons">' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
+				'<label for="mode_all' + numProfiles +'">All</label>' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_individual' + numProfiles +'" value="individual">' +
+				'<label for="mode_individual' + numProfiles +'">Individual</label>' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
+				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
+			'</div>' +
+		'</td>' +
+		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
+		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
 		'<td><select class="template" name="template"><option value="none">None</option></select></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
@@ -68,11 +71,15 @@ function addProfileRow(data) {
 		}
 
 		for (f of fields) {
-			if (f === 'template' && data[f] === '') {
+			var value = data[f];
+			if (f === 'template' && value === '') {
 				row.find("." + f).val('none');
 			}
+			else if (f === 'mode') {
+				row.find(".mode_group input[type=radio][value=" + value + "]").prop('checked', true);
+			}
 			else {
-				row.find("." + f).val(data[f]);
+				row.find("." + f).val(value);
 			}
 		}
 	}
@@ -83,7 +90,8 @@ function addProfileRow(data) {
 	}).button();
 
 	// Apply jQueryUI
-	row.find('.template, .mode').selectmenu();
+	row.find('.template').selectmenu();
+	row.find(".mode_buttons").buttonset();
 
 	// Wire up profile select
 	row.find('.template').on('selectmenuchange', function() {
@@ -129,10 +137,10 @@ function fillInTemplateValues(element) {
 numTemplates = 0;
 
 function addTemplateRow(data) {
-	var rowHTML = '<tr id="template' + numTemplates +'">' + 
-		'<td><input type="text" class="system" name="system"></td>' + 
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+	var rowHTML = '<tr id="template' + numTemplates +'">' +
+		'<td><input type="text" class="system" name="system"></td>' +
+		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
+		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
@@ -160,16 +168,17 @@ function getProfileData() {
 	var retArr = [];
 
 	$("table#profiles > tbody").find("tr").each(function(ind, row) {
+		row = $(row); // I mean really
 		var profile = {};
 		var fields = profileFields;
 		var empty = true;
 
-		if ($(row).hasClass("control_row")) {
+		if (row.hasClass("control_row")) {
 			return; // continue
 		}
 
 		for (f of fields) {
-			var value = $(row).find("." + f).val().trim();
+			var value = row.find("." + f).val();
 
 			// Trim extraneous stuff from domain
 			if (f === "domain") {
@@ -178,8 +187,11 @@ function getProfileData() {
 			else if (f === 'template' && value == 'none') {
 				value = '';
 			}
+			else if (f === 'mode') {
+				value = row.find("input.mode[type=radio]:checked").val();
+			}
 
-			profile[f] = value;
+			profile[f] = value.trim();
 
 			// Don't save empty rows!
 			if (f !== "mode" && value !== "") {
