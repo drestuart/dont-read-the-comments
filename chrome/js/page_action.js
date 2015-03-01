@@ -33,11 +33,18 @@ function buildProfile() {
 	var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 
 	for (f of fields) {
-		var value = $("#" + f).val().trim();
+		var value;
 
 		// Trim extraneous stuff from domain
 		if (f === "domain") {
+			value = $("#" + f).val().trim();
 			value = parseUri(value).authority;
+		}
+		else if (f === 'mode') {
+			value = $("input[name=mode]:checked").val();
+		}
+		else {
+			value = $("#" + f).val().trim();
 		}
 
 		profile[f] = value;
@@ -149,7 +156,13 @@ $(document).ready(function() {
 				}
 
 				for (f of fields) {
-					$("#" + f).val(siteProfile[f]);
+					var value = siteProfile[f];
+					if (f === "mode") {
+						$("input[name=mode][value=" + value + "]").prop('checked', true);
+					}
+					else {
+						$("#" + f).val(value);
+					}
 				}
 			}
 			else {
@@ -158,6 +171,7 @@ $(document).ready(function() {
 
 			// Apply jQueryUI
 			$('#template, #mode').selectmenu();
+			$("#mode_buttons").buttonset();
 		});
 	});
 });
