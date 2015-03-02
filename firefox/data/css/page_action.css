@@ -1,9 +1,9 @@
 * {
-	font-family: sans-serif;
+	font-family: Helvetica, sans-serif;
 }
 
 html {
-	width: 200px;
+	width: 225px;
 }
 
 input[type="text"], select {
@@ -16,6 +16,10 @@ tr {
 
 td:first-child {
 	width: 70px;
+}
+
+td#mode_group {
+	width: 205px;
 }
 
 #profile_not_found, #profile_found {
@@ -34,4 +38,11 @@ td:first-child {
 .contextual_help {
 	cursor: help;
 	color: #999;
+}
+
+/* jQueryUI overrides */
+
+span.ui-selectmenu-text, span.ui-button-text {
+	padding-top: 0;
+	padding-bottom: 0;
 }

@@ -24,17 +24,20 @@ var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
-	var rowHTML = '<tr id="profile' + numProfiles +'">' + 
-		'<td><input type="text" class="domain" name="domain"></td>' + 
-		'<td>' + 
-		  '<select class="mode" name="mode">' + 
-		    '<option value="all">All</option>' + 
-		    '<option value="individual">Individual</option>' + 
-		    '<option value="disabled">Disabled</option>' + 
-		  '</select>' + 
-		'</td>' + 
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+	var rowHTML = '<tr id="profile' + numProfiles +'">' +
+		'<td><input type="text" class="domain" name="domain"></td>' +
+		'<td class="mode_group">' +
+			'<div class="mode_buttons">' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
+				'<label for="mode_all' + numProfiles +'">All</label>' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_individual' + numProfiles +'" value="individual">' +
+				'<label for="mode_individual' + numProfiles +'">Individual</label>' +
+				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
+				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
+			'</div>' +
+		'</td>' +
+		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
+		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
 		'<td><select class="template" name="template"><option value="none">None</option></select></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
@@ -68,11 +71,15 @@ function addProfileRow(data) {
 		}
 
 		for (f of fields) {
-			if (f === 'template' && data[f] === '') {
+			var value = data[f];
+			if (f === 'template' && value === '') {
 				row.find("." + f).val('none');
 			}
+			else if (f === 'mode') {
+				row.find(".mode_group input[type=radio][value=" + value + "]").prop('checked', true);
+			}
 			else {
-				row.find("." + f).val(data[f]);
+				row.find("." + f).val(value);
 			}
 		}
 	}
@@ -80,16 +87,21 @@ function addProfileRow(data) {
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
 		$(this).parents("tr").remove();
-	});
+	}).button();
+
+	// Apply jQueryUI
+	row.find('.template').selectmenu();
+	row.find(".mode_buttons").buttonset();
 
 	// Wire up profile select
-	row.find('.template').on('change', function() {
+	row.find('.template').on('selectmenuchange', function() {
 		fillInTemplateValues(this);
 	});
 
 	// Wire up other fields
 	row.find('.section_selector, .comment_selector').on('input', function() {
 		row.find('.template').val('none');
+		row.find('.template').selectmenu("refresh");
 	});
 
 	numProfiles++;
@@ -125,10 +137,10 @@ function fillInTemplateValues(element) {
 numTemplates = 0;
 
 function addTemplateRow(data) {
-	var rowHTML = '<tr id="template' + numTemplates +'">' + 
-		'<td><input type="text" class="system" name="system"></td>' + 
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' + 
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' + 
+	var rowHTML = '<tr id="template' + numTemplates +'">' +
+		'<td><input type="text" class="system" name="system"></td>' +
+		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
+		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
 		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
 	'</tr>';
 
@@ -146,7 +158,7 @@ function addTemplateRow(data) {
 	// Wire up the delete button
 	$('#template' + numTemplates + ' .delete_row').on('click', function() {
 		$(this).parents("tr").remove();
-	});
+	}).button();
 
 	numTemplates++;
 }
@@ -156,16 +168,17 @@ function getProfileData() {
 	var retArr = [];
 
 	$("table#profiles > tbody").find("tr").each(function(ind, row) {
+		row = $(row); // I mean really
 		var profile = {};
 		var fields = profileFields;
 		var empty = true;
 
-		if ($(row).hasClass("control_row")) {
+		if (row.hasClass("control_row")) {
 			return; // continue
 		}
 
 		for (f of fields) {
-			var value = $(row).find("." + f).val().trim();
+			var value = row.find("." + f).val();
 
 			// Trim extraneous stuff from domain
 			if (f === "domain") {
@@ -174,8 +187,11 @@ function getProfileData() {
 			else if (f === 'template' && value == 'none') {
 				value = '';
 			}
+			else if (f === 'mode') {
+				value = row.find("input.mode[type=radio]:checked").val();
+			}
 
-			profile[f] = value;
+			profile[f] = value.trim();
 
 			// Don't save empty rows!
 			if (f !== "mode" && value !== "") {
@@ -235,16 +251,12 @@ function importProfiles() {
 	if (Array.isArray(imp_profiles)) {
 		for (prof of imp_profiles) {
 			if (!validateProfile(prof)) {
-				console.log("Failed validation: ");
-				console.log(prof);
 				return;
 			}
 		}
 	}
 	else if (imp_profiles !== null && typeof imp_profiles === 'object') {
 		if (!validateProfile(imp_profiles)) {
-			console.log("Failed validation:");
-			console.log(imp_profiles);
 			return;
 		}
 		// Put it in an array
@@ -259,7 +271,6 @@ function importProfiles() {
 	var profiles = getProfileData();
 
 	profiles = Browser.importProfiles(profiles, imp_profiles, function() {
-		console.log("Saved!");
 		location.reload();
 	});
 }
@@ -270,16 +281,12 @@ function importTemplates() {
 	if (Array.isArray(imp_templates)) {
 		for (temp of imp_templates) {
 			if (!validateTemplate(temp)) {
-				console.log("Failed validation: ");
-				console.log(temp);
 				return;
 			}
 		}
 	}
 	else if (imp_templates !== null && typeof imp_templates === 'object') {
 		if (!validateTemplate(imp_templates)) {
-			console.log("Failed validation:");
-			console.log(imp_templates);
 			return;
 		}
 		// Put it in an array
@@ -294,19 +301,15 @@ function importTemplates() {
 	var temps = getTemplateData();
 
 	temps = Browser.importTemplates(temps, imp_templates, function() {
-		console.log("Saved!");
 		location.reload();
 	});
 }
 
 function validateProfile(obj) {
 	var fields = profileFields;
-
+	
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
-			var msg = "Bad field: " + field;
-			console.log(msg);
-			alert("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -319,9 +322,6 @@ function validateProfile(obj) {
 				continue;
 			}
 
-			var msg = "Missing field: " + field;
-			console.log(msg);
-			alert("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -337,18 +337,12 @@ function validateTemplate(temp) {
 function validateImport(obj, fields) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
-			var msg = "Bad field: " + field;
-			console.log(msg);
-			alert("Import failed. " + msg);
 			return false;
 		}
 	}
 
 	for (field of fields) {
 		if (typeof obj[field] === 'undefined') {
-			var msg = "Missing field: " + field;
-			console.log(msg);
-			alert("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -386,9 +380,27 @@ $(document).ready(function() {
 		$("#bigotry_list").val(bigotry_words.join(", "));
 
 		// Fill in word list check boxes
-		$("#profanity_check").prop('checked', word_lists_enabled["profanity"]);
-		$("#obscenity_check").prop('checked', word_lists_enabled["obscenity"]);
-		$("#bigotry_check").prop('checked', word_lists_enabled["bigotry"]);
+		$("#profanity_check").prop('checked', word_lists_enabled["profanity"]).button();
+		$("#obscenity_check").prop('checked', word_lists_enabled["obscenity"]).button();
+		$("#bigotry_check").prop('checked', word_lists_enabled["bigotry"]).button();
+
+		$("#profanity_check, #obscenity_check, #bigotry_check").each(function() {
+			setCheckboxLabel(this);
+		});
+		$("#profanity_check, #obscenity_check, #bigotry_check").on('click', function() {
+			setCheckboxLabel(this);
+		});
+
+		function setCheckboxLabel(elt) {
+			var text;
+			if ($(elt).prop('checked')) {
+				text = "Enabled";
+			}
+			else {
+				text = "Disabled";
+			}
+			$("label[for=" + $(elt).attr('id') + "] span.ui-button-text").text(text);
+		}
 
 		// Set up slider
 	    $("#comment_threshold").slider({
@@ -419,7 +431,7 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#profiles tbody").scrollTop($("#profiles tbody")[0].scrollHeight);
-	});
+	}).button();
 
 	// Add template button
 	$("#add_template").on('click', function() {
@@ -427,7 +439,7 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#templates tbody").scrollTop($("#templates tbody")[0].scrollHeight);
-	});
+	}).button();
 
 	$(".textarea_show").on("click", function() {
 		var textarea_id = $(this).attr("data-for");
@@ -436,40 +448,40 @@ $(document).ready(function() {
 	});
 
 	// Export buttons
-	$("#export_profiles").on("click", exportProfiles);
+	$("#export_profiles").on("click", exportProfiles).button();
 
 	$("#export_templates").on("click", function() {
 		var templates_json = JSON.stringify(getTemplateData());
 		$("#import_templates_go").hide();
 		$("#templates_textarea").show().val(templates_json).prop('readonly', true);
-	});
+	}).button();
 
 	// Import buttons
 	$("#import_profiles").on("click", function() {
 		$("#import_profiles_go").show();
 		$("#profiles_textarea").show().val("").prop('readonly', false);
-	});
+	}).button();
 
 	$("#import_templates").on("click", function() {
 		$("#import_templates_go").show();
 		$("#templates_textarea").show().val("").prop('readonly', false);
-	});
+	}).button();
 
 	// Import trigger buttons
 	$("#import_profiles_go").on("click", function() {
 		if (confirm("This will overwrite any existing profiles with the same domain. Continue?")) {
 			importProfiles();
 		}
-	});
+	}).button();
 
 	$("#import_templates_go").on("click", function() {
 		if (confirm("This will overwrite any existing templates with the same name. Continue?")) {
 			importTemplates();
 		}
-	});
+	}).button();
 
 	// Save options
-	$(".save_button").on('click', function() {
+	$(".save_button").button().click(function(event) {
 		var data = {};
 
 		data.profiles = getProfileData();
@@ -490,19 +502,28 @@ $(document).ready(function() {
 		data.word_lists_enabled = word_lists_enabled;
 
 		Browser.save(data, function() {
-			console.log("Saved!");
 			location.reload();
 		});
 	});
 
 	// Reset options
-	$(".reset_button").on('click', function() {
-		if (confirm("This will re-import DRTC's starting settings. Are you sure?")) {
-			Browser.importStartingData(function() {
-				console.log("Imported starting data!");
-				location.reload();
-			});
+	var resetConfirm = $("#reset-confirm").dialog({
+		resizable: false,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"Reset": function() {
+				importStartingData();
+				$(this).dialog("close");
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			}
 		}
+	});
+
+	$(".reset_button").button().click(function(event) {
+		resetConfirm.dialog("open");
 	});
 });
 

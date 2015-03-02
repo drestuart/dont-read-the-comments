@@ -19,7 +19,7 @@ tabs.on("ready", function(tab) {
 				data.url("js/browser.js"),
 				data.url("js/options.js"),
 				data.url("js/tools.js"),
-			],
+			]
 		});
 
 		worker.port.on("optionsPageDataRequest", function() {

@@ -1,12 +1,9 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../css/options.css"/>
-
     <!-- jQuery UI stuff -->
-    <script src="../js/jquery-1.11.1.min.js"></script>
-    <script src="../js/jquery-ui.js"></script>
     <link href="../css/jquery-ui.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/options.css"/>
   </head>
   <body>
     <div id="content">
@@ -23,7 +20,7 @@
           <thead>
             <tr>
               <th>Domain</th>
-              <th>Mode</th>
+              <th class="mode_col">Mode</th>
               <th>Section Selector</th>
               <th>Comment Selector</th>
               <th>Template</th>
@@ -41,6 +38,7 @@
               <td></td>
             </tr>
           </tfoot>
+          </tbody>
         </table>
         <p>
           <input type="button" value="Export" id="export_profiles">
@@ -109,6 +107,11 @@
       </div>
       <input type="button" value="Save" class="save_button">
       <input type="button" value="Reset" class="reset_button">
+    </div>
+
+    <!-- Reset profiles confirmation dialog -->
+    <div id="reset-confirm" title="Reset DRTC! settings?">
+      <p>This will re-import all of DRTC's starting settings. Are you sure?</p>
     </div>
   </body>
 </html>

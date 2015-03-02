@@ -85,10 +85,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	border: none;
 }
 
-div.options_section input[type=button] {
-	/*margin-left: 7px;*/
-}
-
 table.opt_table thead, table.opt_table tbody {
 	display: block;
 	width: 670px;
@@ -108,6 +104,10 @@ table#profiles th, table#profiles td {
 	width: 130px;
 }
 
+table#profiles th.mode_col, table#profiles td.mode_group {
+	width: 225px;
+}
+
 table#templates th, table#templates td {
 	width: 200px;
 }
@@ -116,11 +116,15 @@ table.opt_table th {
 	font-size: 16px;
 }
 
-table.opt_table td input, table.opt_table td select {
-	width: 90%;
+table.opt_table td input:not([type=radio]), table.opt_table td select,
+table.opt_table td div.mode_buttons {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+}
+
+table.opt_table td input:not([type=radio]), table.opt_table td select {
+	width: 90%;
 }
 
 table.opt_table td input.add_row {
@@ -172,3 +176,21 @@ input.import_go_button {
 	display: none;
 }
 
+/* jQuery UI overrides */
+
+.ui-slider-range {
+	background: #023557;
+}
+
+span.ui-selectmenu-text, span.ui-button-text, .ui-button {
+	font-size: 12px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.ui-selectmenu-button {
+	width: 115px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}

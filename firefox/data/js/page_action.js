@@ -33,11 +33,18 @@ function buildProfile() {
 	var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 
 	for (f of fields) {
-		var value = $("#" + f).val().trim();
+		var value;
 
 		// Trim extraneous stuff from domain
 		if (f === "domain") {
+			value = $("#" + f).val().trim();
 			value = parseUri(value).authority;
+		}
+		else if (f === 'mode') {
+			value = $("input[name=mode]:checked").val();
+		}
+		else {
+			value = $("#" + f).val().trim();
 		}
 
 		profile[f] = value;
@@ -46,7 +53,7 @@ function buildProfile() {
 }
 
 $(document).ready(function() {
-	$("#save").on('click', function() {
+	$("#save").button().on('click', function() {
 		var profile = buildProfile();
 
 		if (siteIndex !== -1) {
@@ -57,7 +64,6 @@ $(document).ready(function() {
 		}
 		
 		Browser.save({"profiles" : profiles}, function() {
-			console.log("Saved!");
 			$("#message").text("Saved");
 			Browser.reload();
 		});
@@ -67,25 +73,26 @@ $(document).ready(function() {
 		var profile = buildProfile();
 		var export_text = Tools.exportProfile(profile);
 		$("#export_text").val(export_text).show();
-	});
+	}).button();
 
-	$("#template").on("input", function() {
+	$("#template").on("selectmenuchange", function() {
 		fillInTemplateValues(this);
 	});
 
 	$('#section_selector, #comment_selector').on('input', function() {
 		$('#template').val('');
+		$('#template').selectmenu("refresh");
 	});
 
 	$("#enable").on("click", function() {
 		$("#profile_not_found").hide();
 		$("#profile_found").show();
-	});
+	}).button();
 
 	$("#showme").on("click", function() {
-		$("#mode").val("disabled");
+		$("input[name=mode][value=disabled]").prop('checked', true);
 		$("#save").trigger("click");
-	});
+	}).button();
 
 	// Close page action on link click
 	$("a").on('click', function() {
@@ -167,8 +174,18 @@ function setUpPageAction(url) {
 			}
 
 			for (f of fields) {
-				$("#" + f).val(siteProfile[f]);
+				var value = siteProfile[f];
+				if (f === "mode") {
+					$("input[name=mode][value=" + value + "]").prop('checked', true);
+				}
+				else {
+					$("#" + f).val(value);
+				}
 			}
+
+			// Apply jQueryUI
+			$('#template').selectmenu();
+			$("#mode_buttons").buttonset();
 		}
 		else {
 			$("#profile_not_found").show();
