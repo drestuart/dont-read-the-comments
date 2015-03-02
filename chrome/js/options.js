@@ -542,7 +542,6 @@ $(document).ready(function() {
 	// Reset options
 	var resetConfirm = $("#reset-confirm").dialog({
 		resizable: false,
-		// height: 160,
 		autoOpen: false,
 		modal: true,
 		buttons: {

@@ -92,7 +92,8 @@ $(document).ready(function() {
 	}).button();
 
 	$("#showme").on("click", function() {
-		$("#mode").val("disabled");
+		// $("#mode").val("disabled");
+		$("input[name=mode][value=disabled]").prop('checked', true);
 		$("#save").trigger("click");
 	}).button();
 
@@ -170,7 +171,7 @@ $(document).ready(function() {
 			}
 
 			// Apply jQueryUI
-			$('#template, #mode').selectmenu();
+			$('#template').selectmenu();
 			$("#mode_buttons").buttonset();
 		});
 	});
