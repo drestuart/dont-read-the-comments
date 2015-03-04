@@ -92,7 +92,6 @@ $(document).ready(function() {
 	}).button();
 
 	$("#showme").on("click", function() {
-		// $("#mode").val("disabled");
 		$("input[name=mode][value=disabled]").prop('checked', true);
 		$("#save").trigger("click");
 	}).button();
