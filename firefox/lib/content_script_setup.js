@@ -14,7 +14,7 @@ pageMod.PageMod({
 	include: "*",
 	contentScriptFile: [
 		data.url("js/jquery-1.11.1.min.js"),
-		data.url("js/jquery-ui.js"),
+		data.url("js/jquery-ui.min.js"),
 		data.url("js/parseUri.js"),
 		data.url("js/browser.js"),
 		data.url("js/tools.js"),
