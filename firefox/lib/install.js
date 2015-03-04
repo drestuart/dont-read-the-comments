@@ -80,7 +80,6 @@ function loadStartingData() {
 	fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
 	DataStore.save(fresh_data);
-    console.log("Installed fresh data");
 }
 
 function importStartingData() {
@@ -106,7 +105,6 @@ function importStartingData() {
 			save_data.word_lists_enabled = starting_word_lists_enabled[list];
 		}
 	}
-	console.log("Imported starting data!");
 	// Save data
 	DataStore.save(save_data);
 }

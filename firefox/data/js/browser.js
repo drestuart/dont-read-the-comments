@@ -34,7 +34,6 @@ Browser.importStartingData = function(func) {
 
 Browser.importProfiles = function(profiles, imp_profiles, func) {
 	self.port.once("importProfileResponse", function() {
-		console.log("Imported profiles!");
 		func();
 	});
 
@@ -44,7 +43,6 @@ Browser.importProfiles = function(profiles, imp_profiles, func) {
 
 Browser.importTemplates = function(temps, imp_templates, func) {
 	self.port.once("importTemplateResponse", function() {
-		console.log("Imported templates!");
 		func();
 	});
 
@@ -62,7 +60,6 @@ Browser.getTabUrl = function(func) {
 
 Browser.save = function(data, func) {
 	self.port.once("saveDataResponse", function() {
-		console.log("Saved data!");
 		func();
 	});
 
