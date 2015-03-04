@@ -17,42 +17,42 @@
         <li>Load the website you want to create the profile for, and find a page with comments.</li>
         <li>Open the Chrome Developer Console with F12 (Windows, Linux) or Alt-Cmd-I (Mac).</li>
       </ul>
-      <img src="images/developer console open.png">
+      <img src="images/developer_console_open.png">
       <ul>
         <li>Click the magnifying glass icon at the top-left to enter Inspect mode.</li>
         <li>Highlight the comment section element as best you can one the page, and click it. This will highlight the corresponding HTML element in the Developer Console.</li>
       </ul>
-      <img src="images/inspect mode.png">
+      <img src="images/inspect_mode.png">
       <ul>
         <li>Explore the HTML elements around the selected element to choose the one that best matches the comment section.</li>
         <li>Build the CSS selector that points to this element, and only this element. If the element has an id attribute, that id should be unique on the page, so you can use a <code>#</code> followed by the id. Here, the element's id is <code>watch-discussion</code>, so the correct selector is <code>#watch-discussion</code>. You can also see the element's CSS selector with its element type, id, and classes in the yellow box.</li>
         <li>Open the page action, and click <strong>Enable</strong>.</li>
       </ul>
-      <img src="images/page action disabled.png">
+      <img src="images/page_action_not_enabled.png">
       <ul>
         <li>Enter your section selector in the <strong>Section Selector</strong> field, and click <strong>Save</strong>.</li>
       </ul>
-      <img src="images/page action enabled.png">
+      <img src="images/page_action_enabled.png">
       <ul>
         <li>The page will reload. The DRTC! cover element should be in place over the comment section. Make sure it covers the whole section, and only that section, and behaves correctly. If it doesn't you can select a new element and try again.</li>
       </ul>
-      <img src="images/section hidden.png">
+      <img src="images/section_hidden.png">
       <ul>
         <li>Repeat the process to build a CSS selector for individual comments. This is slightly more complicated, as you want it to match more than one element, and only comment elements. If the comments have one or more class parameters, these are a good place to start.</li>
       </ul>
-      <img src="images/comment inspect.png">
+      <img src="images/comment_inspect.png">
       <ul>
         <li>Here, the element has many classes specified: <code>class="ve oba HPa"</code>. Classes are specified in a CSS selector using a <code>.</code> instead of a <code>#</code>. You can specify elements with more than one class by putting the classes together: <code>.ve.oba.HPa.</code></li>
       </ul>
-      <img src="images/page action comment.png">
+      <img src="images/page_action_comment.png">
       <ul>
         <li>Save your comment selector in the page action, and set the mode to <strong>Individual</strong> to test it out.</li>
       </ul>
-      <img src="images/comments partially covered.png">
+      <img src="images/comments_partially_covered.png">
       <ul>
         <li>In this case, our selector is only getting top-level comments, and no replies under them. Inspecting the replies shows that they have a different set of classes, <code>.Ik.Wv</code>. You can chain together multiple selectors with a comma <code>,</code>, so our final comment selector becomes <code>.ve.oba.HPa, .Ik.Wv</code>. This will get all comment elements on YouTube.</li>
       </ul>
-      <img src="images/all comments covered.png">
+      <img src="images/all_comments_covered.png">
     </div>
   </body>
 </html>
