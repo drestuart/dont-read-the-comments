@@ -128,6 +128,9 @@ function setUpPageAction(url) {
 	$("#message").text("");
 	$("#export_text").val("").hide();
 
+	// Clear site profile
+	siteProfile = null;
+
 	Browser.getPageActionData(function(data) {
 		profiles = data["profiles"];
 		templates = data["templates"];
