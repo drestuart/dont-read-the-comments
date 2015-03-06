@@ -25,24 +25,24 @@ var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
 	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row ui-state-default">' +
-		'<span><input type="text" class="domain" name="domain"></span>' +
-		'<span class="mode_col">' +
-			'<span class="mode_buttons">' +
+		'<div><input type="text" class="domain" name="domain"></div>' +
+		'<div class="mode_col">' +
+			'<div class="mode_buttons">' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
 				'<label for="mode_all' + numProfiles +'">All</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_individual' + numProfiles +'" value="individual">' +
 				'<label for="mode_individual' + numProfiles +'">Individual</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
 				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
-			'</span>' +
-		'</span>' +
-		'<span><input type="text" class="section_selector" name="section_selector"></span>' +
-		'<span><input type="text" class="comment_selector" name="comment_selector"></span>' +
-		'<span><select class="template" name="template"><option value="none">None</option></select></span>' +
-		'<span class="delete_col"><input type="button" value="-" class="delete_row"></span>' +
+			'</div>' +
+		'</div>' +
+		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
+		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
+		'<div><select class="template" name="template"><option value="none">None</option></select></div>' +
+		'<div class="delete_col"><input type="button" value="-" class="delete_row"></div>' +
 	'</li>';
 
-	$("#profiles .control_row").before(rowHTML);
+	$("#profiles .scroll_area").append(rowHTML);
 
 	var row = $('li#profile' + numProfiles);
 
