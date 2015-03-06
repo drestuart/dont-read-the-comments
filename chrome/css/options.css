@@ -82,58 +82,86 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	border: none;
 }
 
-table.opt_table thead, table.opt_table tbody {
-	display: block;
-	width: 670px;
+input[type=text] {
+	width: 80px;
 }
 
-table.opt_table tbody {
+.opt_table {
+	display: block;
 	max-height: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
+    list-style: none;
+    padding-left: 0;
+    width: 95%;
 }
 
-table#profiles .delete_col, table#templates .delete_col {
+.opt_table li {
+	display: block;
+	vertical-align: middle;
+	padding: 5px;
+}
+
+.opt_table .header_row > span {
+	display: inline-block;
+	text-align: center;
+}
+
+#profiles li > span {
+	width: 90px;
+	margin: 5px;
+	font-size: 12px;
+}
+
+#profiles li.header_row > span {
+	font-size: 15px;
+}
+
+#profiles li > span.delete_col, li > #templates span.delete_col {
 	width: 20px;
 }
 
-table#profiles th, table#profiles td {
-	width: 130px;
+#profiles li > span.mode_col {
+	width: 180px;
 }
 
-table#profiles th.mode_col, table#profiles td.mode_group {
-	width: 225px;
-}
-
-table#templates th, table#templates td {
-	width: 200px;
-}
-
-table.opt_table th {
-	font-size: 16px;
-}
-
-table.opt_table td input:not([type=radio]), table.opt_table td select,
-table.opt_table td div.mode_buttons {
-	margin-left: auto;
+.opt_table input:not([type=radio]), .opt_table select,
+.opt_table span.mode_buttons {
+/*	margin-left: auto;
 	margin-right: auto;
-	display: block;
+	display: inline-block;
+*/}
+
+.opt_table input:not([type=radio]), .opt_table select {
+	/*width: 90%;*/
 }
 
-table.opt_table td input:not([type=radio]), table.opt_table td select {
-	width: 90%;
-}
-
-table.opt_table td input.add_row {
+.opt_table input.add_row {
 	width: auto;
 }
 
-table#profiles input.add_row {
+.opt_table input.delete_row {
+	width: 20px;
+}
+
+#profiles input.add_row {
 	margin: 0 0 0 2px;
 }
 
-table#templates input.add_row {
+#templates input.add_row {
 	margin: 0 0 0 6px;
+}
+
+.profile_row, .template_row {
+
+}
+
+.profile_row:nth-child(odd), .template_row:nth-child(odd) {
+	
+}
+
+.profile_row:nth-child(even), .template_row:nth-child(even) {
+
 }
 
 div#comment_threshold {
@@ -185,8 +213,8 @@ span.ui-selectmenu-text, span.ui-button-text {
 }
 
 .ui-selectmenu-button {
-	width: 115px;
+	width: 100px;
 	margin-left: auto;
 	margin-right: auto;
-	display: block;
+	display: inline-block;
 }

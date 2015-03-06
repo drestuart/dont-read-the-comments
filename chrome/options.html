@@ -38,29 +38,19 @@
         <br>
         <br>
         <h2>Website Profiles</h2>
-        <table id="profiles" class="opt_table">
-          <thead>
-            <tr>
-              <th>Domain</th>
-              <th class="mode_col">Mode</th>
-              <th>Section Selector</th>
-              <th>Comment Selector</th>
-              <th>Template</th>
-              <th class="delete_col"></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-            <tr class="control_row">
-              <td><input type="button" value="+" id="add_profile" class="add_row"></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+        <ul id="profiles" class="opt_table profile_table">
+          <li class="profile_row header_row">
+            <span>Domain</span>
+            <span class="mode_col">Mode</span>
+            <span>Section Selector</span>
+            <span>Comment Selector</span>
+            <span>Template</span>
+            <span class="delete_col">&nbsp;</span>
+          </li>
+          <li class="profile_row control_row">
+            <span><input type="button" value="+" id="add_profile" class="add_row"></span>
+          </li>
+        </ul>
         <p>
           <input type="button" value="Export" id="export_profiles">
           <input type="button" value="Import" id="import_profiles">
@@ -70,7 +60,7 @@
       </div>
       <div id="templates_section" class="options_section">
         <h2>Comment System Templates</h2>
-        <table id="templates" class="opt_table">
+        <table id="templates" class="opt_table template_table">
           <thead>
             <tr>
               <th>Comment System</th>

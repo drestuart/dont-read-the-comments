@@ -24,27 +24,27 @@ var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
-	var rowHTML = '<tr id="profile' + numProfiles +'">' +
-		'<td><input type="text" class="domain" name="domain"></td>' +
-		'<td class="mode_group">' +
-			'<div class="mode_buttons">' +
+	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row ui-state-default">' +
+		'<span><input type="text" class="domain" name="domain"></span>' +
+		'<span class="mode_col">' +
+			'<span class="mode_buttons">' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
 				'<label for="mode_all' + numProfiles +'">All</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_individual' + numProfiles +'" value="individual">' +
 				'<label for="mode_individual' + numProfiles +'">Individual</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
 				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
-			'</div>' +
-		'</td>' +
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
-		'<td><select class="template" name="template"><option value="none">None</option></select></td>' +
-		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
-	'</tr>';
+			'</span>' +
+		'</span>' +
+		'<span><input type="text" class="section_selector" name="section_selector"></span>' +
+		'<span><input type="text" class="comment_selector" name="comment_selector"></span>' +
+		'<span><select class="template" name="template"><option value="none">None</option></select></span>' +
+		'<span class="delete_col"><input type="button" value="-" class="delete_row"></span>' +
+	'</li>';
 
-	$("table#profiles > tbody").append(rowHTML);
+	$("#profiles .control_row").before(rowHTML);
 
-	var row = $('tr#profile' + numProfiles);
+	var row = $('li#profile' + numProfiles);
 
 	// Populate template select list
 	for (t of templates) {
@@ -76,7 +76,7 @@ function addProfileRow(data) {
 				row.find("." + f).val('none');
 			}
 			else if (f === 'mode') {
-				row.find(".mode_group input[type=radio][value=" + value + "]").prop('checked', true);
+				row.find(".mode_col input[type=radio][value=" + value + "]").prop('checked', true);
 			}
 			else {
 				row.find("." + f).val(value);
@@ -86,7 +86,7 @@ function addProfileRow(data) {
 
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
-		$(this).parents("tr").remove();
+		$(this).parents("li").remove();
 	}).button();
 
 	// Apply jQueryUI
@@ -137,7 +137,7 @@ function fillInTemplateValues(element) {
 numTemplates = 0;
 
 function addTemplateRow(data) {
-	var rowHTML = '<tr id="template' + numTemplates +'">' +
+	var rowHTML = '<tr id="template' + numTemplates +'"  class="template_row ui-button ui-widget ui-state-default ui-corner-all">' +
 		'<td><input type="text" class="system" name="system"></td>' +
 		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
 		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
@@ -396,6 +396,7 @@ $(document).ready(function() {
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
+		// Build profile and template tables
 		for (t of templates) {
 			addTemplateRow(t);
 		}
@@ -403,6 +404,15 @@ $(document).ready(function() {
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Set up sortable jQueryUI on profile and template tables
+		$(".profile_table > tbody").sortable({
+			connectWith: ".profile_table > tbody"
+		}).disableSelection();
+
+		$(".template_table > tbody").sortable({
+			connectWith: ".template_table > tbody"
+		}).disableSelection();
 
 		// Fill in word lists
 		$("#custom_list").val(custom_words.join(", "));
