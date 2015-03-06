@@ -91,7 +91,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 }
 
 .opt_table .scroll_area {
-	max-height: 200px;
+	max-height: 275px;
 	overflow-y: auto;
 	overflow-x: visible;
 	width: 100%;
@@ -99,8 +99,9 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 
 .opt_table li {
 	display: block;
-	vertical-align: middle;
-	padding: 5px;
+	vertical-align: bottom;
+	padding: 0 5px 5px 5px;
+	margin: 5px 0 0 0;
 }
 
 .opt_table div {
@@ -137,13 +138,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 #profiles li > div.mode_col {
 	width: 200px;
 }
-
-.opt_table input:not([type=radio]), .opt_table select,
-.opt_table div.mode_buttons {
-/*	margin-left: auto;
-	margin-right: auto;
-	display: inline-block;
-*/}
 
 .opt_table input:not([type=radio]), .opt_table select {
 	width: 95%;
@@ -220,14 +214,11 @@ input.import_go_button {
 	background: #023557;
 }
 
-span.ui-selectmenu-text, span.ui-button-text {
-	padding-top: 0;
-	padding-bottom: 0;
+span.ui-selectmenu-button > span.ui-selectmenu-text, span.ui-button-text {
+	padding: .4em 1em;
 }
 
 .ui-selectmenu-button {
-	width: 100px;
-	margin-left: auto;
-	margin-right: auto;
-	display: inline-block;
+	position: relative;
+	top: 5px;
 }

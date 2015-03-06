@@ -90,7 +90,7 @@ function addProfileRow(data) {
 	}).button();
 
 	// Apply jQueryUI
-	row.find('.template').selectmenu();
+	row.find(".template").selectmenu();
 	row.find(".mode_buttons").buttonset();
 
 	// Wire up profile select
@@ -109,7 +109,7 @@ function addProfileRow(data) {
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
-	var row = $(element).parents("tr");
+	var row = $(element).parents("li");
 	if (template_name !== 'none') {
 		var selected_template = null;
 
@@ -406,12 +406,16 @@ $(document).ready(function() {
 		}
 
 		// Set up sortable jQueryUI on profile and template tables
-		$(".profile_table > tbody").sortable({
-			connectWith: ".profile_table > tbody"
+		$(".profile_table > .scroll_area").sortable({
+			connectWith: ".profile_table > .scroll_area",
+			placeholder: "ui-state-highlight",
+			axis: "y",
 		}).disableSelection();
 
 		$(".template_table > tbody").sortable({
-			connectWith: ".template_table > tbody"
+			connectWith: ".template_table > tbody",
+			placeholder: "ui-state-highlight",
+			axis: "y",
 		}).disableSelection();
 
 		// Fill in word lists
