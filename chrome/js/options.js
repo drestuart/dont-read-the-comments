@@ -491,7 +491,7 @@ $(document).ready(function() {
 		var textarea_id = $(this).attr("data-for");
 		$("#" + textarea_id).show();
 		$(this).hide();
-	});
+	}).button();
 
 	// Export buttons
 	$("#export_profiles").on("click", exportProfiles).button();
