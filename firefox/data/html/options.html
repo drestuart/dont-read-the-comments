@@ -16,29 +16,20 @@
         <br>
         <br>
         <h2>Website Profiles</h2>
-        <table id="profiles" class="opt_table">
-          <thead>
-            <tr>
-              <th>Domain</th>
-              <th class="mode_col">Mode</th>
-              <th>Section Selector</th>
-              <th>Comment Selector</th>
-              <th>Template</th>
-              <th class="delete_col"></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-            <tr class="control_row">
-              <td><input type="button" value="+" id="add_profile" class="add_row"></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+        <ul id="profiles" class="opt_table profile_table">
+          <li class="profile_row header_row">
+            <div>Domain</div>
+            <div class="mode_col">Mode</div>
+            <div>Section Selector</div>
+            <div>Comment Selector</div>
+            <div>Template</div>
+            <div class="delete_col">&nbsp;</div>
+          </li>
+          <div class="scroll_area"></div>
+          <li class="profile_row control_row">
+            <div><input type="button" value="+" id="add_profile" class="add_row"></div>
+          </li>
+        </ul>
         <p>
           <input type="button" value="Export" id="export_profiles">
           <input type="button" value="Import" id="import_profiles">
@@ -48,25 +39,18 @@
       </div>
       <div id="templates_section" class="options_section">
         <h2>Comment System Templates</h2>
-        <table id="templates" class="opt_table">
-          <thead>
-            <tr>
-              <th>Comment System</th>
-              <th>Section Selector</th>
-              <th>Comment Selector</th>
-              <th class="delete_col"></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>  
-          <tfoot>
-            <tr class="control_row">
-              <td><input type="button" value="+" id="add_template" class="add_row"></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+        <ul id="templates" class="opt_table template_table">
+          <li class="template_row header_row">
+            <div>Comment System</div>
+            <div>Section Selector</div>
+            <div>Comment Selector</div>
+            <div class="delete_col">&nbsp;</div>
+          </li>
+          <div class="scroll_area"></div>
+          <li class="template_row control_row">
+            <div><input type="button" value="+" id="add_template" class="add_row"></div>
+          </li>
+        </ul>
         <p>
           <input type="button" value="Export" id="export_templates">
           <input type="button" value="Import" id="import_templates">
@@ -84,19 +68,19 @@
         <div class="word_list_area">
           <h3>Profanity</h3>
           <input type="checkbox" id="profanity_check"><label for="profanity_check">Enabled</label>
-          <p><a id="profanity_show" href="javascript:void()" class="textarea_show" data-for="profanity_list">Show</a></p>
+          <input type="button" id="profanity_show" class="textarea_show" data-for="profanity_list" value="Show">
           <textarea readonly id="profanity_list"></textarea>
         </div>
         <div class="word_list_area">
           <h3>Obscenity</h3>
           <input type="checkbox" id="obscenity_check"><label for="obscenity_check">Enabled</label>
-          <p><a id="obscenity_show" href="javascript:void()" class="textarea_show" data-for="obscenity_list">Show</a></p>
+          <input type="button" id="obscenity_show" class="textarea_show" data-for="obscenity_list" value="Show">
           <textarea readonly id="obscenity_list"></textarea>
         </div>
         <div class="word_list_area">
           <h3>Bigotry</h3>
           <input type="checkbox" id="bigotry_check"><label for="bigotry_check">Enabled</label>
-          <p><a id="bigotry_show" href="javascript:void()" class="textarea_show" data-for="bigotry_list">Show</a></p>
+          <input type="button" id="bigotry_show" class="textarea_show" data-for="bigotry_list" value="Show">
           <textarea readonly id="bigotry_list"></textarea>
         </div>
         <div class="word_list_area">

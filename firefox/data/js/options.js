@@ -24,9 +24,9 @@ var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 
 function addProfileRow(data) {
-	var rowHTML = '<tr id="profile' + numProfiles +'">' +
-		'<td><input type="text" class="domain" name="domain"></td>' +
-		'<td class="mode_group">' +
+	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row">' +
+		'<div><input type="text" class="domain" name="domain"></div>' +
+		'<div class="mode_col">' +
 			'<div class="mode_buttons">' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
 				'<label for="mode_all' + numProfiles +'">All</label>' +
@@ -35,16 +35,16 @@ function addProfileRow(data) {
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
 				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
 			'</div>' +
-		'</td>' +
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
-		'<td><select class="template" name="template"><option value="none">None</option></select></td>' +
-		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
-	'</tr>';
+		'</div>' +
+		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
+		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
+		'<div><select class="template" name="template"><option value="none">None</option></select></div>' +
+		'<div class="delete_col"><input type="button" value="-" class="delete_row"></div>' +
+	'</li>';
 
-	$("table#profiles > tbody").append(rowHTML);
+	$("#profiles .scroll_area").append(rowHTML);
 
-	var row = $('tr#profile' + numProfiles);
+	var row = $('li#profile' + numProfiles);
 
 	// Populate template select list
 	for (t of templates) {
@@ -76,7 +76,7 @@ function addProfileRow(data) {
 				row.find("." + f).val('none');
 			}
 			else if (f === 'mode') {
-				row.find(".mode_group input[type=radio][value=" + value + "]").prop('checked', true);
+				row.find(".mode_col input[type=radio][value=" + value + "]").prop('checked', true);
 			}
 			else {
 				row.find("." + f).val(value);
@@ -86,11 +86,11 @@ function addProfileRow(data) {
 
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
-		$(this).parents("tr").remove();
+		$(this).parents("li").remove();
 	}).button();
 
 	// Apply jQueryUI
-	row.find('.template').selectmenu();
+	row.find(".template").selectmenu();
 	row.find(".mode_buttons").buttonset();
 
 	// Wire up profile select
@@ -109,7 +109,7 @@ function addProfileRow(data) {
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
-	var row = $(element).parents("tr");
+	var row = $(element).parents("li");
 	if (template_name !== 'none') {
 		var selected_template = null;
 
@@ -137,17 +137,17 @@ function fillInTemplateValues(element) {
 numTemplates = 0;
 
 function addTemplateRow(data) {
-	var rowHTML = '<tr id="template' + numTemplates +'">' +
-		'<td><input type="text" class="system" name="system"></td>' +
-		'<td><input type="text" class="section_selector" name="section_selector"></td>' +
-		'<td><input type="text" class="comment_selector" name="comment_selector"></td>' +
-		'<td class="delete_col"><input type="button" value="-" class="delete_row"></td>' +
-	'</tr>';
+	var rowHTML = '<li id="template' + numTemplates +'"  class="template_row">' +
+		'<div><input type="text" class="system" name="system"></div>' +
+		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
+		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
+		'<div class="delete_col"><input type="button" value="-" class="delete_row"></div>' +
+	'</li>';
 
-	$("table#templates > tbody").append(rowHTML);
+	$("#templates > .scroll_area").append(rowHTML);
 
 	if (typeof data !== 'undefined') {
-		var row = $('tr#template' + numTemplates);
+		var row = $('li#template' + numTemplates);
 		var fields = ["system", "mode", "section_selector", "comment_selector"];
 		
 		for (f of fields) {
@@ -157,7 +157,7 @@ function addTemplateRow(data) {
 
 	// Wire up the delete button
 	$('#template' + numTemplates + ' .delete_row').on('click', function() {
-		$(this).parents("tr").remove();
+		$(this).parents("li").remove();
 	}).button();
 
 	numTemplates++;
@@ -167,7 +167,7 @@ function getProfileData() {
 
 	var retArr = [];
 
-	$("table#profiles > tbody").find("tr").each(function(ind, row) {
+	$("#profiles > .scroll_area").find("li").each(function(ind, row) {
 		row = $(row); // I mean really
 		var profile = {};
 		var fields = profileFields;
@@ -210,7 +210,7 @@ function getProfileData() {
 function getTemplateData() {
 	var retArr = [];
 
-	$("table#templates > tbody").find("tr").each(function(ind, row) {
+	$("#templates > .scroll_area").find("li").each(function(ind, row) {
 		var template = {};
 		var fields = templateFields;
 		var empty = true;
@@ -365,6 +365,7 @@ $(document).ready(function() {
 		var obscenity_words = data["obscenity"];
 		var bigotry_words = data["bigotry"];
 
+		// Build profile and template tables
 		for (t of templates) {
 			addTemplateRow(t);
 		}
@@ -372,6 +373,19 @@ $(document).ready(function() {
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Set up sortable jQueryUI on profile and template tables
+		$(".profile_table > .scroll_area").sortable({
+			connectWith: ".profile_table > .scroll_area",
+			placeholder: "ui-state-highlight",
+			axis: "y",
+		}).disableSelection();
+
+		$(".template_table > .scroll_area").sortable({
+			connectWith: ".template_table > .scroll_area",
+			placeholder: "ui-state-highlight",
+			axis: "y",
+		}).disableSelection();
 
 		// Fill in word lists
 		$("#custom_list").val(custom_words.join(", "));
@@ -430,7 +444,7 @@ $(document).ready(function() {
 		addProfileRow();
 
 		// Scroll table to the bottom
-		$("#profiles tbody").scrollTop($("#profiles tbody")[0].scrollHeight);
+		$("#profiles .scroll_area").scrollTop($("#profiles .scroll_area")[0].scrollHeight);
 	}).button();
 
 	// Add template button
@@ -438,14 +452,14 @@ $(document).ready(function() {
 		addTemplateRow();
 
 		// Scroll table to the bottom
-		$("#templates tbody").scrollTop($("#templates tbody")[0].scrollHeight);
+		$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
 	}).button();
 
 	$(".textarea_show").on("click", function() {
 		var textarea_id = $(this).attr("data-for");
 		$("#" + textarea_id).show();
 		$(this).hide();
-	});
+	}).button();
 
 	// Export buttons
 	$("#export_profiles").on("click", exportProfiles).button();
