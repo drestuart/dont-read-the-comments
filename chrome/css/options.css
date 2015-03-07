@@ -1,3 +1,5 @@
+/* General page styles */
+
 * {
 	font-family: Helvetica, sans-serif;
 }
@@ -82,11 +84,49 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	border: none;
 }
 
+/* Profile and Template tables */
+
+
+/* Header row widths */
+
+#profiles li.header_row > div {
+	width: 11%;
+	margin: 0 1.4%;
+}
+
+#profiles li.header_row > div.mode_col {
+	width: 32%;
+}
+
+#profiles li.header_row > div.delete_col {
+	width: 0;
+}
+
+/* Main table widths */
+
+#profiles li > div {
+	width: 12%;
+	margin: 0 1.4%;
+}
+
+#profiles li > div.mode_col {
+	width: 32%;
+}
+
+#profiles li > div.delete_col {
+	width: 3%;
+}
+
+#profiles div.scroll_area li {
+	font-size: 12px;
+}
+
 .opt_table {
 	display: block;
     list-style: none;
     padding-left: 0;
-    width: 95%;
+    /*width: 95%;*/
+    width: 100%;
     overflow: visible;
 }
 
@@ -99,6 +139,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 
 .opt_table li {
 	display: block;
+	width: 98%;
 	vertical-align: bottom;
 	padding: 0 5px 5px 5px;
 	margin: 5px 0 0 0;
@@ -108,35 +149,17 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	display: inline-block;
 }
 
-.opt_table .header_row > div {
+.opt_table li.header_row {
+	font-size: 15px;
+}
+
+.opt_table li.header_row div {
 	display: inline-block;
 	text-align: center;
 }
 
-#profiles {
-	width: 100%;
-}
-
-#profiles li {
-	width: 98%;
-}
-
-#profiles li > div {
-	width: 90px;
-	margin: 0 5px;
-	font-size: 12px;
-}
-
-#profiles li.header_row > div {
-	font-size: 15px;
-}
-
-#profiles li > div.delete_col, li > #templates div.delete_col {
+.opt_table input.delete_row {
 	width: 20px;
-}
-
-#profiles li > div.mode_col {
-	width: 200px;
 }
 
 .opt_table input:not([type=radio]), .opt_table select {
@@ -147,10 +170,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	width: auto;
 }
 
-.opt_table input.delete_row {
-	width: 20px;
-}
-
 #profiles input.add_row {
 	margin: 0 0 0 2px;
 }
@@ -159,8 +178,12 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	margin: 0 0 0 6px;
 }
 
-.profile_row, .template_row {
-
+.scroll_area .profile_row, .scroll_area .template_row {
+	text-align: center;
+	border: 1px solid #cccccc;
+	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
+	font-weight: bold;
+	color: #023557;
 }
 
 .profile_row:nth-child(odd), .template_row:nth-child(odd) {
@@ -170,6 +193,16 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 .profile_row:nth-child(even), .template_row:nth-child(even) {
 
 }
+
+textarea.export_area {
+	display: none;
+}
+
+input.import_go_button {
+	display: none;
+}
+
+/* Other options page sections */
 
 div#comment_threshold {
 	margin: 10px 0;
@@ -198,14 +231,6 @@ div.word_list_area textarea:not(#custom_list) {
 
 div.word_list_area h3 {
 	display: inline;
-}
-
-textarea.export_area {
-	display: none;
-}
-
-input.import_go_button {
-	display: none;
 }
 
 /* jQuery UI overrides */

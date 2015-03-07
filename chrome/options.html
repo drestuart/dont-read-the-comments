@@ -61,25 +61,18 @@
       </div>
       <div id="templates_section" class="options_section">
         <h2>Comment System Templates</h2>
-        <table id="templates" class="opt_table template_table">
-          <thead>
-            <tr>
-              <th>Comment System</th>
-              <th>Section Selector</th>
-              <th>Comment Selector</th>
-              <th class="delete_col"></th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>  
-          <tfoot>
-            <tr class="control_row">
-              <td><input type="button" value="+" id="add_template" class="add_row"></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+        <ul id="templates" class="opt_table template_table">
+          <li class="template_row header_row">
+            <div>Comment System</div>
+            <div>Section Selector</div>
+            <div>Comment Selector</div>
+            <div class="delete_col">&nbsp;</div>
+          </li>
+          <div class="scroll_area"></div>
+          <li class="template_row control_row">
+            <div><input type="button" value="+" id="add_template" class="add_row"></div>
+          </li>
+        </ul>
         <p>
           <input type="button" value="Export" id="export_templates">
           <input type="button" value="Import" id="import_templates">
