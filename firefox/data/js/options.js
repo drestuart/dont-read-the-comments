@@ -527,8 +527,9 @@ $(document).ready(function() {
 		modal: true,
 		buttons: {
 			"Reset": function() {
-				importStartingData();
-				$(this).dialog("close");
+				Browser.importStartingData(function() {
+					location.reload();
+				});
 			},
 			Cancel: function() {
 				$(this).dialog("close");
