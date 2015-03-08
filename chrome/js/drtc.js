@@ -64,45 +64,51 @@ function getZIndex(elt) {
 	return z + 1;
 }
 
-function hideComments(comment_selector) {
-	var comments = $(comment_selector + ":visible");
+function constructSelector(selector_in) {
+	var selector = '';
+	var selectors = selector_in.split(/\s*,\s*/);
 
+	for (var sel of selectors) {
+		selector += sel + ":visible, "
+	}
+
+	selector = selector.replace(/, $/, ''); // Trim off the last comma and space
+	return selector;
+}
+
+function hideComments(comment_selector) {
 	// Ignore empty selector
 	if (comment_selector.trim() === "") {
-		// console.log("DRTC: no comment selector defined");
 		return false;
 	}
+
+	var selector = constructSelector(comment_selector);
+	var comments = $(selector);
 
 	// If the element we want isn't present on the page, do nothing
 	if (comments.length === 0) {
-		// console.log("DRTC: no comments found for " + comment_selector);
 		return false;
 	}
 
-	console.log("DRTC: comments found for " + comment_selector);
-
-	comments.each(function(index, elt) {
-		hideElement($(elt), comment_threshold);
+	comments.each(function(index) {
+		hideElement($(this), comment_threshold);
 	});
 	return true;
 }
 
 function hideCommentSection(section_selector) {
-	var section = $(section_selector + ":visible");
-
 	// Ignore empty selector
 	if (section_selector.trim() === "") {
-		// console.log("DRTC: no comment section selector defined");
 		return false;
 	}
+
+	var selector = constructSelector(section_selector);
+	var section = $(selector);
 
 	// If the element we want isn't present on the page, do nothing
 	if (section.length === 0) {
-		// console.log("DRTC: no comment section found for " + section_selector);
 		return false;
 	}
-
-	console.log("DRTC: comment section found for " + section_selector);
 
 	hideElement(section);
 	return true;
@@ -180,9 +186,9 @@ function hideElement(elt, ct) {
 
 		var parents = elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
-			elt = $(parents[i]);
+			elti = $(parents[i]);
 
-			bgci = elt.css("background-color");
+			bgci = elti.css("background-color");
 			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)" && bgci !== "transparent") {
 				bgc = bgci;
 				break;
@@ -206,7 +212,7 @@ function hideElement(elt, ct) {
 function styleShowHide(elt, showHideElt, element_id, ct) {
 	var bad_ratio;
 
-	if (typeof elt.attr("__drtc_ratio") !== 'undefined') {
+	if (typeof bad_ratios[element_id] !== 'undefined') {
 		bad_ratio = elt.attr("__drtc_ratio");
 	}
 	else {
@@ -267,10 +273,11 @@ function styleShowHide(elt, showHideElt, element_id, ct) {
 }
 
 color_map = {
-			0.4 : "#f00",
-			0.2 : "orange",
+			0.2 : "#f00",
+			0.1 : "orangered",
+			0.0001 : "yellow",
 			0 : "#bbb"};
-ratios = [0.4, 0.2, 0];
+ratios = [0.2, 0.1, 0.00001, 0];
 
 function getShowHideColor(ratio) {
 	for (var r of ratios) {
