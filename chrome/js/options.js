@@ -385,6 +385,14 @@ function validateImport(obj, fields) {
 	return true;
 }
 
+function getSliderText(val) {
+    if (val === 0) {
+	    return val + " (hide everything)";
+    }
+
+    return val;
+}
+
 $(document).ready(function() {
 
 	// Load up comment system templates and profiles
@@ -449,26 +457,20 @@ $(document).ready(function() {
 		}
 
 		// Set up slider
+		var ctselect = $("#comment_threshold_select");
+		ctselect[0].selectedIndex = ct;
 	    $("#comment_threshold").slider({
-			value: ct,
 			min: 0,
-			max: 5,
-			step: 0.5,
+			max: 11, // !!!
 			range: "min",
+			value: ctselect[0].selectedIndex,
 			orientation: "horizontal",
 			slide: function( event, ui ) {
-				if (ui.value === 0) {
-					$("#comment_threshold_value").val(ui.value + " (hide everything)");
-				}
-				else {
-					$("#comment_threshold_value").val(ui.value);
-				}
+				ctselect[0].selectedIndex = ui.value;
+				$("#comment_threshold_value").val(ctselect.find("option:selected").text());
 			}
 	    });
-	    $("#comment_threshold_value").val($("#comment_threshold").slider("value"));
-	    if (ct === 0) {
-		    $("#comment_threshold_value").val($("#comment_threshold").slider("value") + " (hide everything)");
-	    }
+		$("#comment_threshold_value").val(ctselect.find("option:selected").text());
 	});
 
 	// Add profile button

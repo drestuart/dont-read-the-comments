@@ -230,9 +230,14 @@ div#comment_threshold {
 }
 
 input#comment_threshold_value {
-	border:0;
-	font-weight:bold;
+	border: 0;
+	font-weight: bold;
 	font-size: 12px;
+	width: 100%;
+}
+
+select#comment_threshold_select {
+	display: none;
 }
 
 div.word_list_area {

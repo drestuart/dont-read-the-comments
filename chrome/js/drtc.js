@@ -351,7 +351,7 @@ $(document).ready(function() {
 	Browser.getContentScriptData(function(data) {
 		var profiles = data["profiles"];
 		var templates = data["templates"];
-		comment_threshold = data["comment_threshold"]/10;
+		comment_threshold = data["comment_threshold"]/20;
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
