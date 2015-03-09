@@ -212,7 +212,7 @@ function hideElement(elt, ct) {
 function styleShowHide(elt, showHideElt, element_id, ct) {
 	var bad_ratio;
 
-	if (typeof bad_ratios[element_id] !== 'undefined') {
+	if (typeof elt.attr("__drtc_ratio") !== 'undefined') {
 		bad_ratio = elt.attr("__drtc_ratio");
 	}
 	else {

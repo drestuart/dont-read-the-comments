@@ -64,32 +64,46 @@ function getZIndex(elt) {
 	return z + 1;
 }
 
-function hideComments(comment_selector) {
-	var comments = $(comment_selector + ":visible");
+function constructSelector(selector_in) {
+	var selector = '';
+	var selectors = selector_in.split(/\s*,\s*/);
 
+	for (var sel of selectors) {
+		selector += sel + ":visible, "
+	}
+  
+	selector = selector.replace(/, $/, ''); // Trim off the last comma and space
+	return selector;
+}
+
+function hideComments(comment_selector) {
 	// Ignore empty selector
 	if (comment_selector.trim() === "") {
 		return false;
 	}
+
+	var selector = constructSelector(comment_selector);
+ 	var comments = $(selector);
 
 	// If the element we want isn't present on the page, do nothing
 	if (comments.length === 0) {
 		return false;
 	}
 
-	comments.each(function(index, elt) {
-		hideElement($(elt), comment_threshold);
+	comments.each(function(index) {
+		hideElement($(this), comment_threshold);
 	});
 	return true;
 }
 
 function hideCommentSection(section_selector) {
-	var section = $(section_selector + ":visible");
-
 	// Ignore empty selector
 	if (section_selector.trim() === "") {
 		return false;
 	}
+
+	var selector = constructSelector(section_selector);
+ 	var section = $(selector);
 
 	// If the element we want isn't present on the page, do nothing
 	if (section.length === 0) {
@@ -172,9 +186,9 @@ function hideElement(elt, ct) {
 
 		var parents = elt.parents();
 		for (var i = 0 ; i < parents.length ; i++) {
-			elt = $(parents[i]);
+			elti = $(parents[i]);
 
-			bgci = elt.css("background-color");
+			bgci = elti.css("background-color");
 			if (bgci !== "rgba(0, 0, 0, 0)" && bgci !== "hsla(0, 0, 0, 0)" && bgci !== "transparent") {
 				bgc = bgci;
 				break;
@@ -259,10 +273,11 @@ function styleShowHide(elt, showHideElt, element_id, ct) {
 }
 
 color_map = {
-			0.4 : "#f00",
-			0.2 : "orange",
+			0.2 : "#f00",
+			0.1 : "orangered",
+			0.0001 : "yellow",
 			0 : "#bbb"};
-ratios = [0.4, 0.2, 0];
+ratios = [0.2, 0.1, 0.00001, 0];
 
 function getShowHideColor(ratio) {
 	for (var r of ratios) {
@@ -343,7 +358,7 @@ $(document).ready(function() {
 	Browser.getContentScriptData(function(data) {
 		var profiles = data["profiles"];
 		var templates = data["templates"];
-		comment_threshold = data["comment_threshold"]/10;
+		comment_threshold = data["comment_threshold"]/20;
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
 
