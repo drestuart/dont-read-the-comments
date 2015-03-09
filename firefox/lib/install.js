@@ -52,7 +52,12 @@ var starting_profiles = [
 	{"domain": "clientsfromhell.net", "mode": "all", "section_selector": "#dsq-2", "comment_selector": "div.post-content", "template": "Disqus"},
 	{"domain": "theatlantic.com", "mode": "all", "section_selector": "#dsq-2", "comment_selector": "div.post-content", "template": "Disqus"},
 	{"domain": "arstechnica.com", "mode": "all", "section_selector": "#comments-area", "comment_selector": ".comment", "template": ""},
-	{"domain": "huffingtonpost.co*", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"}
+	{"domain": "huffingtonpost.co*", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
+	{"domain": "theguardian.com", "mode": "all", "section_selector": ".discussion__main-comments.js-discussion-main-comments", "comment_selector": ".d-comment__inner,  .d-comment--response", "template": ""},
+	{"domain": "thinkprogress.org", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
+	{"domain": "nymag.com", "mode": "all", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper", "template": "Livefyre"},
+	{"domain": "fusion.net", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
+	{"domain": "patreon.com", "mode": "all", "section_selector": "#creation-comments > div.thread > div.cb_comment.ranked_popular.comment_0", "comment_selector": ".comment_block", "template": ""}
 ];
 
 var starting_templates = [
