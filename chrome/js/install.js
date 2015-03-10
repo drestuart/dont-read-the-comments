@@ -55,7 +55,10 @@ var starting_profiles = [
 	{"domain": "thinkprogress.org", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
 	{"domain": "nymag.com", "mode": "all", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper", "template": "Livefyre"},
 	{"domain": "fusion.net", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
-	{"domain": "patreon.com", "mode": "all", "section_selector": "#creation-comments > div.thread > div.cb_comment.ranked_popular.comment_0", "comment_selector": ".comment_block", "template": ""}
+	{"domain": "patreon.com", "mode": "all", "section_selector": "#creation-comments > div.thread > div.cb_comment.ranked_popular.comment_0", "comment_selector": ".comment_block", "template": ""},
+	{"domain": "stream.aljazeera.com", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook"},
+	{"domain": "politico.com", "mode": "all", "section_selector": "#dsq-2", "comment_selector": "div.post-content", "template": "Disqus"},
+	{"domain": "telegraph.co.uk", "mode": "all", "section_selector": "#dsq-2", "comment_selector": "div.post-content", "template": "Disqus"}
 ];
 
 var starting_templates = [
@@ -82,11 +85,7 @@ function loadStartingData() {
 	fresh_data.custom_words = starting_custom_words;
 	fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
-	Browser.save(fresh_data, 
-    	function() {
-            console.log("Installed fresh data");
-    	}
-    );
+	Browser.save(fresh_data, function() {});
 }
 
 function importStartingData() {
@@ -117,9 +116,8 @@ function importStartingData() {
 		console.log("Done!");
 		// Save data
 		Browser.save(save_data, function() {
-			console.log("Import complete!");
+			location.reload();
 		});
-		location.reload();
 	});
 }
 
