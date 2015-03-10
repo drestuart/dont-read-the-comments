@@ -64,7 +64,6 @@ $(document).ready(function() {
 		}
 		
 		Browser.save({"profiles" : profiles}, function() {
-			console.log("Saved!");
 			$("#message").text("Saved");
 			Browser.reload();
 		});
@@ -81,7 +80,6 @@ $(document).ready(function() {
 	});
 
 	$('#section_selector, #comment_selector').on('input', function() {
-		console.log("Selector update!");
 		$('#template').val('');
 		$('#template').selectmenu("refresh");
 	});
