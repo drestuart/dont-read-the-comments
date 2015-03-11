@@ -153,6 +153,9 @@ function addTemplateRow(data) {
 		for (f of fields) {
 			row.find("." + f).val(data[f]);
 		}
+
+		// Make the system name field readonly
+		row.find(".system").attr("readonly", "readonly");
 	}
 
 	// Wire up the delete button
