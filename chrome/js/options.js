@@ -253,6 +253,10 @@ function importProfiles() {
 	// Validate input
 	if (Array.isArray(imp_profiles)) {
 		for (prof of imp_profiles) {
+
+			// Set default values
+			prof = setProfileDefaults(prof);
+
 			if (!validateProfile(prof)) {
 				console.log("Failed validation: ");
 				console.log(prof);
@@ -327,6 +331,18 @@ function importTemplates() {
 		console.log("Saved!");
 		location.reload();
 	});
+}
+
+function setProfileDefaults(profile) {
+	var defaults = {'mode' : 'all', 'category' : 'uncategorized'};
+
+	for (var field in defaults) {
+		if (typeof profile[field] === 'undefined' || profile[field] === '') {
+			profile[field] = defaults[field];
+		}
+	}
+
+	return profile;
 }
 
 function validateProfile(obj) {
@@ -518,19 +534,6 @@ $(document).ready(function() {
 		$("#templates_textarea").show().val("").prop('readonly', false);
 	}).button();
 
-	// Import trigger buttons
-	$("#import_profiles_go").on("click", function() {
-		if (confirm("This will overwrite any existing profiles with the same domain. Continue?")) {
-			importProfiles();
-		}
-	}).button();
-
-	$("#import_templates_go").on("click", function() {
-		if (confirm("This will overwrite any existing templates with the same name. Continue?")) {
-			importTemplates();
-		}
-	}).button();
-
 	// Save options
 	$(".save_button").button().click(function(event) {
 		var data = {};
@@ -553,21 +556,20 @@ $(document).ready(function() {
 		data.word_lists_enabled = word_lists_enabled;
 
 		Browser.save(data, function() {
-			console.log("Saved!");
 			location.reload();
 		});
 	});
 
-	// Reset options
+	// Set up modals
 	var resetConfirm = $("#reset-confirm").dialog({
 		resizable: false,
 		autoOpen: false,
 		modal: true,
 		buttons: {
 			"Reset": function() {
-				console.log("Resetting!");
 				importStartingData();
 				$(this).dialog("close");
+				location.reload();
 			},
 			Cancel: function() {
 				$(this).dialog("close");
@@ -578,6 +580,48 @@ $(document).ready(function() {
 	$(".reset_button").button().click(function(event) {
 		resetConfirm.dialog("open");
 	});
+
+	var profileImportConfirm = $("#profile-import-confirm").dialog({
+		resizable: false,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"Import": function() {
+				importProfiles();
+				$(this).dialog("close");
+				location.reload();
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+
+	var templateImportConfirm = $("#template-import-confirm").dialog({
+		resizable: false,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			"Import": function() {
+				importTemplates();
+				$(this).dialog("close");
+				location.reload();
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+
+	// Import trigger buttons
+	$("#import_profiles_go").on("click", function() {
+		profileImportConfirm.dialog("open");
+	}).button();
+
+	$("#import_templates_go").on("click", function() {
+		templateImportConfirm.dialog("open");
+	}).button();
+
 });
 
 
