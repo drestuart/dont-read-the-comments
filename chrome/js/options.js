@@ -421,13 +421,13 @@ $(document).ready(function() {
 			connectWith: ".profile_table > .scroll_area",
 			placeholder: "ui-state-highlight",
 			axis: "y",
-		}).disableSelection();
+		});
 
 		$(".template_table > .scroll_area").sortable({
 			connectWith: ".template_table > .scroll_area",
 			placeholder: "ui-state-highlight",
 			axis: "y",
-		}).disableSelection();
+		});
 
 		// Fill in word lists
 		$("#custom_list").val(custom_words.join(", "));
