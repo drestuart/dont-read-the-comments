@@ -6,7 +6,7 @@
   "description": "A free browser extension which hides comment sections. It can work with any site and has settings for many sites built-in.",
   "version": "0.5.3",
   "author": "Dan Stuart",
-  "homepage_url": "https://github.com/drestuart/dont-read-the-comments",
+  "homepage_url": "http://www.coldbrewsoftware.com/drtc",
 
   "permissions": [
     "webNavigation",
