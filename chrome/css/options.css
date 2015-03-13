@@ -212,6 +212,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
 	color: #023557;
+	cursor: move;
 }
 
 textarea.export_area {
