@@ -164,7 +164,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 .opt_table li {
 	display: block;
 	width: 98%;
-	vertical-align: bottom;
 	padding: 0 5px 5px 5px;
 	margin: 5px 0 0 0;
 }
@@ -186,24 +185,13 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	text-align: center;
 }
 
-.opt_table input.delete_row {
-	width: 20px;
-}
-
-.opt_table input:not([type=radio]), .opt_table select {
+.opt_table input:not([type=radio]):not(.delete_row), .opt_table select {
 	width: 95%;
 }
 
-.opt_table input.add_row {
-	width: auto;
-}
-
-#profiles input.add_row {
-	margin: 0 0 0 2px;
-}
-
-#templates input.add_row {
-	margin: 0 0 0 6px;
+.opt_table button.add_row {
+	width: 33px;
+	height: 20px;
 }
 
 .scroll_area .profile_row, .scroll_area .template_row {
@@ -219,7 +207,7 @@ textarea.export_area {
 	display: none;
 }
 
-input.import_go_button {
+button.import_go_button {
 	display: none;
 }
 

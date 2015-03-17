@@ -39,7 +39,7 @@ function addProfileRow(data) {
 		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
 		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
 		'<div><select class="template" name="template"><option value="none">None</option></select></div>' +
-		'<div class="delete_col"><input type="button" value="-" class="delete_row"></div>' +
+		'<div class="delete_col"><button class="delete_row">Delete</button></div>' +
 	'</li>';
 
 	$("#profiles .scroll_area").append(rowHTML);
@@ -87,7 +87,12 @@ function addProfileRow(data) {
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
 		$(this).parents("li").remove();
-	}).button();
+	}).button({
+		icons: {
+			primary: "ui-icon-closethick"
+	    },
+	    text: false
+	});
 
 	// Apply jQueryUI
 	row.find(".template").selectmenu();
@@ -141,7 +146,7 @@ function addTemplateRow(data) {
 		'<div><input type="text" class="system" name="system"></div>' +
 		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
 		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
-		'<div class="delete_col"><input type="button" value="-" class="delete_row"></div>' +
+		'<div class="delete_col"><button class="delete_row"></button></div>' +
 	'</li>';
 
 	$("#templates > .scroll_area").append(rowHTML);
@@ -161,7 +166,12 @@ function addTemplateRow(data) {
 	// Wire up the delete button
 	$('#template' + numTemplates + ' .delete_row').on('click', function() {
 		$(this).parents("li").remove();
-	}).button();
+	}).button({
+		icons: {
+			primary: "ui-icon-closethick"
+	    },
+	    text: false
+	});
 
 	numTemplates++;
 }
@@ -500,7 +510,11 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#profiles .scroll_area").scrollTop($("#profiles .scroll_area")[0].scrollHeight);
-	}).button();
+	}).button({
+		icons: {
+			primary: "ui-icon-plusthick"
+		}
+	});
 
 	// Add template button
 	$("#add_template").on('click', function() {
@@ -508,7 +522,11 @@ $(document).ready(function() {
 
 		// Scroll table to the bottom
 		$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
-	}).button();
+	}).button({
+		icons: {
+			primary: "ui-icon-plusthick"
+		}
+	});
 
 	$(".textarea_show").on("click", function() {
 		var textarea_id = $(this).attr("data-for");
@@ -618,11 +636,15 @@ $(document).ready(function() {
 	// Import trigger buttons
 	$("#import_profiles_go").on("click", function() {
 		profileImportConfirm.dialog("open");
-	}).button();
+	}).button({
+		text: true
+	});
 
 	$("#import_templates_go").on("click", function() {
 		templateImportConfirm.dialog("open");
-	}).button();
+	}).button({
+		text: true
+	});
 
 });
 
