@@ -406,12 +406,14 @@ $(document).ready(function() {
 			connectWith: ".profile_table > .scroll_area",
 			placeholder: "ui-state-highlight",
 			axis: "y",
+			cursor: "grabbing",
 		});
 
 		$(".template_table > .scroll_area").sortable({
 			connectWith: ".template_table > .scroll_area",
 			placeholder: "ui-state-highlight",
 			axis: "y",
+			cursor: "grabbing",
 		});
 
 		// Fill in word lists
