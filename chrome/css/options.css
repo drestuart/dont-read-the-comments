@@ -255,6 +255,23 @@ div.word_list_area h3 {
 	display: inline;
 }
 
+/* Profile edit modal styles */
+
+#edit-profile {
+	height: 300px;
+}
+
+#edit-profile div.modal_row {
+	margin: 5px 0;
+	padding: 5px 0;
+}
+
+#edit-profile input:not([type=radio]),
+#edit-profile .ui-selectmenu-button,
+#edit-profile .mode_buttons {
+	float: right;
+}
+
 /* jQuery UI overrides */
 
 .ui-slider-range {
@@ -263,9 +280,4 @@ div.word_list_area h3 {
 
 span.ui-selectmenu-button > span.ui-selectmenu-text, span.ui-button-text {
 	padding: .4em 1em;
-}
-
-.ui-selectmenu-button {
-	position: relative;
-	top: 5px;
 }

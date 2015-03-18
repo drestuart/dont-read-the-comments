@@ -22,6 +22,7 @@ var profileFields = ["domain", "mode", "section_selector", "comment_selector", "
 var profileFieldsWithoutTemplate = ["domain", "mode", "section_selector", "comment_selector"];
 var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
+var editProfile;
 
 function addProfileRow(data) {
 	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row">' +
@@ -36,21 +37,16 @@ function addProfileRow(data) {
 				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
 			'</div>' +
 		'</div>' +
-		'<div><input type="text" class="section_selector" name="section_selector"></div>' +
-		'<div><input type="text" class="comment_selector" name="comment_selector"></div>' +
-		'<div><select class="template" name="template"><option value="none">None</option></select></div>' +
+		'<input type="hidden" class="section_selector" name="section_selector">' +
+		'<input type="hidden" class="comment_selector" name="comment_selector">' +
+		'<input type="hidden" class="template" name="template">' +
+		'<div><button class="edit_row">Edit</button></div>' +
 		'<div class="delete_col"><button class="delete_row">Delete</button></div>' +
 	'</li>';
 
 	$("#profiles .scroll_area").append(rowHTML);
 
 	var row = $('li#profile' + numProfiles);
-
-	// Populate template select list
-	for (t of templates) {
-		var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
-		row.find('.template').append(optionHTML);
-	}
 
 	// Populate supplied data
 	if (typeof data !== 'undefined') {
@@ -59,15 +55,6 @@ function addProfileRow(data) {
 		if (data['template'] !== 'none' && data['template'] !== '') {
 			var template_selector = row.find('.template');
 			template_selector.val(data['template']);
-
-			// If we got a valid template, fill in the selector values
-			if (fillInTemplateValues(template_selector)) {
-				fields = profileFieldsWithTemplate;
-			}
-			// If not, don't fill in the erroneous template value
-			else {
-				fields = profileFieldsWithoutTemplate;
-			}
 		}
 
 		for (f of fields) {
@@ -84,37 +71,55 @@ function addProfileRow(data) {
 		}
 	}
 
+	// Wire up edit button
+	row.find('.edit_row').on('click', function() {
+		var row = $(this).parents("li");
+
+		// Fill in modal fields
+		for (f of profileFields) {
+			var value = row.find("." + f).val();
+			if (f === 'template' && value === '') {
+				$("#edit-profile ." + f).val('none');
+			}
+			else if (f === 'mode') {
+				value = row.find("input.mode[type=radio]:checked").val();
+				$("#edit-profile .mode_buttons input[type=radio][value=" + value + "]").prop('checked', true);
+				$("#edit-profile .mode_buttons").buttonset();
+			}
+			else {
+				$("#edit-profile ." + f).val(value);
+			}
+		}
+
+		$("#edit-profile .profile_id").val(row.attr('id'));
+
+		editProfile.dialog("open");
+		$("#edit-profile .template").selectmenu("refresh");
+	}).button({
+		icons: {
+			primary: "ui-icon-pencil"
+		},
+		text: false
+	});
+
 	// Wire up delete button
 	row.find('.delete_row').on('click', function() {
 		$(this).parents("li").remove();
 	}).button({
 		icons: {
 			primary: "ui-icon-closethick"
-	    },
-	    text: false
+		},
+		text: false
 	});
 
 	// Apply jQueryUI
-	row.find(".template").selectmenu();
 	row.find(".mode_buttons").buttonset();
-
-	// Wire up profile select
-	row.find('.template').on('selectmenuchange', function() {
-		fillInTemplateValues(this);
-	});
-
-	// Wire up other fields
-	row.find('.section_selector, .comment_selector').on('input', function() {
-		row.find('.template').val('none');
-		row.find('.template').selectmenu("refresh");
-	});
 
 	numProfiles++;
 }
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
-	var row = $(element).parents("li");
 	if (template_name !== 'none') {
 		var selected_template = null;
 
@@ -127,8 +132,8 @@ function fillInTemplateValues(element) {
 
 		// Fill in template values
 		if (selected_template != null) {
-			row.find('.section_selector').val(selected_template['section_selector']);
-			row.find('.comment_selector').val(selected_template['comment_selector']);
+			$('#edit-profile .section_selector').val(selected_template['section_selector']);
+			$('#edit-profile .comment_selector').val(selected_template['comment_selector']);
 			return true;
 		}
 		// Didn't find the specified template for some reason
@@ -268,16 +273,12 @@ function importProfiles() {
 			prof = setProfileDefaults(prof);
 
 			if (!validateProfile(prof)) {
-				console.log("Failed validation: ");
-				console.log(prof);
 				return;
 			}
 		}
 	}
 	else if (imp_profiles !== null && typeof imp_profiles === 'object') {
 		if (!validateProfile(imp_profiles)) {
-			console.log("Failed validation:");
-			console.log(imp_profiles);
 			return;
 		}
 		// Put it in an array
@@ -296,7 +297,6 @@ function importProfiles() {
 	// Save and reload
 	var data = {profiles : profiles};
 	Browser.save(data, function() {
-		console.log("Saved!");
 		location.reload();
 	});
 }
@@ -307,16 +307,12 @@ function importTemplates() {
 	if (Array.isArray(imp_templates)) {
 		for (temp of imp_templates) {
 			if (!validateTemplate(temp)) {
-				console.log("Failed validation: ");
-				console.log(temp);
 				return;
 			}
 		}
 	}
 	else if (imp_templates !== null && typeof imp_templates === 'object') {
 		if (!validateTemplate(imp_templates)) {
-			console.log("Failed validation:");
-			console.log(imp_templates);
 			return;
 		}
 		// Put it in an array
@@ -328,9 +324,6 @@ function importTemplates() {
 	}
 
 	// Import
-	console.log("Importing templates: ");
-	console.log(imp_templates);
-
 	var temps = getTemplateData();
 
 	temps = Tools.mergeTemplates(temps, imp_templates);
@@ -338,7 +331,6 @@ function importTemplates() {
 	// Save and reload
 	var data = {templates : temps};
 	Browser.save(data, function() {
-		console.log("Saved!");
 		location.reload();
 	});
 }
@@ -361,7 +353,6 @@ function validateProfile(obj) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			console.log(msg);
 			alert("Import failed. " + msg);
 			return false;
 		}
@@ -376,7 +367,6 @@ function validateProfile(obj) {
 			}
 
 			var msg = "Missing field: " + field;
-			console.log(msg);
 			alert("Import failed. " + msg);
 			return false;
 		}
@@ -392,20 +382,16 @@ function validateTemplate(temp) {
 
 function validateImport(obj, fields) {
 	for (field in obj) {
-		console.log(field);
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			console.log(msg);
 			alert("Import failed. " + msg);
 			return false;
 		}
 	}
 
 	for (field of fields) {
-		console.log(field);
 		if (typeof obj[field] === 'undefined') {
 			var msg = "Missing field: " + field;
-			console.log(msg);
 			alert("Import failed. " + msg);
 			return false;
 		}
@@ -414,12 +400,25 @@ function validateImport(obj, fields) {
 	return true;
 }
 
-function getSliderText(val) {
-    if (val === 0) {
-	    return val + " (hide everything)";
-    }
+function editProfileSave() {
+	var profile_id = $("#edit-profile .profile_id").val();
+	var row = $("#" + profile_id);
 
-    return val;
+	for (f of profileFields) {
+		var value = $("#edit-profile ." + f).val();
+		if (f === 'template' && value === '') {
+			row.find("." + f).val('none');
+		}
+		else if (f === 'mode') {
+			value = $("#edit-profile input.mode[type=radio]:checked").val();
+			row.find(".mode_col input[type=radio][value=" + value + "]").prop('checked', true);
+			row.find(".mode_buttons").buttonset();
+		}
+		else {
+			row.find("." + f).val(value);
+		}
+	}
+
 }
 
 $(document).ready(function() {
@@ -441,6 +440,24 @@ $(document).ready(function() {
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Set up template menu in profile edit modal
+		for (t of templates) {
+			var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+			$("#edit-profile .template").append(optionHTML);
+		}
+
+		// Wire up template select
+		$("#edit-profile .template").selectmenu();
+		$("#edit-profile .template").on('selectmenuchange', function() {
+			fillInTemplateValues(this);
+		});
+
+		// Wire up other fields
+		$("#edit-profile .section_selector, #edit-profile .comment_selector").on('input', function() {
+			$("#edit-profile .template").val('none');
+			$("#edit-profile .template").selectmenu("refresh");
+		});
 
 		// Set up sortable jQueryUI on profile and template tables
 		$(".profile_table > .scroll_area").sortable({
@@ -483,7 +500,6 @@ $(document).ready(function() {
 			else {
 				text = "Disabled";
 			}
-			console.log("Setting text " + text + " for label[for=" + $(elt).attr('id') + "]");
 			$("label[for=" + $(elt).attr('id') + "] span.ui-button-text").text(text);
 		}
 
@@ -626,6 +642,22 @@ $(document).ready(function() {
 				importTemplates();
 				$(this).dialog("close");
 				location.reload();
+			},
+			Cancel: function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+
+	editProfile = $("#edit-profile").dialog({
+		resizable: false,
+		autoOpen: false,
+		modal: true,
+		height: 350,
+		buttons: {
+			"Done": function() {
+				editProfileSave();
+				$(this).dialog("close");
 			},
 			Cancel: function() {
 				$(this).dialog("close");

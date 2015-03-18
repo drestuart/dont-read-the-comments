@@ -140,6 +140,26 @@
     <div id="template-import-confirm" title="Import templates?">
       <p>This will overwrite any existing templates with the same name. Continue?</p>
     </div>
+
+    <!-- Edit profile modal -->
+    <div id="edit-profile" title="Edit Profile">
+      <div class="modal_row"><label for="modal_domain">Domain</label><input type="text" class="domain" name="domain" id="modal_domain"></div>
+      <div class="modal_row">
+        <label>Mode</label>
+        <div class="mode_buttons">
+          <input type="radio" class="mode" name="mode" id="mode_all" value="all">
+          <label for="mode_all">All</label>
+          <input type="radio" class="mode" name="mode" id="mode_individual" value="individual">
+          <label for="mode_individual">Individual</label>
+          <input type="radio" class="mode" name="mode" id="mode_disabled" value="disabled">
+          <label for="mode_disabled">Disabled</label>
+        </div>
+      </div>
+      <div class="modal_row"><label for="modal_section_selector">Section Selector</label><input type="text" class="section_selector" name="section_selector" id="modal_section_selector"></div>
+      <div class="modal_row"><label for="modal_comment_selector">Comment Selector</label><input type="text" class="comment_selector" name="comment_selector" id="modal_comment_selector"></div>
+      <div class="modal_row"><label for="modal_template">Template</label><select class="template" name="template" id="modal_template"><option value="none">None</option></select></div>
+      <input type="hidden" class="profile_id" name="profile_id">
+    </div>
   </body>
 </html>
 
