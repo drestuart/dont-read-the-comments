@@ -89,12 +89,26 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 /* Profile tables */
 /* Main table widths */
 
+ul.profile_table {
+	width: 49%;
+	border: 1px solid #cccccc;
+	padding: 0 5px;
+}
+
 .profile_table li > div {
 	margin: 0 3px;
 }
 
 .profile_table div.scroll_area li {
 	font-size: 12px;
+}
+
+.profile_table li.header {
+	border: 1px solid #0c9bfa;
+	background: #023557 url("images/ui-bg_gloss-wave_35_023557_500x100.png") 50% 50% repeat-x;
+	color: #ffffff;
+	font-weight: bold;
+	border-radius: 4px;
 }
 
 /* Template table */
@@ -118,10 +132,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 
 /* Main table widths */
 
-#templates {
-	width: 98%;
-}
-
 #templates li > div {
 	width: 28%;
 	margin: 0 1.4%;
@@ -137,7 +147,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	display: block;
     list-style: none;
     padding-left: 0;
-    width: 49%;
+    width: 98%;
     overflow: visible;
 }
 
