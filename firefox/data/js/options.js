@@ -26,7 +26,7 @@ var editProfile;
 
 function addProfileRow(data) {
 	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row">' +
-		'<div><input type="text" class="domain" name="domain"></div>' +
+		'<div><input type="text" class="domain" name="domain" readonly="readonly"></div>' +
 		'<div class="mode_col">' +
 			'<div class="mode_buttons">' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
@@ -506,18 +506,6 @@ $(document).ready(function() {
 			}
 	    });
 		$("#comment_threshold_value").val(ctselect.find("option:selected").text());
-	});
-
-	// Add profile button
-	$("#add_profile").on('click', function() {
-		addProfileRow();
-
-		// Scroll table to the bottom
-		$("#profiles .scroll_area").scrollTop($("#profiles .scroll_area")[0].scrollHeight);
-	}).button({
-		icons: {
-			primary: "ui-icon-plusthick"
-		}
 	});
 
 	// Add template button

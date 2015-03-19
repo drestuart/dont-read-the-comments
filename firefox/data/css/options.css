@@ -90,38 +90,28 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 /* Profile and Template tables */
 
 /* Profile tables */
-/* Header row widths */
-
-.profile_table li.header_row > div {
-	width: 11%;
-	margin: 0 1.4%;
-}
-
-.profile_table li.header_row > div.mode_col {
-	width: 32%;
-}
-
-.profile_table li.header_row > div.delete_col {
-	width: 0;
-}
-
 /* Main table widths */
 
+ul.profile_table {
+	width: 49%;
+	border: 1px solid #cccccc;
+	padding: 0 5px;
+}
+
 .profile_table li > div {
-	width: 12%;
-	margin: 0 1.4%;
-}
-
-.profile_table li > div.mode_col {
-	width: 32%;
-}
-
-.profile_table li > div.delete_col {
-	width: 3%;
+	margin: 0 3px;
 }
 
 .profile_table div.scroll_area li {
 	font-size: 12px;
+}
+
+.profile_table li.header {
+	border: 1px solid #0c9bfa;
+	background: #023557 url("images/ui-bg_gloss-wave_35_023557_500x100.png") 50% 50% repeat-x;
+	color: #ffffff;
+	font-weight: bold;
+	border-radius: 4px;
 }
 
 /* Template table */
@@ -130,10 +120,17 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 #templates li.header_row > div {
 	width: 28%;
 	margin: 0 1.4%;
+	font-size: 15px;
+	display: inline-block;
+	text-align: center;
 }
 
 #templates li.header_row > div.delete_col {
 	width: 0;
+}
+
+#templates input {
+	width: 95%;
 }
 
 /* Main table widths */
@@ -153,7 +150,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	display: block;
     list-style: none;
     padding-left: 0;
-    width: 100%;
+    width: 98%;
     overflow: visible;
 }
 
@@ -166,8 +163,7 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 
 .opt_table li {
 	display: block;
-	width: 98%;
-	padding: 0 5px 5px 5px;
+	padding: 5px;
 	margin: 5px 0 0 0;
 }
 
@@ -179,17 +175,8 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 	display: inline-block;
 }
 
-.opt_table li.header_row {
-	font-size: 15px;
-}
-
-.opt_table li.header_row div {
-	display: inline-block;
-	text-align: center;
-}
-
-.opt_table input:not([type=radio]):not(.delete_row), .opt_table select {
-	width: 95%;
+.opt_table input:not([type=radio]):not(.delete_row) {
+	width: 65px;
 }
 
 .opt_table button.add_row {
@@ -198,7 +185,6 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 }
 
 .scroll_area .profile_row, .scroll_area .template_row {
-	text-align: center;
 	border: 1px solid #cccccc;
 	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
@@ -281,7 +267,13 @@ div.word_list_area h3 {
 	background: #023557;
 }
 
-span.ui-selectmenu-button > span.ui-selectmenu-text, span.ui-button-text {
+
+span.ui-selectmenu-button > span.ui-selectmenu-text {
 	font-size: 12px;
 	padding: .4em 1em;
+}
+
+.ui-button .ui-button-text {
+	font-size: 0.9em;
+	padding: .4em 0.9em;
 }
