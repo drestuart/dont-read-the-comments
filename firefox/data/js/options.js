@@ -82,7 +82,7 @@ function addProfileRow(data) {
 				if (value === '') {
 					value = "none";
 				}
-				else if ($("#edit-profile .template input[type=radio][value=" + value + "]").length === 0) {
+				else if ($("#edit-profile .template option[value=" + value + "]").length === 0) {
 					value = "none"
 				}
 
