@@ -78,8 +78,15 @@ function addProfileRow(data) {
 		// Fill in modal fields
 		for (f of profileFields) {
 			var value = row.find("." + f).val();
-			if (f === 'template' && value === '') {
-				$("#edit-profile ." + f).val('none');
+			if (f === 'template') {
+				if (value === '') {
+					value = "none";
+				}
+				else if ($("#edit-profile .template input[type=radio][value=" + value + "]").length === 0) {
+					value = "none"
+				}
+
+				$("#edit-profile ." + f).val(value);
 			}
 			else if (f === 'mode') {
 				value = row.find("input.mode[type=radio]:checked").val();
