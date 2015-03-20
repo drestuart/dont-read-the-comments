@@ -256,6 +256,7 @@ div.word_list_area h3 {
 #edit-profile .ui-selectmenu-button,
 #edit-profile .mode_buttons {
 	float: right;
+	font-size: 12px;
 }
 
 /* jQuery UI overrides */
