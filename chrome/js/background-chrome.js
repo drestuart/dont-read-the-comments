@@ -21,6 +21,16 @@ chrome.runtime.onInstalled.addListener(function(details){
     }
 });
 
+// Detect tab url changes
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    if (typeof(changeInfo["url"]) !== 'undefined') {
+        var message = {
+            action : "hide"
+        };
+        chrome.tabs.sendMessage(tabId, message);
+    }
+});
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request === "showPageAction") {

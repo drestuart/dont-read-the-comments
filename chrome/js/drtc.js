@@ -314,8 +314,7 @@ var drtcTimeout;
 function drtcRun() {
 	var refreshInterval;
 
-	// Delete all DRTC cover elements before running again
-	$(".__drtc_area").remove();
+	drtcHide()
 
 	if (siteProfile["mode"] === "all") {
 		section_selector = getSectionSelector();
@@ -339,18 +338,9 @@ function drtcRun() {
 	drtcTimeout = setTimeout(drtcRun, refreshInterval*1000);
 }
 
-var oldURL;
-
-function detectLocationChange() {
-	var url = location.href;
-
-	if (typeof oldURL !== 'undefined' && oldURL != url) {
-		// Clear the old drtcTimeout and run again immediately
-		clearTimeout(drtcTimeout);
-		drtcRun();
-	}
-
-	oldURL = url;
+function drtcHide() {
+	// Delete all DRTC cover elements before running again
+	$(".__drtc_area").remove();
 }
 
 $(document).ready(function() {
@@ -414,7 +404,7 @@ $(document).ready(function() {
 				Browser.pageActionEnabled();
 
 				// Location change handler
-				setInterval(detectLocationChange, 100);
+				Browser.setUpLocationChange(drtcHide);
 
 				// Run all the DRTC code
 				drtcRun();

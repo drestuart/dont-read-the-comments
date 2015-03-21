@@ -127,4 +127,14 @@ Browser.openOptionsPage = function() {
 	chrome.tabs.create({url: "chrome://extensions/?options=ohjehbcchmjagodhlgboaadkkdpegega"});
 }
 
+Browser.setUpLocationChange = function(func) {
+	// Set up listener for url update message
+	chrome.runtime.onMessage.addListener(
+	    function(message, sender, sendResponse) {
+			if (message.action == "hide") {
+				func();
+			}
+	    }
+	);
+}
 
