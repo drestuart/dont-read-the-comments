@@ -4,7 +4,7 @@ Browser.getFromStorage = function(fields, func) {
 	var MAX_ITEMS = 512;
 
 	// Add all possible profile chunks to the storage query
-	if ($.inArray("profiles", fields) !== -1) {
+	if (fields.indexOf("profiles") !== -1) {
 		for (var i = 1 ; i < MAX_ITEMS ; i++) {
 			fields.push("profiles" + i)
 		}
@@ -13,7 +13,7 @@ Browser.getFromStorage = function(fields, func) {
 		// Put the profile chunks back together
 		for (var i = 1 ; i < MAX_ITEMS ; i++) {
 			if (typeof data["profiles" + i] !== 'undefined') {
-				$.merge(data.profiles, data["profiles" + i]);
+				data.profiles = data.profiles.concat(data["profiles" + i]);
 				delete data["profiles" + i];
 			}
 		}
