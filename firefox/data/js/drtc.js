@@ -339,18 +339,8 @@ function drtcRun() {
 	drtcTimeout = setTimeout(drtcRun, refreshInterval*1000);
 }
 
-var oldURL;
-
-function detectLocationChange() {
-	var url = location.href;
-
-	if (typeof oldURL !== 'undefined' && oldURL != url) {
-		// Clear the old drtcTimeout and run again immediately
-		clearTimeout(drtcTimeout);
-		drtcRun();
-	}
-
-	oldURL = url;
+function drtcHide() {
+	$(".__drtc_area").remove();
 }
 
 $(document).ready(function() {
@@ -418,7 +408,7 @@ $(document).ready(function() {
 				Browser.pageActionEnabled();
 
 				// Location change handler
-				setInterval(detectLocationChange, 100);
+				self.port.on("hide", drtcHide);
 
 				// Run all the DRTC code
 				drtcRun();

@@ -26,3 +26,9 @@ else if (self.loadReason === 'upgrade' || self.loadReason === 'downgrade') {
 if (self.loadReason === 'install' || (self.loadReason === 'upgrade' && self.version === '0.4')) {
 	tabs.open(data.url("html/help.html"));
 }
+
+// Hide DRTC content when a tab updates
+tabs.on("ready", function(tab) {
+	worker = tab.attach({});
+	worker.port.emit("hide");
+});
