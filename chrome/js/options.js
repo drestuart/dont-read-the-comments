@@ -462,6 +462,57 @@ $(document).ready(function() {
 			fillInTemplateValues(this);
 		});
 
+		// Wire up category edit buttons
+		$("button.category_edit").on('click', function() {
+			var row = $(this).parents("li");
+			var input = row.find("input");
+			input.removeClass("readonly")
+				.removeAttr("readonly")
+				.attr("data-original-value", input.val())
+				.focus()
+				.val(input.val()); // Move cursor to the end, totally stupid
+
+			row.find("button").show();
+			$(this).hide();
+		}).button({
+			icons: {
+				primary: "ui-icon-pencil"
+			},
+			text: false
+		});
+
+		$("button.category_save").on('click', function() {
+			var row = $(this).parents("li");
+			var input = row.find("input");
+			input.addClass("readonly")
+				.attr("readonly", "readonly")
+				.attr("data-original-value", input.val());
+
+			row.find("button").hide();
+			row.find("button.category_edit").show();
+		}).button({
+			icons: {
+				primary: "ui-icon-check"
+			},
+			text: false
+		}).hide();
+
+		$("button.category_cancel").on('click', function() {
+			var row = $(this).parents("li");
+			var input = row.find("input");
+			input.addClass("readonly")
+				.attr("readonly", "readonly")
+				.val(input.attr("data-original-value"));
+
+			row.find("button").hide();
+			row.find("button.category_edit").show();
+		}).button({
+			icons: {
+				primary: "ui-icon-closethick"
+			},
+			text: false
+		}).hide();
+
 		// Wire up other fields
 		$("#edit-profile .section_selector, #edit-profile .comment_selector").on('input', function() {
 			$("#edit-profile .template").val('none');
@@ -533,8 +584,8 @@ $(document).ready(function() {
 	$("#add_template").on('click', function() {
 		addTemplateRow();
 
-		// Scroll table to the bottom
-		$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
+	// Scroll table to the bottom
+	$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
 	}).button({
 		icons: {
 			primary: "ui-icon-plusthick"
