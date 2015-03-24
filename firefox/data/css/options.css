@@ -262,6 +262,10 @@ div.word_list_area h3 {
 	font-size: 12px;
 }
 
+.selectmenu_scroll {
+	max-height: 105px;
+}
+
 /* jQuery UI overrides */
 
 .ui-slider-range {

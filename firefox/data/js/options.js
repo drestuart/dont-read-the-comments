@@ -443,7 +443,9 @@ $(document).ready(function() {
 		}
 
 		// Wire up template select
-		$("#edit-profile .template").selectmenu();
+		$("#edit-profile .template").selectmenu()
+			.selectmenu("menuWidget")
+			.addClass("selectmenu_scroll");
 		$("#edit-profile .template").on('selectmenuchange', function() {
 			fillInTemplateValues(this);
 		});
