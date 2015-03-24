@@ -17,7 +17,12 @@
         <br>
         <h2>Website Profiles</h2>
         <ul id="profiles" class="opt_table profile_table">
-          <li class="header">Category</li>
+          <li class="header">
+            <button class="category_edit"></button>
+            <button class="category_save"></button>
+            <button class="category_cancel"></button>
+            <input type="text" class="readonly" value="Category" readonly="readonly">
+          </li>
           <div class="scroll_area"></div>
         </ul>
         <p>
@@ -50,7 +55,7 @@
       </div>
       <div id="comment_threshold_section" class="options_section">
         <h3>Comment Severity Threshold</h3>
-        <input type="text" id="comment_threshold_value" readonly>
+        <input type="text" id="comment_threshold_value" class="readonly" readonly>
         <div id="comment_threshold"></div>
         <select id="comment_threshold_select">
           <option value="0">0 (hide everything)</option>
