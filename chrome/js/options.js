@@ -20,13 +20,18 @@ $.fn.serializeObject = function()
 var numProfiles = 0;
 var numCategories = 0;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
-var profileFieldsWithoutTemplate = ["domain", "mode", "section_selector", "comment_selector"];
-var profileFieldsWithTemplate = ["domain", "mode"];
+var importFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 var editProfile;
 
+function formatCategoryName(name) {
+	return name.toLowerCase().replace(/ /g, "_");
+}
+
 function addCategoryTable(category_name) {
-	var tableHTML = '<ul id="category' + category_name + '" class="opt_table profile_table">' +
+	category_name_fixed = formatCategoryName(category_name);
+
+	var tableHTML = '<ul id="category' + category_name_fixed + '" class="opt_table profile_table">' +
 	    '<li class="header">' +
 	      '<button class="category_edit"></button>' +
 	      '<button class="category_save"></button>' +
@@ -38,7 +43,7 @@ function addCategoryTable(category_name) {
 
 	$("#profiles").append(tableHTML);
 
-	var table = $("#category" + category_name);
+	var table = $("#category" + category_name_fixed);
 
 	// Wire up category edit buttons
 	table.find("button.category_edit").on('click', function() {
@@ -91,6 +96,14 @@ function addCategoryTable(category_name) {
 		text: false
 	}).hide();
 
+	// Set up sortable jQueryUI on profile table
+	// $("#profiles .scroll_area").sortable({
+	table.find(".scroll_area").sortable({
+		connectWith: ".profile_table .scroll_area",
+		placeholder: "ui-state-highlight",
+		forcePlaceholderSize: true,
+		cursor: "-webkit-grabbing",
+	});
 
     numCategories++;
 
@@ -126,7 +139,8 @@ function addProfileRow(data) {
 	}
 
 	// Find the category to append this to
-	var categoryTable = $("#category" + category_name);
+	category_name_fixed = formatCategoryName(category_name);
+	var categoryTable = $("#category" + category_name_fixed);
 	if (!categoryTable.length) {
 		categoryTable = addCategoryTable(category_name);
 	}
@@ -382,7 +396,7 @@ function importProfiles() {
 		imp_profiles = [imp_profiles];
 	}
 	else {
-		alert("JSON parsing failed");
+		console.log("JSON parsing failed");
 		return;
 	}
 
@@ -416,7 +430,7 @@ function importTemplates() {
 		imp_templates = [imp_templates];
 	}
 	else {
-		alert("JSON parsing failed");
+		console.log("JSON parsing failed");
 		return;
 	}
 
@@ -445,12 +459,12 @@ function setProfileDefaults(profile) {
 }
 
 function validateProfile(obj) {
-	var fields = profileFields;
+	var fields = importFields;
 	
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			alert("Import failed. " + msg);
+			console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -464,7 +478,7 @@ function validateProfile(obj) {
 			}
 
 			var msg = "Missing field: " + field;
-			alert("Import failed. " + msg);
+			console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -481,7 +495,7 @@ function validateImport(obj, fields) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			alert("Import failed. " + msg);
+			console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -489,7 +503,7 @@ function validateImport(obj, fields) {
 	for (field of fields) {
 		if (typeof obj[field] === 'undefined') {
 			var msg = "Missing field: " + field;
-			alert("Import failed. " + msg);
+			console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -558,16 +572,8 @@ $(document).ready(function() {
 			$("#edit-profile .template").selectmenu("refresh");
 		});
 
-		// Set up sortable jQueryUI on profile and template tables
-		$(".profile_table > .scroll_area").sortable({
-			connectWith: ".profile_table > .scroll_area",
-			placeholder: "ui-state-highlight",
-			axis: "y",
-			cursor: "-webkit-grabbing",
-		});
-
+		// Set up sortable jQueryUI on emplate table
 		$(".template_table > .scroll_area").sortable({
-			connectWith: ".template_table > .scroll_area",
 			placeholder: "ui-state-highlight",
 			axis: "y",
 			cursor: "-webkit-grabbing",
@@ -656,6 +662,15 @@ $(document).ready(function() {
 		$("#import_templates_go").show();
 		$("#templates_textarea").show().val("").prop('readonly', false);
 	}).button();
+
+	// Add Category button
+	$("#add_category").on('click', function() {
+		addCategoryTable("New Category " + numCategories);
+	}).button({
+		icons: {
+			primary: "ui-icon-plusthick"
+		}
+	});
 
 	// Save options
 	$(".save_button").button().click(function(event) {

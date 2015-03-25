@@ -59,7 +59,7 @@ code {
 }
 
 #content {
-	width: 700px;
+	width: 717px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 15px;
@@ -90,9 +90,10 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 /* Main table widths */
 
 ul.profile_table {
-	width: 49%;
+	width: 47%;
 	border: 1px solid #cccccc;
 	padding: 0 5px;
+	margin: .5% .5%;
 }
 
 .profile_table li > div {
@@ -114,7 +115,7 @@ ul.profile_table {
 }
 
 .profile_table li.header input[type=text] {
-	width: 230px;
+	width: 69%; /* Duhnownownow */
 }
 
 .profile_table li.header input.readonly {
@@ -164,7 +165,7 @@ ul.profile_table {
 /* General table styles */
 
 .opt_table {
-	display: block;
+	display: inline-block;
     list-style: none;
     padding-left: 0;
     width: 98%;
@@ -172,7 +173,7 @@ ul.profile_table {
 }
 
 .opt_table .scroll_area {
-	max-height: 275px;
+	height: 275px;
 	overflow-y: auto;
 	overflow-x: visible;
 	width: 100%;
@@ -297,7 +298,7 @@ span.ui-selectmenu-button > span.ui-selectmenu-text {
 	padding: .4em 1em;
 }
 
-.ui-button .ui-button-text {
+.ui-button:not(.with_text) .ui-button-text {
 	font-size: 0.9em;
 	padding: .4em 0.9em;
 }
