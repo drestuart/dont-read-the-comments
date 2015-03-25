@@ -97,7 +97,6 @@ function addCategoryTable(category_name) {
 	}).hide();
 
 	// Set up sortable jQueryUI on profile table
-	// $("#profiles .scroll_area").sortable({
 	table.find(".scroll_area").sortable({
 		connectWith: ".profile_table .scroll_area",
 		placeholder: "ui-state-highlight",
@@ -572,7 +571,7 @@ $(document).ready(function() {
 			$("#edit-profile .template").selectmenu("refresh");
 		});
 
-		// Set up sortable jQueryUI on emplate table
+		// Set up sortable jQueryUI on template table
 		$(".template_table > .scroll_area").sortable({
 			placeholder: "ui-state-highlight",
 			axis: "y",
