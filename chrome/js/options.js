@@ -18,11 +18,84 @@ $.fn.serializeObject = function()
 };
 
 var numProfiles = 0;
+var numCategories = 0;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 var profileFieldsWithoutTemplate = ["domain", "mode", "section_selector", "comment_selector"];
 var profileFieldsWithTemplate = ["domain", "mode"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 var editProfile;
+
+function addCategoryTable(category_name) {
+	var tableHTML = '<ul id="category' + category_name + '" class="opt_table profile_table">' +
+	    '<li class="header">' +
+	      '<button class="category_edit"></button>' +
+	      '<button class="category_save"></button>' +
+	      '<button class="category_cancel"></button>' +
+	      '<input type="text" class="readonly category_name" value="' + category_name + '" readonly="readonly">' +
+	    '</li>' +
+	    '<div class="scroll_area"></div>' +
+	  '</ul>';
+
+	$("#profiles").append(tableHTML);
+
+	var table = $("#category" + category_name);
+
+	// Wire up category edit buttons
+	table.find("button.category_edit").on('click', function() {
+		var row = $(this).parents("li");
+		var input = row.find("input");
+		input.removeClass("readonly")
+			.removeAttr("readonly")
+			.attr("data-original-value", input.val())
+			.focus()
+			.val(input.val()); // Move cursor to the end, totally stupid
+
+		row.find("button").show();
+		$(this).hide();
+	}).button({
+		icons: {
+			primary: "ui-icon-pencil"
+		},
+		text: false
+	});
+
+	table.find("button.category_save").on('click', function() {
+		var row = $(this).parents("li");
+		var input = row.find("input");
+		input.addClass("readonly")
+			.attr("readonly", "readonly")
+			.attr("data-original-value", input.val());
+
+		row.find("button").hide();
+		row.find("button.category_edit").show();
+	}).button({
+		icons: {
+			primary: "ui-icon-check"
+		},
+		text: false
+	}).hide();
+
+	table.find("button.category_cancel").on('click', function() {
+		var row = $(this).parents("li");
+		var input = row.find("input");
+		input.addClass("readonly")
+			.attr("readonly", "readonly")
+			.val(input.attr("data-original-value"));
+
+		row.find("button").hide();
+		row.find("button.category_edit").show();
+	}).button({
+		icons: {
+			primary: "ui-icon-closethick"
+		},
+		text: false
+	}).hide();
+
+
+    numCategories++;
+
+    return table;
+}
 
 function addProfileRow(data) {
 	var rowHTML = '<li id="profile' + numProfiles +'" class="profile_row">' +
@@ -44,7 +117,21 @@ function addProfileRow(data) {
 		'<div class="delete_col"><button class="delete_row">Delete</button></div>' +
 	'</li>';
 
-	$("#profiles .scroll_area").append(rowHTML);
+	var category_name;
+	if (typeof data['category'] === 'undefined' || data['category'] === '') {
+		category_name = "Uncategorized";
+	}
+	else {
+		category_name = data['category'];
+	}
+
+	// Find the category to append this to
+	var categoryTable = $("#category" + category_name);
+	if (!categoryTable.length) {
+		categoryTable = addCategoryTable(category_name);
+	}
+
+	categoryTable.find('.scroll_area').append(rowHTML);
 
 	var row = $('li#profile' + numProfiles);
 
@@ -192,7 +279,7 @@ function getProfileData() {
 
 	var retArr = [];
 
-	$("#profiles > .scroll_area").find("li").each(function(ind, row) {
+	$("#profiles .scroll_area li").each(function(ind, row) {
 		row = $(row); // I mean really
 		var profile = {};
 		var fields = profileFields;
@@ -225,6 +312,9 @@ function getProfileData() {
 		}
 
 		if (!empty) {
+			// Get category name
+			profile["category"] = row.parents("ul").find("input.category_name").val();
+
 			retArr.push(profile);
 		}
 	});
@@ -461,57 +551,6 @@ $(document).ready(function() {
 		$("#edit-profile .template").on('selectmenuchange', function() {
 			fillInTemplateValues(this);
 		});
-
-		// Wire up category edit buttons
-		$("button.category_edit").on('click', function() {
-			var row = $(this).parents("li");
-			var input = row.find("input");
-			input.removeClass("readonly")
-				.removeAttr("readonly")
-				.attr("data-original-value", input.val())
-				.focus()
-				.val(input.val()); // Move cursor to the end, totally stupid
-
-			row.find("button").show();
-			$(this).hide();
-		}).button({
-			icons: {
-				primary: "ui-icon-pencil"
-			},
-			text: false
-		});
-
-		$("button.category_save").on('click', function() {
-			var row = $(this).parents("li");
-			var input = row.find("input");
-			input.addClass("readonly")
-				.attr("readonly", "readonly")
-				.attr("data-original-value", input.val());
-
-			row.find("button").hide();
-			row.find("button.category_edit").show();
-		}).button({
-			icons: {
-				primary: "ui-icon-check"
-			},
-			text: false
-		}).hide();
-
-		$("button.category_cancel").on('click', function() {
-			var row = $(this).parents("li");
-			var input = row.find("input");
-			input.addClass("readonly")
-				.attr("readonly", "readonly")
-				.val(input.attr("data-original-value"));
-
-			row.find("button").hide();
-			row.find("button.category_edit").show();
-		}).button({
-			icons: {
-				primary: "ui-icon-closethick"
-			},
-			text: false
-		}).hide();
 
 		// Wire up other fields
 		$("#edit-profile .section_selector, #edit-profile .comment_selector").on('input', function() {
