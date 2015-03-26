@@ -559,10 +559,14 @@ $(document).ready(function() {
 			$("#edit-profile .template").selectmenu("refresh");
 		});
 
-		// Set up sortable jQueryUI on template table
+		// Set up sortable jQueryUI on template table and category tables
 		$(".template_table > .scroll_area").sortable({
 			placeholder: "ui-state-highlight",
 			axis: "y",
+			cursor: "grabbing",
+		});
+
+		$("#profiles").sortable({
 			cursor: "grabbing",
 		});
 

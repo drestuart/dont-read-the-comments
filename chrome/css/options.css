@@ -86,6 +86,10 @@ div.options_section:last-of-type, div.help_section:last-of-type {
 
 /* Profile and Template tables */
 
+#profiles {
+	margin: 10px 0;
+}
+
 /* Profile tables */
 /* Main table widths */
 
@@ -94,6 +98,9 @@ ul.profile_table {
 	border: 1px solid #cccccc;
 	padding: 0 5px;
 	margin: .5% .5%;
+	float: left;
+	cursor: -webkit-grab;
+	background: white;
 }
 
 .profile_table li > div {
