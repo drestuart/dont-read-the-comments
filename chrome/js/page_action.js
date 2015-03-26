@@ -7,6 +7,7 @@ var templates = [];
 var siteProfile = null;
 var siteIndex = -1;
 var currentTab = null;
+var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
@@ -30,9 +31,8 @@ function fillInTemplateValues(element) {
 
 function buildProfile() {
 	var profile = {};
-	var fields = ["domain", "mode", "section_selector", "comment_selector", "template"];
 
-	for (f of fields) {
+	for (f of profileFields) {
 		var value;
 
 		// Trim extraneous stuff from domain
@@ -96,6 +96,7 @@ $(document).ready(function() {
 
 	$("#options").on("click", Browser.openOptionsPage);
 
+	// Tooltips
 	$(document).tooltip();
 
 	Browser.tabsQuery(function(response) {
@@ -145,10 +146,10 @@ $(document).ready(function() {
 			// Fill in form fields
 			if (siteProfile !== null) {
 				$("#profile_found").show();
-				var fields = ["domain", "mode", "section_selector", "comment_selector"];
+				var fields = profileFields;
 
 				if (siteProfile['template'] !== '') {
-					fields = ["domain", "mode"];
+					fields = ["domain", "mode", "category"];
 					template_menu.val(siteProfile['template']);
 					fillInTemplateValues(template_menu);
 				}

@@ -29,6 +29,7 @@ td#mode_group {
 #export_text {
 	display: none;
 	width: 100%;
+	margin-top: 10px;
 }
 
 #help {
