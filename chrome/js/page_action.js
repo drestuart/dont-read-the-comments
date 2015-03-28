@@ -111,6 +111,7 @@ $(document).ready(function() {
 		Browser.getPageActionData(function(data) {
 			profiles = data["profiles"];
 			templates = data["templates"];
+			categories = data["categories"];
 			
 			// Retrieve the profile matching this site
 			for (i = 0 ; i < profiles.length ; i++) {
@@ -143,6 +144,14 @@ $(document).ready(function() {
 				template_menu.append(optionHTML);
 			}
 
+			// Fill in category menu
+			var category_menu = $('select#category');
+			for (c of categories) {
+				if (c === "Uncategorized") {continue;}
+				var optionHTML = "<option value='" + c + "'>" + c + "</option>";
+				category_menu.append(optionHTML);
+			}
+
 			// Fill in form fields
 			if (siteProfile !== null) {
 				$("#profile_found").show();
@@ -169,7 +178,12 @@ $(document).ready(function() {
 			}
 
 			// Apply jQueryUI
-			$('#template').selectmenu();
+			$('#template').selectmenu()
+				.selectmenu("menuWidget")
+				.addClass("selectmenu_scroll");
+			$('#category').selectmenu()
+				.selectmenu("menuWidget")
+				.addClass("selectmenu_scroll");
 			$("#mode_buttons").buttonset();
 		});
 	});

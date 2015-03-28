@@ -32,7 +32,7 @@ Browser.getOptionsPageData = function(func) {
 }
 
 Browser.getPageActionData = function(func) {
-	Browser.getFromStorage(["profiles", "templates"], func);
+	Browser.getFromStorage(["profiles", "templates", "categories"], func);
 }
 
 Browser.getBackgroundPageData = function(func) {
@@ -40,11 +40,26 @@ Browser.getBackgroundPageData = function(func) {
 		"word_lists_enabled"], func);
 }
 
+Browser.getCategories = function(profiles) {
+	var categories = [];
+
+	for (var profile of profiles) {
+		if (categories.indexOf(profile["category"]) === -1) {
+			categories.push(profile["category"]);
+		}
+	}
+
+	return categories;
+}
+
 Browser.save = function(data, func) {
-	// Make sure we're not going to exceed the QUOTA_BYTES_PER_ITEM limit!
 	var QUOTA_BYTES_PER_ITEM = 8192;
 
+	// Handle profile data specially
 	if (typeof data.profiles !== 'undefined') {
+		data.categories = Browser.getCategories(data.profiles);
+
+		// Split up profiles to make sure we're not going to exceed the QUOTA_BYTES_PER_ITEM limit!
 		var bytes = (JSON.stringify(data.profiles) + "profiles").length;
 
 		if (bytes >= QUOTA_BYTES_PER_ITEM) {

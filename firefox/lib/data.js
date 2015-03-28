@@ -11,6 +11,7 @@ DataStore.getPageActionData = function() {
 
 	retData.profiles = storage.profiles;
 	retData.templates = storage.templates;
+	retData.categories = storage.categories;
 
 	return retData;
 }
@@ -123,10 +124,27 @@ DataStore.importTemplates = function(template_data) {
 	DataStore.save({templates: merged});
 }
 
+DataStore.getCategories = function(profiles) {
+	var categories = [];
+
+	for (var profile of profiles) {
+		if (categories.indexOf(profile["category"]) === -1) {
+			categories.push(profile["category"]);
+		}
+	}
+
+	return categories;
+}
+
 DataStore.save = function(data) {
 	for (var field of fields) {
 		if (typeof data[field] !== 'undefined') {
 			storage[field] = data[field];
+
+			// Bild categories list
+			if (field === "profiles") {
+				storage["categories"] = DataStore.getCategories(data[field]);
+			}
 		}
 	}
 }

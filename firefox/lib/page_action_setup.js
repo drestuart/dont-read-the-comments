@@ -23,8 +23,8 @@ var inactiveIcons = {
 
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
-	width: 226,
-	height: 300,
+	width: 230,
+	height: 330,
 	contentScriptFile: [
 		data.url("js/jquery-1.11.1.min.js"),
 		data.url("js/jquery-ui.min.js"),

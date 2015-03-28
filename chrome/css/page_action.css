@@ -41,6 +41,10 @@ td#mode_group {
 	color: #999;
 }
 
+.selectmenu_scroll {
+	max-height: 105px;
+}
+
 /* jQueryUI overrides */
 
 span.ui-selectmenu-text, span.ui-button-text {

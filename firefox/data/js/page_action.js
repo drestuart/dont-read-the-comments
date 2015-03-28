@@ -7,7 +7,7 @@ var templates = [];
 var siteProfile = null;
 var siteIndex = -1;
 var currentTab = null;
-var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
+var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
 
 function fillInTemplateValues(element) {
 	var template_name = $(element).val();
@@ -120,6 +120,11 @@ function setUpPageAction(url) {
 	template_menu.html("");
 	template_menu.append('<option value="">None</option>');
 
+	// Empty the category menu
+	var category_menu = $('select#category');
+	category_menu.html("");
+	category_menu.append('<option value="Uncategorized">Uncategorized</option>');
+
 	// Hide sections, will show later as needed
 	$("#profile_found").hide();
 	$("#profile_not_found").hide();
@@ -137,6 +142,7 @@ function setUpPageAction(url) {
 	Browser.getPageActionData(function(data) {
 		profiles = data["profiles"];
 		templates = data["templates"];
+		categories = data["categories"];
 
 		// Retrieve the profile matching this site
 		for (i = 0 ; i < profiles.length ; i++) {
@@ -168,6 +174,13 @@ function setUpPageAction(url) {
 			template_menu.append(optionHTML);
 		}
 
+		// Fill in category menu
+		for (c of categories) {
+			if (c === "Uncategorized") {continue;}
+			var optionHTML = "<option value='" + c + "'>" + c + "</option>";
+			category_menu.append(optionHTML);
+       }
+
 		// Fill in form fields
 		if (siteProfile !== null) {
 			$("#profile_found").show();
@@ -190,7 +203,13 @@ function setUpPageAction(url) {
 			}
 
 			// Apply jQueryUI
-			$('#template').selectmenu();
+			$('#template').selectmenu()
+				.selectmenu("menuWidget")
+				.addClass("selectmenu_scroll");
+			$('#category').selectmenu()
+				.selectmenu("menuWidget")
+				.addClass("selectmenu_scroll");
+
 			$("#mode_buttons").buttonset();
 		}
 		else {
