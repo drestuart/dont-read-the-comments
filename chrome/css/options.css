@@ -134,9 +134,12 @@ ul.profile_table {
 	margin: 0 5px;
 }
 
-.profile_table li.header .category_save,
-.profile_table li.header .category_cancel {
-	/*display: none;*/
+.profile_table li.control_row {
+	background: #023557 url("images/ui-bg_highlight-soft_100_eeeeee_1x100.png") 50% 50% repeat-x;
+	text-align: center;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin: 5px 0;
 }
 
 /* Template table */

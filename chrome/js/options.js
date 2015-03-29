@@ -2,19 +2,19 @@
 // http://css-tricks.com/snippets/jquery/serialize-form-to-json/
 $.fn.serializeObject = function()
 {
-   var o = {};
-   var a = this.serializeArray();
-   $.each(a, function() {
-       if (o[this.name]) {
-           if (!o[this.name].push) {
-               o[this.name] = [o[this.name]];
-           }
-           o[this.name].push(this.value || '');
-       } else {
-           o[this.name] = this.value || '';
-       }
-   });
-   return o;
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
 };
 
 var numProfiles = 0;
@@ -32,14 +32,24 @@ function addCategoryTable(category_name) {
 	category_name_fixed = formatCategoryName(category_name);
 
 	var tableHTML = '<ul id="category' + category_name_fixed + '" class="opt_table profile_table">' +
-	    '<li class="header">' +
-	      '<button class="category_edit"></button>' +
-	      '<button class="category_save"></button>' +
-	      '<button class="category_cancel"></button>' +
-	      '<input type="text" class="readonly category_name" value="' + category_name + '" readonly="readonly">' +
-	    '</li>' +
-	    '<div class="scroll_area"></div>' +
-	  '</ul>';
+		'<li class="header">' +
+		  '<button class="category_edit"></button>' +
+		  '<button class="category_save"></button>' +
+		  '<button class="category_cancel"></button>' +
+		  '<input type="text" class="readonly category_name" value="' + category_name + '" readonly="readonly">' +
+		'</li>' +
+		'<div class="scroll_area"></div>' +
+		'<li class="control_row">' +
+			'<div class="mode_buttons">' +
+				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_all' + category_name_fixed +'" value="all">' +
+				'<label for="mode_all' + category_name_fixed +'">All</label>' +
+				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_individual' + category_name_fixed +'" value="individual">' +
+				'<label for="mode_individual' + category_name_fixed +'">Individual</label>' +
+				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_disabled' + category_name_fixed +'" value="disabled">' +
+				'<label for="mode_disabled' + category_name_fixed +'">Disabled</label>' +
+			'</div>' +
+		'</li>' +
+	'</ul>';
 
 	$("#profiles").append(tableHTML);
 
@@ -104,9 +114,19 @@ function addCategoryTable(category_name) {
 		cursor: "-webkit-grabbing",
 	});
 
-    numCategories++;
+	// Apply jQueryUI
+	table.find(".mode_buttons").buttonset()
+		.find("label").on("click", function() {
+			var buttonid = $(this).attr("for");
+			var value = $("#" + buttonid).val();
 
-    return table;
+			// Set all profiles in this category to the corresponding mode
+			table.find(".scroll_area input[type=radio][value=" + value + "]").trigger('click');
+	});
+
+	numCategories++;
+
+	return table;
 }
 
 function addProfileRow(data) {
@@ -281,8 +301,8 @@ function addTemplateRow(data) {
 	}).button({
 		icons: {
 			primary: "ui-icon-closethick"
-	    },
-	    text: false
+		},
+		text: false
 	});
 
 	numTemplates++;
@@ -297,10 +317,6 @@ function getProfileData() {
 		var profile = {};
 		var fields = profileFields;
 		var empty = true;
-
-		if (row.hasClass("control_row")) {
-			return; // continue
-		}
 
 		for (f of fields) {
 			var value = row.find("." + f).val();
@@ -342,10 +358,6 @@ function getTemplateData() {
 		var template = {};
 		var fields = templateFields;
 		var empty = true;
-
-		if ($(row).hasClass("control_row")) {
-			return; // continue
-		}
 
 		for (f of fields) {
 			var value = $(row).find("." + f).val().trim();
@@ -614,7 +626,7 @@ $(document).ready(function() {
 		// Set up slider
 		var ctselect = $("#comment_threshold_select");
 		ctselect[0].selectedIndex = ct;
-	    $("#comment_threshold").slider({
+		$("#comment_threshold").slider({
 			min: 0,
 			max: 11, // !!!
 			range: "min",
@@ -624,7 +636,7 @@ $(document).ready(function() {
 				ctselect[0].selectedIndex = ui.value;
 				$("#comment_threshold_value").val(ctselect.find("option:selected").text());
 			}
-	    });
+		});
 		$("#comment_threshold_value").val(ctselect.find("option:selected").text());
 	});
 
