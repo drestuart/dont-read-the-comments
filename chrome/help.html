@@ -39,8 +39,21 @@
         <img src="images/page_action_not_enabled.png">
         <p>When DRTC! does not have a website profile matching the current page, it will show this message. You can click on "Enable" to start creating a profile.</p>
         <img src="images/page_action_new.png">
-        <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) Clicking <strong>Save</strong> will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
+        <p>The page action dialog automatically fills in the site's domain. From here, you can fill in the comment section and/or comment selectors, or choose a <a href="#template_section">comment system template</a> to use. (See <a href="#profile_section">below</a> for more on creating a website profile.) You can also chose a category for this site with the <strong>Category</strong> menu. Clicking <strong>Save</strong> will save your profile and reload the page, so that DRTC! can apply the new profile.</p>
         <p>You can also use <strong>Show Me The Comments!</strong> to immediately disable DRTC! on the current site.</p>
+      </div>
+
+      <div id="options_section" class="help_section">
+        <h2>Options Page</h2>
+        <p>The options page controls global settings for DRTC!.</p>
+        <h3>Website Profiles</h3>
+        <p>These tables list all <a href="#profile_section">website profiles</a> created in DRTC!, grouped by category. You can edit any current profiles using the edit button (with the pencil icon).  Remember to click "Save" to save your changes!</p>
+        <h3>Comment System Templates</h3>
+        <p>Here you can add and edit <a href="#template_section">comment system templates</a>. You'll need to save a new template before it can be used to create a website profile.</p>
+        <h3>Comment Severity Threshold</h3>
+        <p>When using Individual mode, DRTC! uses this setting to decide whether to hide an individual comment, based on what proportion of the words in it are in one of the bad word lists. A threshold of 0 (the default) causes DRTC! to hide all comments, and it can go up to 5.</p>
+        <h3>Bad Word Lists</h3>
+        <p>This section contains the bad word lists which DRTC! uses. The lists can be disabled individually, and additional words can be added to the custom list.</p>
       </div>
 
       <div id="profile_section" class="help_section">
@@ -48,6 +61,8 @@
         <p>DRTC! uses profiles to know which page elements to block on a website.</p>
         <p><a href="create.html" target="_blank">How to create your own profiles</a></p>
         <img src="images/profiles_table.png">
+        <br>
+        <img src="images/edit_profile_modal.png">
         <h3>Domain</h3>
         <p>DRTC! determines which site your browser is on by using the domain part of the currently displayed page's URL. For example, if you're on <a href="http://www.bbc.com/news/">http://www.bbc.com/news</a>, the domain is <i>bbc.com</i>.</p>
         <p>Each DRTC! profile has a domain parameter which determines which pages it will be applied to. A profile with the domain <i>bbc.com</i>, for example, will apply to any page with a URL beginning with <i>bbc.com</i>, but not <i>bbc.co.uk</i>.</p>
@@ -66,25 +81,15 @@
         <p>Learn more about using CSS selectors <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank">here</a>.
         <h3>Template</h3>
         <p>Because many websites use third-party comment systems, such as Disqus or Facebook, DRTC! defines <a href="#template_section">common templates</a> for these systems. These templates can be applied to the profile of a page using one of these systems to block the comments in one step.</p>
+        <h3>Category</h3>
+        <p>Categories (such as <strong>World News</strong> and <strong>Technology</strong>) are used mainly on the options page to keep website profiles organized in manageable chunks. Profiles can be meved between categories by dragging and dropping them. You can also use the mode buttons at the bottom of each category table to set the mode for all profiles in that category.</p>
+        <p>Clicking the <strong>+ Category</strong> button creates a new category table to add profiles to, and the button with the pencil icon let you edit the category name.</p>
       </div>
 
       <div id="template_section" class="help_section">
         <h2>Comment System Templates</h2>
         <img src="images/templates_table.png">
         <p>Comment system templates are similar to profiles, in that they define a pair of section and comment selectors. When applied to a website profile, a template sets the profiles selectors to match its own.  A template's selectors, as well as its name, can be edited just like a profile.</p>
-      </div>
-
-      <div id="options_section" class="help_section">
-        <h2>Options Page</h2>
-        <p>The options page controls global settings for DRTC!.</p>
-        <h3>Website Profiles</h3>
-        <p>This table lists all <a href="#profile_section">website profiles</a> defined by DRTC!. You can add more using the "+" button at the bottom, or change any current profiles right in the table.  Remember to click "Save" to save your changes!</p>
-        <h3>Comment System Templates</h3>
-        <p>Here you can add and edit <a href="#template_section">comment system templates</a>, just like in the profiles table. You'll need to save a new template before it can be used to create a website profile.</p>
-        <h3>Comment Severity Threshold</h3>
-        <p>When using Individual mode, DRTC! uses this setting to decide whether to hide an individual comment, based on what proportion of the words in it are in one of the bad word lists. A threshold of 0 (the default) causes DRTC! to hide all comments, and it can go up to 5.</p>
-        <h3>Bad Word Lists</h3>
-        <p>This section contains the bad word lists which DRTC! uses. The lists can be disabled individually, and additional words can be added to the custom list.</p>
       </div>
 
       <div id="philosophy_section" class="help_section">

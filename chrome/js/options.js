@@ -114,7 +114,7 @@ function addCategoryTable(category_name) {
 		cursor: "-webkit-grabbing",
 	});
 
-	// Apply jQueryUI
+	// Apply jQueryUI and set up click event on control row
 	table.find(".mode_buttons").buttonset()
 		.find("label").on("click", function() {
 			var buttonid = $(this).attr("for");
