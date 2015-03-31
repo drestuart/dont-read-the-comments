@@ -153,3 +153,15 @@ Browser.setUpLocationChange = function(func) {
 	);
 }
 
+Browser.loadJSONFile = function(file, func) {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			data = JSON.parse(xhr.responseText);
+			func(data);
+		}
+	};
+	xhr.open("GET", chrome.extension.getURL(file), true);
+	xhr.send();
+}
+
