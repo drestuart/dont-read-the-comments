@@ -97,9 +97,6 @@ Browser.save = function(data, func) {
 	}
 
 	chrome.storage.sync.set(data, function() {
-		if (typeof chrome.runtime.lastError !== 'undefined') {
-			console.log("Error: " + chrome.runtime.lastError.message);
-		}
 		func();
 	});
 }

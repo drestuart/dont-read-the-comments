@@ -407,7 +407,7 @@ function importProfiles() {
 		imp_profiles = [imp_profiles];
 	}
 	else {
-		console.log("JSON parsing failed");
+		// console.log("JSON parsing failed");
 		return;
 	}
 
@@ -441,7 +441,7 @@ function importTemplates() {
 		imp_templates = [imp_templates];
 	}
 	else {
-		console.log("JSON parsing failed");
+		// console.log("JSON parsing failed");
 		return;
 	}
 
@@ -475,7 +475,7 @@ function validateProfile(obj) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			console.log("Import failed. " + msg);
+			// console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -489,7 +489,7 @@ function validateProfile(obj) {
 			}
 
 			var msg = "Missing field: " + field;
-			console.log("Import failed. " + msg);
+			// console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -506,7 +506,7 @@ function validateImport(obj, fields) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			console.log("Import failed. " + msg);
+			// console.log("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -514,7 +514,7 @@ function validateImport(obj, fields) {
 	for (field of fields) {
 		if (typeof obj[field] === 'undefined') {
 			var msg = "Missing field: " + field;
-			console.log("Import failed. " + msg);
+			// console.log("Import failed. " + msg);
 			return false;
 		}
 	}

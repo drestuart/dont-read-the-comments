@@ -415,7 +415,7 @@ function importProfiles() {
 		imp_profiles = [imp_profiles];
 	}
 	else {
-		console.log("JSON parsing failed");
+		// console.log("JSON parsing failed");
 		return;
 	}
 
@@ -445,7 +445,7 @@ function importTemplates() {
 		imp_templates = [imp_templates];
 	}
 	else {
-		console.log("JSON parsing failed");
+		// console.log("JSON parsing failed");
 		return;
 	}
 
