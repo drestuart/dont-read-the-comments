@@ -128,7 +128,7 @@ Browser.getTabUrl = function(func) {
 }
 
 Browser.tabsQuery = function(func) {
-	chrome.tabs.query({active: true}, function(tabs) {
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         tab = tabs[0];
         url = tab.url;
         func(url);
