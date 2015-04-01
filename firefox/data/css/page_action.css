@@ -4,12 +4,24 @@
 }
 
 html {
-	width: 225px;
+	width: 300px;
 	margin: 10px;
 }
 
-input[type="text"], select {
-	width: 100px;
+#profile {
+	width: 100%;
+}
+
+input[type="text"] {
+	width: 90%;
+}
+
+select, .ui-selectmenu-button {
+	width: 92% !important;
+}
+
+input[type="text"], select, .ui-selectmenu-button {
+	float: right;
 }
 
 tr {
@@ -21,11 +33,16 @@ td:first-child {
 }
 
 td#mode_group {
-	width: 205px;
+	width: 100%;
+}
+
+td[colspan]:not([colspan="1"]) {
+	text-align: center;
 }
 
 #profile_not_found, #profile_found {
 	display: none;
+	width: 100%;
 	margin-top: 10px;
 }
 
