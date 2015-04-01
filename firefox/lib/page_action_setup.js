@@ -23,8 +23,6 @@ var inactiveIcons = {
 
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
-	width: 230,
-	height: 330,
 	contentScriptFile: [
 		data.url("js/jquery-1.11.1.min.js"),
 		data.url("js/jquery-ui.min.js"),
@@ -36,7 +34,14 @@ PageAction.page_action = panel.Panel({
 	contentStyleFile: [
 		data.url("css/page_action.css"),
 		data.url("css/jquery-ui.css")
-	]
+	],
+	onShow: function() {
+		PageAction.page_action.port.emit('fetch_panel_size');
+	}
+});
+
+PageAction.page_action.port.on('panel_size', function(data) {
+    PageAction.page_action.resize((data.width+30), (data.height+30));
 });
 
 PageAction.page_action.port.on("pageActionDataRequest", function() {

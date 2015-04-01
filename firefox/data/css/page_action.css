@@ -1,9 +1,11 @@
 * {
 	font-family: Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 html {
 	width: 225px;
+	margin: 10px;
 }
 
 input[type="text"], select {
@@ -24,6 +26,7 @@ td#mode_group {
 
 #profile_not_found, #profile_found {
 	display: none;
+	margin-top: 10px;
 }
 
 #export_text {

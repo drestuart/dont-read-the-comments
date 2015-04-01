@@ -73,6 +73,7 @@ $(document).ready(function() {
 		var profile = buildProfile();
 		var export_text = Tools.exportProfile(profile);
 		$("#export_text").val(export_text).show();
+		resize();
 	}).button();
 
 	$("#template").on("selectmenuchange", function() {
@@ -87,6 +88,7 @@ $(document).ready(function() {
 	$("#enable").on("click", function() {
 		$("#profile_not_found").hide();
 		$("#profile_found").show();
+		resize();
 	}).button();
 
 	$("#showme").on("click", function() {
@@ -104,6 +106,14 @@ $(document).ready(function() {
 self.port.removeListener("pageActionOpen", setUpPageAction);
 
 self.port.on("pageActionOpen", setUpPageAction);
+
+self.port.on('fetch_panel_size', resize);
+
+function resize() {
+	var height = $("html").outerHeight();
+	var width = $("html").outerWidth();
+    self.port.emit("panel_size", {height: height, width: width});
+}
 
 function setUpPageAction(url) {
 	var domain = parseUri(url).authority;
