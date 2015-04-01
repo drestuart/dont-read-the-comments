@@ -185,6 +185,9 @@ function addProfileRow(data) {
 			else if (f === 'mode') {
 				row.find(".mode_col input[type=radio][value=" + value + "]").prop('checked', true);
 			}
+			else if (f === 'domain') {
+				row.find("." + f).val(value).attr("title", value);
+			}
 			else {
 				row.find("." + f).val(value);
 			}
@@ -536,6 +539,9 @@ function editProfileSave() {
 			row.find(".mode_col input[type=radio][value=" + value + "]").prop('checked', true);
 			row.find(".mode_buttons").buttonset();
 		}
+		else if (f === 'domain') {
+			row.find("." + f).val(value).attr("title", value);
+		}
 		else {
 			row.find("." + f).val(value);
 		}
@@ -795,6 +801,8 @@ $(document).ready(function() {
 		text: true
 	});
 
+	// Tooltips
+	$(document).tooltip();
 });
 
 
