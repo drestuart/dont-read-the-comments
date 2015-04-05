@@ -19,11 +19,11 @@ if (self.loadReason === 'install') {
 	Install.loadStartingData();
 }
 else if (self.loadReason === 'upgrade' || self.loadReason === 'downgrade') {
-	Install.importStartingData();
+	Install.importStartingData(false);
 }
 
 // Show help page
-if (self.loadReason === 'install' || (self.loadReason === 'upgrade' && self.version === '0.4')) {
+if (self.loadReason === 'install') {
 	tabs.open(data.url("html/help.html"));
 }
 

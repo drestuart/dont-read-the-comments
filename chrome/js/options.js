@@ -726,9 +726,10 @@ $(document).ready(function() {
 		modal: true,
 		buttons: {
 			"Reset": function() {
-				importStartingData();
-				$(this).dialog("close");
-				location.reload();
+				importStartingData(true, function() {
+					$("#reset-confirm").dialog("close");
+					location.reload();
+				});
 			},
 			Cancel: function() {
 				$(this).dialog("close");

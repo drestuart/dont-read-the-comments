@@ -1,6 +1,10 @@
 Tools = {};
 
-Tools.mergeProfiles = function(existing, new_profiles) {
+Tools.mergeProfiles = function(existing, new_profiles, overwrite_category) {
+
+	if (typeof overwrite_category === 'undefined') {
+		overwrite_category = true;
+	}
 
 	for (newprof of new_profiles) {
 		var overwrote = false;
@@ -11,6 +15,12 @@ Tools.mergeProfiles = function(existing, new_profiles) {
 			if (prof["domain"] === newprof["domain"]) {
 				// Keep the existing 'mode' field
 				newprof['mode'] = prof['mode'];
+
+				// Keep the existing category?
+				if (!overwrite_category || newprof['category'] === '') {
+					newprof['category'] = prof['category'];
+				}
+
 				existing[i] = newprof;
 				overwrote = true;
 				break;

@@ -27,7 +27,7 @@ tabs.on("ready", function(tab) {
 		});
 
 		worker.port.on("importDataRequest", function() {
-			Install.importStartingData();
+			Install.importStartingData(true);
 			worker.port.emit("importDataResponse");
 		});
 

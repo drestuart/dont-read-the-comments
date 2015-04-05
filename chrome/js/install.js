@@ -35,7 +35,7 @@ function loadStartingData() {
 	});
 }
 
-function importStartingData() {
+function importStartingData(overwrite_category, func) {
 	loadData(function() {
 		// Get current data
 		Browser.getBackgroundPageData(function(data) {
@@ -46,7 +46,8 @@ function importStartingData() {
 
 			// Merge in starting data
 			var save_data = {};
-			save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles);
+
+			save_data.profiles = Tools.mergeProfiles(existing_profiles, starting_profiles, overwrite_category);
 			save_data.templates = Tools.mergeTemplates(existing_templates, starting_templates);
 			save_data.word_lists_enabled = {};
 
@@ -63,6 +64,9 @@ function importStartingData() {
 			// Save data
 			Browser.save(save_data, function() {
 				location.reload();
+				if (typeof func !== 'undefined') {
+					func();
+				}
 			});
 		});
 	});

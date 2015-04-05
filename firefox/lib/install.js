@@ -26,7 +26,7 @@ function loadStartingData() {
 	DataStore.save(fresh_data);
 }
 
-function importStartingData() {
+function importStartingData(overwrite_category) {
 	// Get current data
 	var data = DataStore.getBackgroundPageData();
 
@@ -36,7 +36,7 @@ function importStartingData() {
 
 	// Merge in starting data
 	var save_data = {};
-	save_data.profiles = DataStore.mergeProfiles(existing_profiles, starting_profiles);
+	save_data.profiles = DataStore.mergeProfiles(existing_profiles, starting_profiles, overwrite_category);
 	save_data.templates = DataStore.mergeTemplates(existing_templates, starting_templates);
 	save_data.word_lists_enabled = {};
 
