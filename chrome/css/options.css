@@ -59,7 +59,7 @@ code {
 }
 
 #content {
-	width: 717px;
+	width: 59.75em;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 15px;
@@ -204,11 +204,11 @@ ul.profile_table {
 }
 
 .opt_table input:not([type=radio]):not(.delete_row) {
-	width: 65px;
+	width: 5.9em;
 }
 
 .opt_table button.add_row {
-	width: 33px;
+	width: 2.3em;
 	height: 20px;
 }
 
@@ -278,10 +278,6 @@ div.word_list_area h3 {
 
 /* Profile edit modal styles */
 
-#edit-profile {
-	height: 300px;
-}
-
 #edit-profile div.modal_row {
 	margin: 5px 0;
 	padding: 5px 0;
@@ -295,7 +291,7 @@ div.word_list_area h3 {
 }
 
 .selectmenu_scroll {
-	max-height: 105px;
+	max-height: 9em;
 }
 
 /* jQuery UI overrides */

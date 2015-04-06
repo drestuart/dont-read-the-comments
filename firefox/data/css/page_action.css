@@ -4,7 +4,7 @@
 }
 
 html {
-	width: 300px;
+	width: 25em;
 	margin: 10px;
 }
 
@@ -29,7 +29,7 @@ tr {
 }
 
 td:first-child {
-	width: 70px;
+	width: 4.375em;
 }
 
 td#mode_group {
@@ -62,7 +62,7 @@ td[colspan]:not([colspan="1"]) {
 }
 
 .selectmenu_scroll {
-	max-height: 105px;
+	max-height: 9em;
 }
 
 /* jQueryUI overrides */
