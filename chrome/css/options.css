@@ -204,7 +204,7 @@ ul.profile_table {
 }
 
 .opt_table input:not([type=radio]):not(.delete_row) {
-	width: 5.9em;
+	width: 10.2em;
 }
 
 .opt_table button.add_row {

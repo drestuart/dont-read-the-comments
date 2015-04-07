@@ -7,7 +7,7 @@ var tabs = require("sdk/tabs");
 var DataStore = require("data").DataStore;
 var OptionsPage = require("options_setup").OptionsPage;
 
-var buttons = require('sdk/ui/button/action');
+var buttons = require("sdk/ui/button/toggle");
 
 var activeIcons = {
 	"16": data.url("images/logo_drtc_16.png"),
@@ -21,6 +21,15 @@ var inactiveIcons = {
 	"64": data.url("images/logo_drtc_gs_64.png"),
 };
 
+// Toolbar button for page action
+var button = buttons.ToggleButton({
+	id: "drtc-page-action",
+	label: "DRTC!",
+	icon: activeIcons,
+	onChange: ShowPageAction
+});
+
+// Page action panel
 PageAction.page_action = panel.Panel({
 	contentURL: data.url("html/page_action.html"),
 	contentScriptFile: [
@@ -37,8 +46,22 @@ PageAction.page_action = panel.Panel({
 	],
 	onShow: function() {
 		PageAction.page_action.port.emit('fetch_panel_size');
-	}
+	},
+	onHide: HidePageAction
 });
+
+function ShowPageAction(state) {
+	PageAction.page_action.port.emit("pageActionOpen", tabs.activeTab.url);
+	if (state.checked) {
+		PageAction.page_action.show({
+	      position: button
+	    });
+	}
+}
+
+function HidePageAction() {
+	button.state('window', {checked: false});
+}
 
 PageAction.page_action.port.on('panel_size', function(data) {
     PageAction.page_action.resize((data.width+30), (data.height+30));
@@ -75,24 +98,6 @@ PageAction.page_action.port.on("saveDataRequest", function(saveData) {
 PageAction.page_action.port.on("reloadActiveTabRequest", function() {
 	PageAction.page_action.hide();
 	tabs.activeTab.reload();
-});
-
-PageAction.ShowHidePageAction = function(state) {
-	PageAction.page_action.port.emit("pageActionOpen", tabs.activeTab.url);
-	if (PageAction.page_action.isShowing) {
-		PageAction.page_action.hide();
-	}
-	else {
-		PageAction.page_action.show();
-	}
-}
-
-// Toolbar button for page action
-var button = buttons.ActionButton({
-	id: "drtc-page-action",
-	label: "DRTC!",
-	icon: activeIcons,
-	onClick: PageAction.ShowHidePageAction
 });
 
 PageAction.DRTCInactive = function() {

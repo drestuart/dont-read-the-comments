@@ -12,16 +12,12 @@ html {
 	width: 100%;
 }
 
-input[type="text"] {
-	width: 90%;
-}
-
-select, .ui-selectmenu-button {
-	width: 92% !important;
-}
-
 input[type="text"], select, .ui-selectmenu-button {
-	float: right;
+	width: 75%;
+}
+
+td:nth-child(2) {
+	text-align: center;
 }
 
 tr {
@@ -34,6 +30,10 @@ td:first-child {
 
 td#mode_group {
 	width: 100%;
+}
+
+#mode_buttons {
+	text-align: center;
 }
 
 td[colspan]:not([colspan="1"]) {

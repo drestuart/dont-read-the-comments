@@ -44,9 +44,9 @@ function addCategoryTable(category_name) {
 				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_all' + category_name_fixed +'" value="all">' +
 				'<label for="mode_all' + category_name_fixed +'">All</label>' +
 				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_individual' + category_name_fixed +'" value="individual">' +
-				'<label for="mode_individual' + category_name_fixed +'">Individual</label>' +
+				'<label for="mode_individual' + category_name_fixed +'">Single</label>' +
 				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_disabled' + category_name_fixed +'" value="disabled">' +
-				'<label for="mode_disabled' + category_name_fixed +'">Disabled</label>' +
+				'<label for="mode_disabled' + category_name_fixed +'">Off</label>' +
 			'</div>' +
 		'</li>' +
 	'</ul>';
@@ -137,9 +137,9 @@ function addProfileRow(data) {
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_all' + numProfiles +'" value="all">' +
 				'<label for="mode_all' + numProfiles +'">All</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_individual' + numProfiles +'" value="individual">' +
-				'<label for="mode_individual' + numProfiles +'">Individual</label>' +
+				'<label for="mode_individual' + numProfiles +'">Single</label>' +
 				'<input type="radio" class="mode" name="mode' + numProfiles +'" id="mode_disabled' + numProfiles +'" value="disabled">' +
-				'<label for="mode_disabled' + numProfiles +'">Disabled</label>' +
+				'<label for="mode_disabled' + numProfiles +'">Off</label>' +
 			'</div>' +
 		'</div>' +
 		'<input type="hidden" class="section_selector" name="section_selector">' +
