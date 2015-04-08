@@ -54,6 +54,7 @@ function buildProfile() {
 
 $(document).ready(function() {
 	$("#save").button().on('click', function() {
+		$("#message").text("");
 		var profile = buildProfile();
 
 		if (siteIndex !== -1) {
@@ -69,10 +70,27 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#export").on('click', function() {
-		var profile = buildProfile();
-		var export_text = Tools.exportProfile(profile);
-		$("#export_text").val(export_text).show();
+	// $("#export").on('click', function() {
+	// 	var profile = buildProfile();
+	// 	var export_text = Tools.exportProfile(profile);
+	// 	$("#export_text").val(export_text).show();
+	// }).button();
+
+	$("#upload").on('click', function() {
+		$("#message").text("");
+
+		var ajaxData = {
+			domain: $("#domain").val(),
+			section_selector: $("#section_selector").val(),
+			comment_selector: $("#comment_selector").val(),
+			template: $("#template").val(),
+			category: $("#category").val(),
+		};
+
+		Browser.uploadProfile(ajaxData, function(message) {
+			console.log("Profile uploaded");
+			$("#message").text(message);
+		});
 	}).button();
 
 	$("#template").on("selectmenuchange", function() {
