@@ -87,9 +87,13 @@ $(document).ready(function() {
 			category: $("#category").val(),
 		};
 
-		Browser.uploadProfile(ajaxData, function(message) {
-			console.log("Profile uploaded");
-			$("#message").text(message);
+		$.ajax({
+			method: "POST",
+			url: "https://drestuart.pythonanywhere.com/drtc/profile",
+			data: ajaxData,
+		})
+		.done(function(data) {
+			$("#message").text(data);
 		});
 	}).button();
 

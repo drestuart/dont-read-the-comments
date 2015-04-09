@@ -49,46 +49,6 @@ chrome.runtime.onMessage.addListener(
         else if (request === "getTabUrl") {
             sendResponse(sender.tab.url);
         }
-        else if (typeof request === 'object') {
-            send_ajax("https://drestuart.pythonanywhere.com/drtc/profile",
-                request, function(data) {
-                    console.log("Sent");
-                    console.log(data);
-                    sendResponse(data);
-                }
-            );
-        }
     }
 );
-
-function send_ajax(url, data, func) {
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 ) {
-            if(xmlhttp.status == 200){
-                func(xmlhttp.responseText);
-            }
-            else {
-               console.log(xmlhttp.responseText);
-            }
-        }
-    }
-
-    xmlhttp.open("POST", url, true)
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send(serialize(data));
-}
-
-serialize = function(obj) {
-   var str = [];
-
-   for(var p in obj){
-       if (obj.hasOwnProperty(p)) {
-           str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-       }
-   }
-
-   return str.join("&");
-}
 

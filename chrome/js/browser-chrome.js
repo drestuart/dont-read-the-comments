@@ -162,7 +162,3 @@ Browser.loadJSONFile = function(file, func) {
 	xhr.send();
 }
 
-Browser.uploadProfile = function(data, func) {
-	Browser.sendMessage(data, func);
-}
-
