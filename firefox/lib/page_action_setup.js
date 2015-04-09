@@ -100,6 +100,19 @@ PageAction.page_action.port.on("reloadActiveTabRequest", function() {
 	tabs.activeTab.reload();
 });
 
+PageAction.page_action.port.on("profileUploadableCheckRequest", function(profile) {
+	var starting_profiles = JSON.parse(data.load('starting_profiles.json'));
+	// Check for one matching the provided profile
+	for (prof of starting_profiles) {
+		if (prof['domain'] === profile['domain']) {
+			PageAction.page_action.port.emit("profileUploadableCheckResponse", false);
+			return;
+		}
+	}
+	PageAction.page_action.port.emit("profileUploadableCheckResponse", true);
+});
+
+
 PageAction.DRTCInactive = function() {
 	button.state("tab", {
 		icon: inactiveIcons

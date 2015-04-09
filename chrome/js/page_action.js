@@ -188,8 +188,11 @@ $(document).ready(function() {
 									url: "https://drestuart.pythonanywhere.com/drtc/profile",
 									data: ajaxData,
 								})
-								.done(function(data) {
+								.done(function(data, textStatus, jqXHR) {
 									$("#message").text(data);
+								})
+								.fail(function(jqXHR, textStatus, errorThrown) {
+									$("#message").text("Error: " + errorThrown);
 								});
 							},
 							notUploadable: function() {

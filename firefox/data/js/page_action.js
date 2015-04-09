@@ -54,6 +54,7 @@ function buildProfile() {
 
 $(document).ready(function() {
 	$("#save").button().on('click', function() {
+		$("#message").text("");
 		var profile = buildProfile();
 
 		if (siteIndex !== -1) {
@@ -69,12 +70,39 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#export").on('click', function() {
-		var profile = buildProfile();
-		var export_text = Tools.exportProfile(profile);
-		$("#export_text").val(export_text).show();
-		resize();
-	}).button();
+	// Set up Upload button
+	Browser.profileUploadableCheck(siteProfile, {
+		uploadable: function() {
+			$("#upload").on('click', function() {
+				$("#message").text("");
+
+				var ajaxData = buildProfile();
+
+				Browser.profileUploadableCheck(ajaxData, {
+					uploadable: function() {
+						$.ajax({
+							method: "POST",
+							url: "https://drestuart.pythonanywhere.com/drtc/profile",
+							data: ajaxData,
+						})
+						.done(function(data, textStatus, jqXHR) {
+							$("#message").text(data);
+						})
+						.fail(function(jqXHR, textStatus, errorThrown) {
+							$("#message").text("Error: " + errorThrown);
+						});
+					},
+					notUploadable: function() {
+						$("#message").text("A profile for this site already exists.");
+					}
+				});
+			});
+		},
+		notUploadable: function() {
+			$("#upload").parents("tr").hide();
+		}
+	});
+	$("#upload").button();
 
 	$("#template").on("selectmenuchange", function() {
 		fillInTemplateValues(this);
@@ -82,7 +110,7 @@ $(document).ready(function() {
 
 	$('#section_selector, #comment_selector').on('input', function() {
 		$('#template').val('');
-		$('#template').selectmenu("refresh");
+		$('#template').selectmenu();
 	});
 
 	$("#enable").on("click", function() {
@@ -131,9 +159,10 @@ function setUpPageAction(url) {
 	template_menu.append('<option value="">None</option>');
 
 	// Empty the category menu
-	var category_menu = $('select#category');
+	var category_menu = $('#category');
 	category_menu.html("");
 	category_menu.append('<option value="Uncategorized">Uncategorized</option>');
+	category_menu.selectmenu();
 
 	// Hide sections, will show later as needed
 	$("#profile_found").hide();
@@ -142,6 +171,12 @@ function setUpPageAction(url) {
 	// Empty the message and export box
 	$("#message").text("");
 	$("#export_text").val("").hide();
+
+	// Empty the fields
+	$("#section_selector, #comment_selector").val("");
+
+	// Show the upload button
+	$("#upload").parents("tr").show();
 
 	// Clear site profile
 	siteProfile = null;
@@ -183,13 +218,17 @@ function setUpPageAction(url) {
 			var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
 			template_menu.append(optionHTML);
 		}
+		$('#template').selectmenu();
 
 		// Fill in category menu
 		for (c of categories) {
 			if (c === "Uncategorized") {continue;}
 			var optionHTML = "<option value='" + c + "'>" + c + "</option>";
 			category_menu.append(optionHTML);
-       }
+		}
+		$('#category').selectmenu()
+
+		$("#mode_buttons").buttonset();
 
 		// Fill in form fields
 		if (siteProfile !== null) {
@@ -219,7 +258,6 @@ function setUpPageAction(url) {
 			$('#category').selectmenu()
 				.selectmenu("menuWidget")
 				.addClass("selectmenu_scroll");
-
 			$("#mode_buttons").buttonset();
 		}
 		else {

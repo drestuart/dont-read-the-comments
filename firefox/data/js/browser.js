@@ -78,3 +78,21 @@ Browser.reload = function() {
 	self.port.emit("reloadActiveTabRequest");
 }
 
+Browser.profileUploadableCheck = function(profile, callbacks) {
+	if (profile === null) {
+		callbacks.uploadable();
+		return;
+	}
+
+	self.port.once("profileUploadableCheckResponse", function(uploadable) {
+		if (uploadable) {
+			callbacks.uploadable();
+		}
+		else {
+			callbacks.notUploadable();
+		}
+	});
+
+	self.port.emit("profileUploadableCheckRequest", profile);
+}
+
