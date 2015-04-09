@@ -70,33 +70,6 @@ $(document).ready(function() {
 		});
 	});
 
-	// $("#export").on('click', function() {
-	// 	var profile = buildProfile();
-	// 	var export_text = Tools.exportProfile(profile);
-	// 	$("#export_text").val(export_text).show();
-	// }).button();
-
-	$("#upload").on('click', function() {
-		$("#message").text("");
-
-		var ajaxData = {
-			domain: $("#domain").val(),
-			section_selector: $("#section_selector").val(),
-			comment_selector: $("#comment_selector").val(),
-			template: $("#template").val(),
-			category: $("#category").val(),
-		};
-
-		$.ajax({
-			method: "POST",
-			url: "https://drestuart.pythonanywhere.com/drtc/profile",
-			data: ajaxData,
-		})
-		.done(function(data) {
-			$("#message").text(data);
-		});
-	}).button();
-
 	$("#template").on("selectmenuchange", function() {
 		fillInTemplateValues(this);
 	});
@@ -199,6 +172,37 @@ $(document).ready(function() {
 				$("#profile_not_found").show();
 			}
 
+			// If this profile can be uploaded, set up the Upload button
+			// Otherwise hide it
+			Browser.profileUploadableCheck(siteProfile, {
+				uploadable: function() {
+					$("#upload").on('click', function() {
+						$("#message").text("");
+
+						var ajaxData = buildProfile();
+
+						Browser.profileUploadableCheck(ajaxData, {
+							uploadable: function() {
+								$.ajax({
+									method: "POST",
+									url: "https://drestuart.pythonanywhere.com/drtc/profile",
+									data: ajaxData,
+								})
+								.done(function(data) {
+									$("#message").text(data);
+								});
+							},
+							notUploadable: function() {
+								$("#message").text("A profile for this site already exists.");
+							}
+						});
+					});
+				},
+				notUploadable: function() {
+					$("#upload").parents("tr").hide();
+				}
+			});
+
 			// Apply jQueryUI
 			$('#template').selectmenu()
 				.selectmenu("menuWidget")
@@ -207,6 +211,7 @@ $(document).ready(function() {
 				.selectmenu("menuWidget")
 				.addClass("selectmenu_scroll");
 			$("#mode_buttons").buttonset();
+			$("#upload").button();
 		});
 	});
 });

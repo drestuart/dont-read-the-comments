@@ -13,7 +13,7 @@ html {
 }
 
 input[type="text"], select, .ui-selectmenu-button {
-	width: 75%;
+	width: 75% !important;
 }
 
 td:nth-child(2) {

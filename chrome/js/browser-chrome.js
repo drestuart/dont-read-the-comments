@@ -162,3 +162,25 @@ Browser.loadJSONFile = function(file, func) {
 	xhr.send();
 }
 
+Browser.profileUploadableCheck = function (profile, callbacks) {
+	if (profile === null) {
+		callbacks.uploadable();
+		return;
+	}
+
+	// Load starting profiles
+	Browser.loadJSONFile('data/starting_profiles.json', function(prof_data) {
+		starting_profiles = prof_data;
+
+		// Check for one matching the provided profile
+		for (prof of starting_profiles) {
+			if (prof['domain'] === profile['domain']) {
+				callbacks.notUploadable();
+				return;
+			}
+		}
+
+		callbacks.uploadable();
+	});
+}
+
