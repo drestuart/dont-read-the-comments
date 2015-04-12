@@ -6,6 +6,7 @@
 html {
 	width: 25em;
 	margin: 10px;
+	min-height: 300px;
 }
 
 #profile {

@@ -9,8 +9,8 @@ var siteIndex = -1;
 var currentTab = null;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
 
-function fillInTemplateValues(element) {
-	var template_name = $(element).val();
+function fillInTemplateValues() {
+	var template_name = $("#template").val();
 	if (template_name !== '') {
 		var selected_template = null;
 
@@ -29,6 +29,16 @@ function fillInTemplateValues(element) {
 	}
 }
 
+function showHideNewCategory() {
+	if ($("#category").val() == "New Category") {
+		$("#new_category").parents("tr").show();
+	}
+	else {
+		$("#new_category").parents("tr").hide();
+	}
+	resize();
+}
+
 function buildProfile() {
 	var profile = {};
 
@@ -42,6 +52,14 @@ function buildProfile() {
 		}
 		else if (f === 'mode') {
 			value = $("input[name=mode]:checked").val();
+		}
+		else if (f === 'category') {
+			if ($("#category").val() === "New Category") {
+				value = $("#new_category").val().trim();
+			}
+			else {
+				value = $("#" + f).val().trim();
+			}
 		}
 		else {
 			value = $("#" + f).val().trim();
@@ -104,9 +122,11 @@ $(document).ready(function() {
 	});
 	$("#upload").button();
 
-	$("#template").on("selectmenuchange", function() {
-		fillInTemplateValues(this);
-	});
+	// Fill in template values
+	$("#template").on("selectmenuchange", fillInTemplateValues);
+
+	// Show or hide the New Category input
+	$("#category").on("selectmenuchange", showHideNewCategory);
 
 	$('#section_selector, #comment_selector').on('input', function() {
 		$('#template').val('');
@@ -162,7 +182,12 @@ function setUpPageAction(url) {
 	var category_menu = $('#category');
 	category_menu.html("");
 	category_menu.append('<option value="Uncategorized">Uncategorized</option>');
+	category_menu.append('<option value="New Category">New Category</option>');
 	category_menu.selectmenu();
+
+	// Hide the new category input
+	$("#new_category").parents("tr").hide();
+	$("#new_category").val('');
 
 	// Hide sections, will show later as needed
 	$("#profile_found").hide();
@@ -226,7 +251,7 @@ function setUpPageAction(url) {
 			var optionHTML = "<option value='" + c + "'>" + c + "</option>";
 			category_menu.append(optionHTML);
 		}
-		$('#category').selectmenu()
+		
 
 		$("#mode_buttons").buttonset();
 
@@ -250,6 +275,7 @@ function setUpPageAction(url) {
 					$("#" + f).val(value);
 				}
 			}
+			$('#category').selectmenu('refresh');
 
 			// Apply jQueryUI
 			$('#template').selectmenu()

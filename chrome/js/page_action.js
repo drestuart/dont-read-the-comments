@@ -9,8 +9,8 @@ var siteIndex = -1;
 var currentTab = null;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
 
-function fillInTemplateValues(element) {
-	var template_name = $(element).val();
+function fillInTemplateValues() {
+	var template_name = $("#template").val();
 	if (template_name !== '') {
 		var selected_template = null;
 
@@ -29,6 +29,15 @@ function fillInTemplateValues(element) {
 	}
 }
 
+function showHideNewCategory() {
+	if ($("#category").val() == "New Category") {
+		$("#new_category").parents("tr").show();
+	}
+	else {
+		$("#new_category").parents("tr").hide();
+	}
+}
+
 function buildProfile() {
 	var profile = {};
 
@@ -42,6 +51,14 @@ function buildProfile() {
 		}
 		else if (f === 'mode') {
 			value = $("input[name=mode]:checked").val();
+		}
+		else if (f === 'category') {
+			if ($("#category").val() === "New Category") {
+				value = $("#new_category").val().trim();
+			}
+			else {
+				value = $("#" + f).val().trim();
+			}
 		}
 		else {
 			value = $("#" + f).val().trim();
@@ -70,9 +87,12 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#template").on("selectmenuchange", function() {
-		fillInTemplateValues(this);
-	});
+	// Fill in template values
+	$("#template").on("selectmenuchange", fillInTemplateValues);
+
+	// Show or hide the New Category input
+	$("#category").on("selectmenuchange", showHideNewCategory);
+	$("#new_category").parents("tr").hide();
 
 	$('#section_selector, #comment_selector').on('input', function() {
 		$('#template').val('');
