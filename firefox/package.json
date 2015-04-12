@@ -11,6 +11,6 @@
   "homepage": "http://www.coldbrewsoftware.com/drtc",
   "main": "main.js",
   "permissions": {
-    "cross-domain-content": ["https://drestuart.pythonanywhere.com/", "https://coldbrewsoftware.com/"]
+    "cross-domain-content": ["http://www.coldbrewsoftware.com/"]
   }
 }

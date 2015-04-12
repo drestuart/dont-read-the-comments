@@ -16,7 +16,7 @@
     "tabs"
   ],
 
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'; connect-src 'self'  https://drestuart.pythonanywhere.com https://coldbrewsoftware.com",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'; connect-src 'self' http://www.coldbrewsoftware.com",
 
   "content_scripts": [
     {

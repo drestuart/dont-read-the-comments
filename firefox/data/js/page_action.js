@@ -82,7 +82,7 @@ $(document).ready(function() {
 					uploadable: function() {
 						$.ajax({
 							method: "POST",
-							url: "https://drestuart.pythonanywhere.com/drtc/profile",
+							url: "http://www.coldbrewsoftware.com/drtc/profile",
 							data: ajaxData,
 						})
 						.done(function(data, textStatus, jqXHR) {
