@@ -106,7 +106,7 @@ function addCategoryTable(category_name) {
 		text: false
 	}).hide();
 
-	// Set up sortable jQueryUI on profile table
+	// Set up sortable jQueryUI for profile rows
 	table.find(".scroll_area").sortable({
 		connectWith: ".profile_table .scroll_area",
 		placeholder: "ui-state-highlight",
@@ -598,6 +598,7 @@ $(document).ready(function() {
 
 		$("#profiles").sortable({
 			cursor: "-webkit-grabbing",
+			cancel: ".scroll_area",
 		});
 
 		// Fill in word lists
