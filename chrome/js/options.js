@@ -598,7 +598,7 @@ $(document).ready(function() {
 
 		$("#profiles").sortable({
 			cursor: "-webkit-grabbing",
-			cancel: ".scroll_area",
+			cancel: ".scroll_area,.ui-button,input:not(.readonly),textarea,button,select,option",
 		});
 
 		// Fill in word lists

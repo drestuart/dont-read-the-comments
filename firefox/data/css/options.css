@@ -130,6 +130,7 @@ ul.profile_table {
 
 .profile_table li.header input.readonly {
 	color: #ffffff;
+	cursor: inherit;
 }
 
 .profile_table li.header button {
