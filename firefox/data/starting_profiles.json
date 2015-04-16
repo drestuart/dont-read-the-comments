@@ -57,5 +57,12 @@
 {"domain": "lifehacker.com", "mode": "all", "section_selector": "section.js_replies", "comment_selector": "article.js_reply.reply", "template": "Kinja", "category": "Technology"},
 {"domain": "amazon.com", "mode": "all", "section_selector": "#revMH", "comment_selector": "#revMHRL > .a-section.celwidget", "template": "", "category": "Uncategorized"},
 {"domain": "*.wikia.com", "mode": "all", "section_selector": "#article-comments", "comment_selector": "li.comment", "template": "", "category": "Uncategorized"},
-{"domain": "patreon.com", "mode": "all", "section_selector": "#creation-comments > div.thread > div.cb_comment.ranked_popular.comment_0", "comment_selector": ".comment_block", "template": "", "category": "Uncategorized"}
+{"domain": "patreon.com", "mode": "all", "section_selector": "#creation-comments > div.thread > div.cb_comment.ranked_popular.comment_0", "comment_selector": ".comment_block", "template": "", "category": "Uncategorized"},
+{"category": "World News", "comment_selector": "article.j-comment", "domain": "msnbc.com", "template": "", "section_selector": "#discussions"},
+{"category": "Local News", "comment_selector": "div.post-content", "domain": "*.cbslocal.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "World News", "comment_selector": "div.post-content", "domain": "thenation.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "World News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "ibtimes.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "World News", "comment_selector": "div.pundit-content", "domain": "businessinsider.com", "template": "", "section_selector": "#comments"},
+{"category": "World News", "comment_selector": "div.gig-comments-comment, div.gig-comments-comment-child", "domain": "standard.co.uk", "template": "", "section_selector": "#gigyacomment_thread"},
+{"category": "Art", "comment_selector": "div.ccomment.ch", "domain": "*.deviantart.com", "template": "", "section_selector": "#gmi-CCommentMaster"}
 ]
