@@ -38,7 +38,7 @@
 {"domain": "mashable.com", "mode": "all", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper", "template": "Livefyre", "category": "Entertainment"},
 {"domain": "collegehumor.com", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook", "category": "Entertainment"},
 {"domain": "avclub.com", "mode": "all", "section_selector": "#dsq-2", "comment_selector": "div.post-content", "template": "Disqus", "category": "Entertainment"},
-{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".ve.oba.HPa,   .Ik.Wv", "template": "", "category": "Entertainment"},
+{"domain": "youtube.com", "mode": "all", "section_selector": "#watch-discussion", "comment_selector": ".comment-item", "template": "", "category": "Entertainment"},
 {"domain": "knowyourmeme.com", "mode": "all", "section_selector": "div.fbFeedbackContent,    #comments", "comment_selector": "div.postContainer.fsl.fwb.fcb,    .comment.rel", "template": "", "category": "Entertainment"},
 {"domain": "fusion.net", "mode": "all", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook", "category": "Blogs"},
 {"domain": "blogspot.com", "mode": "all", "section_selector": "#Blog1_comments-block-wrapper", "comment_selector": ".comment-body", "template": "", "category": "Blogs"},

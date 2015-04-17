@@ -33,6 +33,7 @@ coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
 			"</div>";
 id = 0;
 showEltId = [];
+comments_section = null;
 
 function getZIndex(elt) {
 	var z = 0;
@@ -135,6 +136,25 @@ function hideElement(elt, ct) {
 		element_id = id;
 		elt.attr("__drtc_id", element_id);
 		id++;
+	}
+
+	// Get the comments section element
+	if (comments_section === null) {
+		comments_section = $(getSectionSelector());
+	}
+
+	// Check if this element is actually visible in the comments section
+	// If it's not, skip the rest of the function
+	if (!elt.is(comments_section)) {
+		var eltTop = elt.offset().top;
+		var eltBottom = eltTop + elt.outerHeight(true);
+
+		var sectionTop = comments_section.scrollTop();
+		var sectionBottom = sectionTop + comments_section.outerHeight(true);
+
+		if ((eltTop > sectionBottom) || (eltBottom < sectionTop)) {
+			return;
+		}
 	}
 
 	if (isNaN(z)) {
