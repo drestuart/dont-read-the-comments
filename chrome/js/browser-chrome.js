@@ -129,10 +129,47 @@ Browser.getTabUrl = function(func) {
 
 Browser.tabsQuery = function(func) {
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        tab = tabs[0];
-        url = tab.url;
-        func(url);
-    });
+		tab = tabs[0];
+		url = tab.url;
+		func(url);
+	});
+}
+
+Browser.templateQuery = function(func) {
+	chrome.runtime.onMessage.addListener(
+		function(message) {
+			if (message.action === "templateQueryResponse") {
+				if (message.template !== null) {
+					func(message.template);
+				}
+			}
+		}
+	);
+
+	// Browser.sendMessage("templateQuery", null);
+	chrome.tabs.query({active: true, currentWindow: true},
+		function(tabs){
+			chrome.tabs.sendMessage(tabs[0].id, "templateQuery", null);
+		}
+	);
+
+}
+
+Browser.setUpTemplateQueryListener = function(func) {
+	chrome.runtime.onMessage.addListener(
+		function(message, sender, sendResponse) {
+			if (message === "templateQuery") {
+				template = func();
+				if (typeof template !== 'undefined') {
+					sendResponse(template);
+					Browser.sendMessage({
+						action: "templateQueryResponse",
+						template: template
+					});
+				}
+			}
+		}
+	);
 }
 
 Browser.openOptionsPage = function() {
@@ -142,11 +179,11 @@ Browser.openOptionsPage = function() {
 Browser.setUpLocationChange = function(func) {
 	// Set up listener for url update message
 	chrome.runtime.onMessage.addListener(
-	    function(message, sender, sendResponse) {
+		function(message, sender, sendResponse) {
 			if (message.action == "hide") {
 				func();
 			}
-	    }
+		}
 	);
 }
 

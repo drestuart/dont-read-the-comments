@@ -363,11 +363,21 @@ function drtcHide() {
 	$(".__drtc_area").remove();
 }
 
+function templateQuery() {
+	for (t of templates) {
+		var section_selector = t['section_selector'];
+
+		if ($(section_selector).length) {
+			return t["system"];
+		}
+	}
+}
+
 $(document).ready(function() {
 	// Load profile and template data
 	Browser.getContentScriptData(function(data) {
 		var profiles = data["profiles"];
-		var templates = data["templates"];
+		templates = data["templates"];
 		comment_threshold = data["comment_threshold"]/20;
 		var custom_words = data["custom_words"];
 		var word_lists_enabled = data["word_lists_enabled"];
@@ -431,6 +441,7 @@ $(document).ready(function() {
 			}
 			else {
 				Browser.pageActionDisabled();
+				Browser.setUpTemplateQueryListener(templateQuery);
 			}
 		});
 	});
