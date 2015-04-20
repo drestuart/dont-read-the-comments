@@ -58,6 +58,10 @@ DataStore.getContentScriptData = function() {
 	return retData;
 }
 
+DataStore.getTemplateData = function() {
+	return storage.templates;
+}
+
 DataStore.mergeProfiles = function(existing, new_profiles, overwrite_category) {
 
 	if (typeof overwrite_category === 'undefined') {

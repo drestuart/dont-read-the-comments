@@ -96,3 +96,13 @@ Browser.profileUploadableCheck = function(profile, callbacks) {
 	self.port.emit("profileUploadableCheckRequest", profile);
 }
 
+Browser.templateQuery = function(func) {
+	self.port.once("templateQueryResponse", function(template) {
+		if (template !== null) {
+			func(template);
+		}
+	});
+
+	self.port.emit("templateQuery", null);
+}
+

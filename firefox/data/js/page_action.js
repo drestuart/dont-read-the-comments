@@ -137,6 +137,12 @@ $(document).ready(function() {
 		$("#profile_not_found").hide();
 		$("#profile_found").show();
 		resize();
+
+		Browser.templateQuery(function(template){
+			var template_menu = $('select#template');
+			template_menu.val(template).selectmenu("refresh");
+			fillInTemplateValues(template_menu);
+		});
 	}).button();
 
 	$("#showme").on("click", function() {

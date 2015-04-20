@@ -339,7 +339,9 @@ function getProfileData() {
 				value = row.find("input.mode[type=radio]:checked").val();
 			}
 
-			profile[f] = value.trim();
+			if (typeof value !== 'undefined') {
+				profile[f] = value.trim();
+			}
 
 			// Don't save empty rows!
 			if (f !== "mode" && value !== "") {

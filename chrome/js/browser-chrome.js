@@ -146,7 +146,6 @@ Browser.templateQuery = function(func) {
 		}
 	);
 
-	// Browser.sendMessage("templateQuery", null);
 	chrome.tabs.query({active: true, currentWindow: true},
 		function(tabs){
 			chrome.tabs.sendMessage(tabs[0].id, "templateQuery", null);

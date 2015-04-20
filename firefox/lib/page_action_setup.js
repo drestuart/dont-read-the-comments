@@ -112,6 +112,24 @@ PageAction.page_action.port.on("profileUploadableCheckRequest", function(profile
 	PageAction.page_action.port.emit("profileUploadableCheckResponse", true);
 });
 
+PageAction.page_action.port.on("templateQuery", function() {
+	var worker = tabs.activeTab.attach({
+		contentScriptFile: [
+			data.url("js/templateScan.js"),
+			data.url("js/jquery-1.11.1.min.js")
+		],
+		contentScriptOptions: {
+			templates: DataStore.getTemplateData()
+		}
+	});
+
+	worker.port.on("templateQueryResponse", function(template) {
+		PageAction.page_action.port.emit("templateQueryResponse", template);
+	});
+
+	worker.port.emit("templateQuery");
+});
+
 
 PageAction.DRTCInactive = function() {
 	button.state("tab", {
