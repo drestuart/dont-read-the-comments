@@ -110,6 +110,10 @@ ul.profile_table {
 	margin: 0 2px;
 }
 
+.profile_table li > div:first-of-type {
+	width: 37%;
+}
+
 .profile_table div.scroll_area li {
 	font-size: 12px;
 }
@@ -208,7 +212,7 @@ ul.profile_table {
 }
 
 .opt_table input:not([type=radio]):not(.delete_row) {
-	width: 14.2em;
+	width: 95%;
 }
 
 .opt_table button.add_row {
