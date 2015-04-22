@@ -29,9 +29,9 @@ Data.loadData = function(sendResponse) {
 					Data.profiles = Data.profiles.concat(syncdata["profiles" + i]);
 					delete syncdata["profiles" + i];
 				}
-				// else {
-				// 	break;
-				// }
+				else {
+					break;
+				}
 			}
 
 			console.log(syncdata);
@@ -58,6 +58,13 @@ Data.saveData = function(savedata) {
 				"custom_words", "word_lists_enabled", "categories"];
 
 	var QUOTA_BYTES_PER_ITEM = 8192;
+
+	console.log("Updating data in memory");
+	for (f of fields) {
+		if (typeof savedata[f] !== 'undefined') {
+			Data[f] = savedata[f]
+		}
+	}
 
 	// Handle profile data specially
 	if (typeof savedata.profiles !== 'undefined') {
@@ -101,13 +108,7 @@ Data.saveData = function(savedata) {
 	}
 
 	chrome.storage.sync.set(savedata, function() {
-		// Save new data
-		console.log("Saving new data");
-		for (f of fields) {
-			if (typeof savedata[f] !== 'undefined') {
-				Data[f] = savedata[f]
-			}
-		}
+		console.log("Updating data in storage");
 	});
 }
 
