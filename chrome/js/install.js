@@ -23,6 +23,7 @@ function loadData(func) {
 
 function loadStartingData() {
 	loadData(function() {
+		console.log("Loading starting data");
 		var fresh_data = {};
 
 		fresh_data.profiles = starting_profiles;
@@ -31,19 +32,29 @@ function loadStartingData() {
 		fresh_data.custom_words = starting_custom_words;
 		fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
-		Browser.save(fresh_data, function() {});
+		// Browser.save(fresh_data, function() {});
+		Data.saveData(fresh_data);
+		// chrome.storage.sync.set(fresh_data, function() {console.log("Saved it!");});
 	});
 }
 
 function importStartingData(overwrite_category, func) {
+	console.log("Importing starting data");
+
 	loadData(function() {
 		// Get current data
 		Browser.getBackgroundPageData(function(data) {
 
-			var existing_profiles = data["profiles"];
-			var existing_templates = data["templates"];
-			var existing_word_lists_enabled = data["word_lists_enabled"];
-
+			if (typeof data !== 'undefined') {
+				var existing_profiles = data["profiles"];
+				var existing_templates = data["templates"];
+				var existing_word_lists_enabled = data["word_lists_enabled"];
+			}
+			else {
+				var existing_profiles = [];
+				var existing_templates = [];
+				var existing_word_lists_enabled = [];
+			}
 			// Merge in starting data
 			var save_data = {};
 
