@@ -30,7 +30,7 @@
   ],
 
   "background": {
-    "scripts": ["js/tools.js", "js/browser-chrome.js", "js/install.js", "js/background-chrome.js", "js/data.js"],
+    "scripts": ["js/tools.js", "js/install.js", "js/background-chrome.js", "js/data.js"],
     "persistent": true
   },
 

@@ -6,7 +6,7 @@ Data.comment_threshold = null;
 Data.custom_words = null;
 Data.word_lists_enabled = null;
 
-Data.loadData = function(sendResponse) {
+Data.loadData = function(callback) {
 	console.log("Retrieving data");
 	var MAX_ITEMS = 512;
 	var fields = ["templates", "comment_threshold", "custom_words", 
@@ -17,8 +17,6 @@ Data.loadData = function(sendResponse) {
 		for (var i = 1 ; i < MAX_ITEMS ; i++) {
 			fields.push("profiles" + i)
 		}
-
-		console.log(fields);
 
 		chrome.storage.sync.get(null, function(syncdata) {
 			Data.profiles = [];
@@ -34,26 +32,22 @@ Data.loadData = function(sendResponse) {
 				}
 			}
 
-			console.log(syncdata);
-
 			Data.templates = syncdata["templates"];
 			Data.comment_threshold = syncdata["comment_threshold"];
 			Data.custom_words = syncdata["custom_words"];
 			Data.word_lists_enabled = syncdata["word_lists_enabled"];
 
 			console.log("Returning from Chrome storage");
-			console.log(Data);
-			sendResponse(Data);
+			callback(Data);
 		});
 	}
 	else {
 		console.log("Returning from memory");
-		console.log(Data);
-		sendResponse(Data);
+		callback(Data);
 	}
 }
 
-Data.saveData = function(savedata) {
+Data.saveData = function(savedata, callback) {
 	var fields = ["profiles", "templates", "comment_threshold", 
 				"custom_words", "word_lists_enabled", "categories"];
 
@@ -109,6 +103,7 @@ Data.saveData = function(savedata) {
 
 	chrome.storage.sync.set(savedata, function() {
 		console.log("Updating data in storage");
+		callback();
 	});
 }
 

@@ -8,12 +8,24 @@ var starting_word_lists_enabled = {
 	"bigotry": true
 };
 
+function loadJSONFile(file, func) {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			data = JSON.parse(xhr.responseText);
+			func(data);
+		}
+	};
+	xhr.open("GET", chrome.extension.getURL(file), true);
+	xhr.send();
+}
+
 function loadData(func) {
 	// Load JSON files
-	Browser.loadJSONFile('data/starting_profiles.json', function(prof_data) {
+	loadJSONFile('data/starting_profiles.json', function(prof_data) {
 		starting_profiles = prof_data;
 
-		Browser.loadJSONFile('data/starting_templates.json', function(temp_data) {
+		loadJSONFile('data/starting_templates.json', function(temp_data) {
 			starting_templates = temp_data;
 
 			func();
@@ -33,8 +45,7 @@ function loadStartingData() {
 		fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
 		// Browser.save(fresh_data, function() {});
-		Data.saveData(fresh_data);
-		// chrome.storage.sync.set(fresh_data, function() {console.log("Saved it!");});
+		Data.saveData(fresh_data, null);
 	});
 }
 
@@ -43,7 +54,7 @@ function importStartingData(overwrite_category, func) {
 
 	loadData(function() {
 		// Get current data
-		Browser.getBackgroundPageData(function(data) {
+		Data.loadData(function(data) {
 
 			if (typeof data !== 'undefined') {
 				var existing_profiles = data["profiles"];
@@ -73,7 +84,7 @@ function importStartingData(overwrite_category, func) {
 			}
 
 			// Save data
-			Browser.save(save_data, function() {
+			Data.saveData(save_data, function() {
 				location.reload();
 				if (typeof func !== 'undefined') {
 					func();
