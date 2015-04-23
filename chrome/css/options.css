@@ -107,7 +107,7 @@ ul.profile_table {
 	margin: 0 2px;
 }
 
-.profile_table li > div:first-of-type {
+.profile_table .scroll_area li > div:first-of-type {
 	width: 37%;
 }
 
