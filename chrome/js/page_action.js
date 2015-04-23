@@ -129,7 +129,7 @@ $(document).ready(function() {
 		// Fill in domain field whether we load anything or not
 		$("#domain").val(domain);
 
-		Browser.getPageActionData(function(data) {
+		Browser.getFromStorage(function(data) {
 			profiles = data["profiles"];
 			templates = data["templates"];
 			categories = data["categories"];

@@ -2,6 +2,7 @@ Data = {};
 
 Data.profiles = null;
 Data.templates = null;
+Data.categories = null;
 Data.comment_threshold = null;
 Data.custom_words = null;
 Data.word_lists_enabled = null;
@@ -35,6 +36,7 @@ Data.loadData = function(callback) {
 				}
 			}
 
+			Data.categories = Data.getCategories(Data.profiles);
 			Data.templates = syncdata["templates"];
 			Data.comment_threshold = syncdata["comment_threshold"];
 			Data.custom_words = syncdata["custom_words"];

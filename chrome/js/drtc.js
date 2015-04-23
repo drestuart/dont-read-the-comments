@@ -375,7 +375,7 @@ function templateQuery() {
 
 $(document).ready(function() {
 	// Load profile and template data
-	Browser.getContentScriptData(function(data) {
+	Browser.getFromStorage(function(data) {
 		var profiles = data["profiles"];
 		templates = data["templates"];
 		comment_threshold = data["comment_threshold"]/20;

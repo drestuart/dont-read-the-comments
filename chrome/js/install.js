@@ -35,7 +35,6 @@ function loadData(func) {
 
 function loadStartingData() {
 	loadData(function() {
-		console.log("Loading starting data");
 		var fresh_data = {};
 
 		fresh_data.profiles = starting_profiles;
@@ -49,8 +48,6 @@ function loadStartingData() {
 }
 
 function importStartingData(overwrite_category, func) {
-	console.log("Importing starting data");
-
 	loadData(function() {
 		// Get current data
 		Data.loadData(function(data) {

@@ -552,7 +552,7 @@ function editProfileSave() {
 $(document).ready(function() {
 
 	// Load up comment system templates and profiles
-	Browser.getOptionsPageData(function(data) {
+	Browser.getFromStorage(function(data) {
 
 		templates = data["templates"];
 		ct = data["comment_threshold"];
