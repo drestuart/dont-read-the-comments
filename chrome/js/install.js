@@ -44,8 +44,7 @@ function loadStartingData() {
 		fresh_data.custom_words = starting_custom_words;
 		fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
-		// Browser.save(fresh_data, function() {});
-		Data.saveData(fresh_data, null);
+		Data.saveData(fresh_data, function() {});
 	});
 }
 
@@ -85,7 +84,6 @@ function importStartingData(overwrite_category, func) {
 
 			// Save data
 			Data.saveData(save_data, function() {
-				location.reload();
 				if (typeof func !== 'undefined') {
 					func();
 				}

@@ -6,20 +6,23 @@ Data.comment_threshold = null;
 Data.custom_words = null;
 Data.word_lists_enabled = null;
 
+Data.lastSyncTime = null;
+syncInterval = 300000; // 5 minutes in ms
+
 Data.loadData = function(callback) {
-	console.log("Retrieving data");
 	var MAX_ITEMS = 512;
 	var fields = ["templates", "comment_threshold", "custom_words", 
 				"word_lists_enabled", "categories"];
 
-	if (Data.profiles === null) {
+	if (Data.profiles === null ||
+		(Date.now() - Data.lastSyncTime > syncInterval)) {
 		// Add all possible profile chunks to the storage query
 		for (var i = 1 ; i < MAX_ITEMS ; i++) {
 			fields.push("profiles" + i)
 		}
 
 		chrome.storage.sync.get(null, function(syncdata) {
-			Data.profiles = [];
+			Data.profiles = syncdata["profiles"];
 
 			// Put the profile chunks back together
 			for (var i = 1 ; i < MAX_ITEMS ; i++) {
@@ -37,12 +40,13 @@ Data.loadData = function(callback) {
 			Data.custom_words = syncdata["custom_words"];
 			Data.word_lists_enabled = syncdata["word_lists_enabled"];
 
-			console.log("Returning from Chrome storage");
+			// Set sync timer
+			Data.lastSyncTime = Date.now();
+
 			callback(Data);
 		});
 	}
 	else {
-		console.log("Returning from memory");
 		callback(Data);
 	}
 }
@@ -53,7 +57,6 @@ Data.saveData = function(savedata, callback) {
 
 	var QUOTA_BYTES_PER_ITEM = 8192;
 
-	console.log("Updating data in memory");
 	for (f of fields) {
 		if (typeof savedata[f] !== 'undefined') {
 			Data[f] = savedata[f]
@@ -102,7 +105,6 @@ Data.saveData = function(savedata, callback) {
 	}
 
 	chrome.storage.sync.set(savedata, function() {
-		console.log("Updating data in storage");
 		callback();
 	});
 }
@@ -122,7 +124,6 @@ Data.getCategories = function(profiles) {
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request === "getStoredData") {
-			console.log("Got request: getStoredData");
 			Data.loadData(sendResponse);
 		}
 		else if (typeof request === "object" && request.request === "saveData") {
