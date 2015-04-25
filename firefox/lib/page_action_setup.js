@@ -68,9 +68,7 @@ PageAction.page_action.port.on('panel_size', function(data) {
 });
 
 PageAction.page_action.port.on("pageActionDataRequest", function() {
-	// Get the data for the page action
-	var pageActionData = DataStore.getPageActionData();
-	PageAction.page_action.port.emit("pageActionDataResponse", pageActionData);
+	PageAction.page_action.port.emit("pageActionDataResponse", DataStore.loadData());
 });
 
 PageAction.page_action.port.on("openOptionsPageRequest", function() {

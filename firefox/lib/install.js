@@ -28,7 +28,7 @@ function loadStartingData() {
 
 function importStartingData(overwrite_category) {
 	// Get current data
-	var data = DataStore.getBackgroundPageData();
+	var data = DataStore.loadData();
 
 	var existing_profiles = data["profiles"];
 	var existing_templates = data["templates"];

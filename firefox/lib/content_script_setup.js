@@ -29,7 +29,7 @@ pageMod.PageMod({
 		});
 
 		worker.port.on("contentScriptDataRequest", function() {
-			worker.port.emit("contentScriptDataResponse", DataStore.getContentScriptData());
+			worker.port.emit("contentScriptDataResponse", DataStore.loadData());
 		});
 
 		worker.port.on("pageActionEnabledRequest", function() {

@@ -6,56 +6,57 @@ var storage = require("sdk/simple-storage").storage;
 var fields = ["profiles", "templates", "word_lists_enabled",
 	"comment_threshold", "custom_words"];
 
-DataStore.getPageActionData = function() {
-	var retData = {};
+// Data fields
+DataStore.profiles = null;
+DataStore.templates = null;
+DataStore.categories = null;
+DataStore.comment_threshold = null;
+DataStore.custom_words = null;
+DataStore.word_lists_enabled = null;
 
-	retData.profiles = storage.profiles;
-	retData.templates = storage.templates;
-	retData.categories = storage.categories;
+DataStore.lastSyncTime = null;
+syncInterval = 300000; // 5 minutes in ms
 
-	return retData;
+DataStore.loadData = function() {
+	if (DataStore.profiles === null ||
+		// Check sync timer
+		(Date.now() - DataStore.lastSyncTime > syncInterval)) {
+
+		// Load data from storage
+		DataStore.profiles = storage.profiles;
+		DataStore.templates = storage.templates;
+		DataStore.comment_threshold = storage.comment_threshold;
+		DataStore.custom_words = storage.custom_words;
+		DataStore.word_lists_enabled = storage.word_lists_enabled;
+		DataStore.categories = DataStore.getCategories(DataStore.profiles);
+
+		// Load bad word lists
+		DataStore.profanity = JSON.parse(data.load('bad_words/profanity.json'));
+		DataStore.obscenity = JSON.parse(data.load('bad_words/obscenity.json'));
+		DataStore.bigotry = JSON.parse(data.load('bad_words/bigotry.json'));
+
+		// Set sync timer
+		DataStore.lastSyncTime = Date.now();
+
+		return DataStore;
+	}
+	else {
+		return DataStore;
+	}
 }
 
-DataStore.getBackgroundPageData = function() {
-	var retData = {};
+DataStore.save = function(data) {
+	for (var field of fields) {
+		if (typeof data[field] !== 'undefined') {
+			storage[field] = data[field];
+			DataStore[field] = data[field];
 
-	retData.profiles = storage.profiles;
-	retData.templates = storage.templates;
-	retData.word_lists_enabled = storage.word_lists_enabled;
-
-	return retData;
-}
-
-DataStore.getOptionsPageData = function() {
-	var retData = {};
-
-	retData.profiles = storage.profiles;
-	retData.templates = storage.templates;
-	retData.comment_threshold = storage.comment_threshold;
-	retData.custom_words = storage.custom_words;
-	retData.word_lists_enabled = storage.word_lists_enabled;
-
-	retData.profanity = JSON.parse(data.load('bad_words/profanity.json'));
-	retData.obscenity = JSON.parse(data.load('bad_words/obscenity.json'));
-	retData.bigotry = JSON.parse(data.load('bad_words/bigotry.json'));
-
-	return retData;
-}
-
-DataStore.getContentScriptData = function() {
-	var retData = {};
-
-	retData.profiles = storage.profiles;
-	retData.templates = storage.templates;
-	retData.comment_threshold = storage.comment_threshold;
-	retData.custom_words = storage.custom_words;
-	retData.word_lists_enabled = storage.word_lists_enabled;
-
-	retData.profanity = JSON.parse(data.load('bad_words/profanity.json'));
-	retData.obscenity = JSON.parse(data.load('bad_words/obscenity.json'));
-	retData.bigotry = JSON.parse(data.load('bad_words/bigotry.json'));
-
-	return retData;
+			// Build categories list
+			if (field === "profiles") {
+				storage["categories"] = DataStore.getCategories(data[field]);
+			}
+		}
+	}
 }
 
 DataStore.getTemplateData = function() {
@@ -148,19 +149,6 @@ DataStore.getCategories = function(profiles) {
 	}
 
 	return categories;
-}
-
-DataStore.save = function(data) {
-	for (var field of fields) {
-		if (typeof data[field] !== 'undefined') {
-			storage[field] = data[field];
-
-			// Bild categories list
-			if (field === "profiles") {
-				storage["categories"] = DataStore.getCategories(data[field]);
-			}
-		}
-	}
 }
 
 // Export for Firefox

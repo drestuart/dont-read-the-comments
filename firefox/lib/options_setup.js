@@ -23,7 +23,7 @@ tabs.on("ready", function(tab) {
 		});
 
 		worker.port.on("optionsPageDataRequest", function() {
-			worker.port.emit("optionsPageDataResponse", DataStore.getOptionsPageData());
+			worker.port.emit("optionsPageDataResponse", DataStore.loadData());
 		});
 
 		worker.port.on("importDataRequest", function() {
