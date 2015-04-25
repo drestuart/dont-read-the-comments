@@ -58,8 +58,12 @@ td[colspan]:not([colspan="1"]) {
 }
 
 .contextual_help {
-	cursor: help;
 	color: #999;
+	text-decoration: none;
+}
+
+.contextual_help:hover {
+	text-decoration: underline;
 }
 
 .selectmenu_scroll {
