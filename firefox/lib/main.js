@@ -24,7 +24,7 @@ else if (self.loadReason === 'upgrade' || self.loadReason === 'downgrade') {
 
 // Show help page
 if (self.loadReason === 'install') {
-	tabs.open(data.url("html/help.html"));
+	tabs.open(data.url("html/install.html"));
 }
 
 // Hide DRTC content when a tab updates

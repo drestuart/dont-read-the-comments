@@ -4,7 +4,7 @@ chrome.runtime.onInstalled.addListener(function(details){
 		loadStartingData();
 
 		// Open help page
-		chrome.tabs.create({url: "help.html", active: true});
+		chrome.tabs.create({url: "install.html", active: true});
 	}
 	else if(details.reason == "update") {
 		var thisVersion = chrome.runtime.getManifest().version;
