@@ -33,7 +33,6 @@ coverHTML = "<div class='__drtc_area' id='__drtc_area%id%'>" +
 			"</div>";
 id = 0;
 showEltId = [];
-comments_section = null;
 
 function getZIndex(elt) {
 	var z = 0;
@@ -139,9 +138,7 @@ function hideElement(elt, ct) {
 	}
 
 	// Get the comments section element
-	if (comments_section === null) {
-		comments_section = $(getSectionSelector());
-	}
+	var comments_section = $(getSectionSelector());
 
 	// Check if this element is actually visible in the comments section
 	// If it's not, skip the rest of the function
