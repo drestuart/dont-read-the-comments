@@ -142,7 +142,7 @@ function hideElement(elt, ct) {
 
 	// Check if this element is actually visible in the comments section
 	// If it's not, skip the rest of the function
-	if (!elt.is(comments_section)) {
+	if (!elt.is(comments_section) && comments_section.clientHeight !== comments_section.scrollHeight) {
 		var eltTop = elt.offset().top;
 		var eltBottom = eltTop + elt.outerHeight(true);
 
