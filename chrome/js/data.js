@@ -106,9 +106,7 @@ Data.saveData = function(savedata, callback) {
 		}
 	}
 
-	chrome.storage.sync.set(savedata, function() {
-		callback();
-	});
+	chrome.storage.sync.set(savedata, callback);
 }
 
 Data.getCategories = function(profiles) {
@@ -128,9 +126,10 @@ chrome.runtime.onMessage.addListener(
 		if (request === "getStoredData") {
 			Data.loadData(sendResponse);
 		}
-		else if (typeof request === "object" && request.request === "saveData") {
+		else if (typeof request === "object" && request.method === "saveData") {
 			Data.saveData(request.data, sendResponse);
 		}
+		return true;
 	}
 );
 

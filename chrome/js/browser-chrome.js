@@ -7,14 +7,13 @@ Browser.getFromStorage = function(func) {
 }
 
 Browser.save = function(data, func) {
-	console.log("Saving!");
-	Browser.sendMessage({request : "saveData", data : data}, function(response) {
-		func();
-	});
+	Browser.sendMessage({method : "saveData", data : data}, func);
 }
 
 Browser.sendMessage = function(message, func) {
-	chrome.runtime.sendMessage(chrome.runtime.id, message, func);
+	chrome.runtime.sendMessage(chrome.runtime.id, message, function(response) {
+		func(response);
+	});
 }
 
 Browser.pageActionEnabled = function() {
@@ -26,7 +25,6 @@ Browser.pageActionDisabled = function() {
 }
 
 Browser.reload = function() {
-	console.log("Reloading!");
 	chrome.tabs.reload();
 }
 
@@ -76,6 +74,7 @@ Browser.setUpTemplateQueryListener = function(func) {
 					});
 				}
 			}
+			return true;
 		}
 	);
 }
