@@ -129,7 +129,7 @@ chrome.runtime.onMessage.addListener(
 			Data.loadData(sendResponse);
 		}
 		else if (typeof request === "object" && request.request === "saveData") {
-			Data.saveData(request.data);
+			Data.saveData(request.data, sendResponse);
 		}
 	}
 );

@@ -7,7 +7,8 @@ Browser.getFromStorage = function(func) {
 }
 
 Browser.save = function(data, func) {
-	Browser.sendMessage({request : "saveData", data : data}, function() {
+	console.log("Saving!");
+	Browser.sendMessage({request : "saveData", data : data}, function(response) {
 		func();
 	});
 }
@@ -25,6 +26,7 @@ Browser.pageActionDisabled = function() {
 }
 
 Browser.reload = function() {
+	console.log("Reloading!");
 	chrome.tabs.reload();
 }
 

@@ -85,6 +85,7 @@ $(document).ready(function() {
 			$("#message").text("Saved");
 			Browser.reload();
 		});
+		Browser.reload();
 	});
 
 	// Fill in template values
