@@ -19,11 +19,6 @@ function getCommentSelector() {
 	return siteProfile["comment_selector"];
 }
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegExp(string){
-	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 showText = "Show &#8595;";
 hideText = "Hide &#8593;";
 
@@ -383,22 +378,9 @@ $(document).ready(function() {
 			var domain = uri.authority;
 
 			for (p of profiles) {
-				// Check if the profile's domain has a glob in it
-				if (p["domain"].indexOf('*') !== -1) {
-					// Build it into a regex
-					var checkDomain = escapeRegExp(p["domain"]);
-					checkDomain = checkDomain.replace(/\\\*/g, '[\\w\.-]*')  + '$';
-
-					if (domain.match(checkDomain)) {
-						siteProfile = p;
-						break;
-					}
-				}
-				else {
-					if (domain.endsWith(p["domain"])) {
-						siteProfile = p;
-						break;
-					}
+				if (Browser.domainMatch(domain, p["domain"])) {
+					siteProfile = p;
+					break;
 				}
 			}
 

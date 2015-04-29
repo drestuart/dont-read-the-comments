@@ -128,3 +128,32 @@ Browser.loadJSONFile = function(file, func) {
 	xhr.send();
 }
 
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegExp(string){
+	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+Browser.domainMatch = function (domain, toCheck) {
+	// Check if the check domain has a glob in it
+	if (toCheck.indexOf('*') !== -1) {
+		// Build it into a regex
+		toCheck = escapeRegExp(toCheck);
+		toCheck = toCheck.replace(/\\\*/g, '[\\w\.-]*')  + '$';
+		if (domain.match(toCheck)) {
+			return true;
+		}
+	}
+	else {
+		// Check if the domain matches or is a subdomain
+		// of the domain to check
+		var domainRe = new RegExp(".+\\." + toCheck + "$");
+		if (domain.match(domainRe)) {
+			return true;
+		}
+		else if (domain === toCheck) {
+			return true;
+		}
+	}
+	return false;
+}
+

@@ -378,22 +378,9 @@ $(document).ready(function() {
 			var domain = uri.authority;
 
 			for (p of profiles) {
-				// Check if the profile's domain has a glob in it
-				if (p["domain"].indexOf('*') !== -1) {
-					// Build it into a regex
-					var checkDomain = escapeRegExp(p["domain"]);
-					checkDomain = checkDomain.replace(/\\\*/g, '[\\w\.-]*')  + '$';
-
-					if (domain.match(checkDomain)) {
-						siteProfile = p;
-						break;
-					}
-				}
-				else {
-					if (endsWith(domain,p["domain"])) {
-						siteProfile = p;
-						break;
-					}
+				if (Browser.domainMatch(domain, p["domain"])) {
+					siteProfile = p;
+					break;
 				}
 			}
 

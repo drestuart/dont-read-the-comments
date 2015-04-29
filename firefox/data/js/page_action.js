@@ -223,20 +223,10 @@ function setUpPageAction(url) {
 		// Retrieve the profile matching this site
 		for (i = 0 ; i < profiles.length ; i++) {
 			p = profiles[i];
-			// Check if the profile's domain has a glob in it
-			if (p["domain"].indexOf('*') !== -1) {
-				// Build it into a regex
-				var checkDomain = p["domain"];
-				checkDomain = checkDomain.replace(/\*/g, '[\\w\.-]*')  + '$';
-
-				if (domain.match(checkDomain)) {
-					siteProfile = p;
-					siteIndex = i;
-					break;
-				}
-			}
-			else {
-				if (endsWith(domain, p["domain"])) {
+			// Retrieve the profile matching this site
+			for (i = 0 ; i < profiles.length ; i++) {
+				p = profiles[i];
+				if (Browser.domainMatch(domain, p["domain"])) {
 					siteProfile = p;
 					siteIndex = i;
 					break;
