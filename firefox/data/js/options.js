@@ -563,9 +563,16 @@ $(document).ready(function() {
 			addTemplateRow(t);
 		}
 
+		// Add the Uncategorized table
+		addCategoryTable("Uncategorized");
+
 		for (p of profiles) {
 			addProfileRow(p);
 		}
+
+		// Move the Uncategorized table to the end
+		uncat = $("#categoryuncategorized").detach();
+		$("#profiles").append(uncat);
 
 		// Set up template menu in profile edit modal
 		for (t of templates) {
