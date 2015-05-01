@@ -68,5 +68,22 @@
 {"category": "Local News", "comment_selector": ".fyre-comment-wrapper", "domain": "al.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
 {"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "adn.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
 {"category": "Local News", "comment_selector": "div.post-content", "domain": "arkansasnews.com", "template": "Disqus", "section_selector": "#dsq-2"},
-{"category": "Local News", "comment_selector": ".gig-comment", "domain": "sacbee.com", "template": "", "section_selector": ".gig-comments-container"}
+{"category": "Local News", "comment_selector": ".gig-comment", "domain": "sacbee.com", "template": "", "section_selector": ".gig-comments-container"},
+{"category": "Local News", "comment_selector": "div.post-content", "domain": "denverpost.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "Local News", "comment_selector": ".vf-comment-container", "domain": "courant.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
+{"category": "World News", "comment_selector": ".vf-comment-container", "domain": "latimes.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
+{"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "miamiherald.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "Local News", "comment_selector": ".vf-comment-container", "domain": "sun-sentinel.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
+{"category": "Local News", "comment_selector": ".fyre-comment-wrapper", "domain": "ajc.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
+{"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "hawaiinewsnow.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "idahostatesman.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "World News", "comment_selector": ".vf-comment-container", "domain": "chicagotribune.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
+{"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "kansascity.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "Local News", "comment_selector": ".fyre-comment-wrapper", "domain": "nola.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
+{"category": "Local News", "comment_selector": "div.post-content", "domain": "pressherald.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "Local News", "comment_selector": ".vf-comment-container", "domain": "baltimoresun.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
+{"category": "World News", "comment_selector": ".comment-holder", "domain": "boston.com", "template": "", "section_selector": "#comments"},
+{"category": "Local News", "comment_selector": ".fyre-comment-wrapper", "domain": "startribune.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
+{"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "msnewsnow.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
+{"category": "Local News", "comment_selector": "#comment-list > li > dl", "domain": "billingsgazette.com", "template": "", "section_selector": "#comment-list"}
 ]

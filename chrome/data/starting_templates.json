@@ -2,5 +2,6 @@
 {"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"},
 {"system": "Facebook", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb"},
 {"system": "Livefyre", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper"},
-{"system": "Kinja", "section_selector": "section.js_replies", "comment_selector": "article.js_reply.reply"}
+{"system": "Kinja", "section_selector": "section.js_replies", "comment_selector": "article.js_reply.reply"},
+{"system":"Viafoura","section_selector":".vf-commenting","comment_selector":".vf-comment-container"}
 ]
