@@ -116,5 +116,9 @@
 {"category": "Local News", "comment_selector": "#loadComments dl", "domain": "madison.com", "template": "", "section_selector": "#loadComments"},
 {"category": "Local News", "comment_selector": ".vf-comment-container", "domain": "jsonline.com", "template": "Viafoura", "section_selector": ".vf-commenting"},
 {"category": "Local News", "comment_selector": "div.post-content", "domain": "wyomingnews.com", "template": "Disqus", "section_selector": "#dsq-2"},
-{"category": "Local News", "comment_selector": "#loadComments dl", "domain": "trib.com", "template": "", "section_selector": "#loadComments"}
+{"category": "Local News", "comment_selector": "#loadComments dl", "domain": "trib.com", "template": "", "section_selector": "#loadComments"},
+{"category": "Politics", "comment_selector": "div.post-content", "domain": "redstate.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "Politics", "comment_selector": "div.post-content", "domain": "breitbart.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "Politics", "comment_selector": "div.post-content", "domain": "washingtonexaminer.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "Politics", "comment_selector": "div.post-content", "domain": "wnd.com", "template": "Disqus", "section_selector": "#dsq-2"}
 ]
