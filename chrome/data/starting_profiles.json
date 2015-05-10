@@ -120,5 +120,6 @@
 {"category": "Politics", "comment_selector": "div.post-content", "domain": "redstate.com", "template": "Disqus", "section_selector": "#dsq-2"},
 {"category": "Politics", "comment_selector": "div.post-content", "domain": "breitbart.com", "template": "Disqus", "section_selector": "#dsq-2"},
 {"category": "Politics", "comment_selector": "div.post-content", "domain": "washingtonexaminer.com", "template": "Disqus", "section_selector": "#dsq-2"},
-{"category": "Politics", "comment_selector": "div.post-content", "domain": "wnd.com", "template": "Disqus", "section_selector": "#dsq-2"}
+{"category": "Politics", "comment_selector": "div.post-content", "domain": "wnd.com", "template": "Disqus", "section_selector": "#dsq-2"},
+{"category": "World News", "comment_selector": "div.post-content", "domain": "abcnews.go.com", "template": "Disqus", "section_selector": "#dsq-2"}
 ]
