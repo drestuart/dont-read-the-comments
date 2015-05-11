@@ -1,9 +1,10 @@
 Tools = {};
 
 Tools.cleanProfile = function(profile) {
-	if (profile['template'] === 'none') {
-		profile['template'] = '';
+	if (profile.template === 'none') {
+		profile.template = '';
 	}
+	delete profile.mode;
 	return profile;
 }
 

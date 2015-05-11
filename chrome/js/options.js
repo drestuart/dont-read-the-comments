@@ -431,8 +431,14 @@ function importProfiles() {
 }
 
 function importTemplates() {
-	var imp_templates = JSON.parse($("#templates_textarea").val());
-
+	try {
+		var imp_templates = JSON.parse($("#templates_textarea").val());
+	}
+	catch(err) {
+		message("JSON parsing failed. There is an error in your import text.");
+		return;
+	}
+	
 	if (Array.isArray(imp_templates)) {
 		for (temp of imp_templates) {
 			if (!validateTemplate(temp)) {
@@ -749,7 +755,6 @@ $(document).ready(function() {
 			"Import": function() {
 				importProfiles();
 				$(this).dialog("close");
-				// location.reload();
 			},
 			Cancel: function() {
 				$(this).dialog("close");
@@ -765,7 +770,6 @@ $(document).ready(function() {
 			"Import": function() {
 				importTemplates();
 				$(this).dialog("close");
-				// location.reload();
 			},
 			Cancel: function() {
 				$(this).dialog("close");
@@ -790,7 +794,7 @@ $(document).ready(function() {
 	});
 
 	messageModal = $("#message_modal").dialog({
-		esizable: false,
+		resizable: false,
 		autoOpen: false,
 		modal: true,
 		buttons: {

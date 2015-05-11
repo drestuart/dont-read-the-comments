@@ -23,6 +23,11 @@ function loadStartingData() {
 	fresh_data.custom_words = starting_custom_words;
 	fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
+	// Go through the profiles and set the default mode
+	for (p of fresh_data.profiles) {
+		p.mode = "all";
+	}
+
 	DataStore.save(fresh_data);
 }
 
