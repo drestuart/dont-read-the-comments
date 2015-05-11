@@ -1,14 +1,14 @@
 // Check whether new version is installed
 chrome.runtime.onInstalled.addListener(function(details){
 	if(details.reason == "install") {
-		loadStartingData();
+		Install.loadStartingData();
 
 		// Open help page
 		chrome.tabs.create({url: "install.html", active: true});
 	}
 	else if(details.reason == "update") {
 		var thisVersion = chrome.runtime.getManifest().version;
-		importStartingData(false);
+		Install.importStartingData(false);
 	}
 });
 

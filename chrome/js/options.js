@@ -466,8 +466,6 @@ function importTemplates() {
 
 function validateProfile(obj) {
 	var fields = importFields;
-	
-	console.log(obj);
 
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
@@ -728,10 +726,9 @@ $(document).ready(function() {
 		modal: true,
 		buttons: {
 			"Reset": function() {
-				importStartingData(true, function() {
-					console.log("Data re-imported");
+				Browser.resetData(function() {
 					$("#reset-confirm").dialog("close");
-					// location.reload();
+					location.reload();
 				});
 			},
 			Cancel: function() {

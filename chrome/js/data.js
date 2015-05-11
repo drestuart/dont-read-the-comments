@@ -105,7 +105,6 @@ Data.saveData = function(savedata, callback) {
 			}
 		}
 	}
-	console.log("Saving");
 	chrome.storage.sync.set(savedata, callback);
 }
 
@@ -125,6 +124,9 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request === "getStoredData") {
 			Data.loadData(sendResponse);
+		}
+		else if (request === "resetData") {
+			Install.importStartingData(true, sendResponse);
 		}
 		else if (typeof request === "object" && request.method === "saveData") {
 			Data.saveData(request.data, sendResponse);

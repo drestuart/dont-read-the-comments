@@ -10,6 +10,10 @@ Browser.save = function(data, func) {
 	Browser.sendMessage({method : "saveData", data : data}, func);
 }
 
+Browser.resetData = function(func) {
+	Browser.sendMessage("resetData", func);
+}
+
 Browser.sendMessage = function(message, func) {
 	chrome.runtime.sendMessage(chrome.runtime.id, message, function(response) {
 		func(response);

@@ -1,3 +1,5 @@
+Install = {};
+
 // Starting data
 var starting_profiles;
 var starting_templates;
@@ -8,7 +10,7 @@ var starting_word_lists_enabled = {
 	"bigotry": true
 };
 
-function loadJSONFile(file, func) {
+Install.loadJSONFile = function(file, func) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -20,12 +22,12 @@ function loadJSONFile(file, func) {
 	xhr.send();
 }
 
-function loadJSONData(func) {
+Install.loadJSONData = function(func) {
 	// Load JSON files
-	loadJSONFile('data/starting_profiles.json', function(prof_data) {
+	Install.loadJSONFile('data/starting_profiles.json', function(prof_data) {
 		starting_profiles = prof_data;
 
-		loadJSONFile('data/starting_templates.json', function(temp_data) {
+		Install.loadJSONFile('data/starting_templates.json', function(temp_data) {
 			starting_templates = temp_data;
 
 			func();
@@ -33,8 +35,8 @@ function loadJSONData(func) {
 	});
 }
 
-function loadStartingData() {
-	loadJSONData(function() {
+Install.loadStartingData = function() {
+	Install.loadJSONData(function() {
 		var fresh_data = {};
 
 		fresh_data.profiles = starting_profiles;
@@ -52,8 +54,8 @@ function loadStartingData() {
 	});
 }
 
-function importStartingData(overwrite_category, func) {
-	loadJSONData(function() {
+Install.importStartingData = function(overwrite_category, func) {
+	Install.loadJSONData(function() {
 		// Get current data
 		Data.loadData(function(data) {
 
@@ -86,7 +88,6 @@ function importStartingData(overwrite_category, func) {
 
 			// Save data
 			Data.saveData(save_data, function() {
-				console.log("importStartingData");
 				if (typeof func !== 'undefined') {
 					func();
 				}
