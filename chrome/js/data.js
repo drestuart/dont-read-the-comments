@@ -105,7 +105,7 @@ Data.saveData = function(savedata, callback) {
 			}
 		}
 	}
-
+	console.log("Saving");
 	chrome.storage.sync.set(savedata, callback);
 }
 

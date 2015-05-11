@@ -20,7 +20,7 @@ $.fn.serializeObject = function()
 var numProfiles = 0;
 var numCategories = 0;
 var profileFields = ["domain", "mode", "section_selector", "comment_selector", "template"];
-var importFields = ["domain", "mode", "section_selector", "comment_selector", "template", "category"];
+var importFields = ["domain", "section_selector", "comment_selector", "template", "category"];
 var templateFields = ["system", "section_selector", "comment_selector"];
 var editProfile;
 
@@ -390,15 +390,17 @@ function exportProfiles() {
 
 
 function importProfiles() {
-	var imp_profiles = JSON.parse($("#profiles_textarea").val());
+	try {
+		var imp_profiles = JSON.parse($("#profiles_textarea").val());
+	}
+	catch(err) {
+		message("JSON parsing failed. There is an error in your import text.");
+		return;
+	}
 
 	// Validate input
 	if (Array.isArray(imp_profiles)) {
 		for (prof of imp_profiles) {
-
-			// Set default values
-			prof = setProfileDefaults(prof);
-
 			if (!validateProfile(prof)) {
 				return;
 			}
@@ -412,7 +414,7 @@ function importProfiles() {
 		imp_profiles = [imp_profiles];
 	}
 	else {
-		// console.log("JSON parsing failed");
+		message("JSON parsing failed");
 		return;
 	}
 
@@ -446,7 +448,7 @@ function importTemplates() {
 		imp_templates = [imp_templates];
 	}
 	else {
-		// console.log("JSON parsing failed");
+		message("JSON parsing failed");
 		return;
 	}
 
@@ -462,25 +464,15 @@ function importTemplates() {
 	});
 }
 
-function setProfileDefaults(profile) {
-	var defaults = {'mode' : 'all', 'category' : 'uncategorized'};
-
-	for (var field in defaults) {
-		if (typeof profile[field] === 'undefined' || profile[field] === '') {
-			profile[field] = defaults[field];
-		}
-	}
-
-	return profile;
-}
-
 function validateProfile(obj) {
 	var fields = importFields;
 	
+	console.log(obj);
+
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			// console.log("Import failed. " + msg);
+			message("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -494,7 +486,7 @@ function validateProfile(obj) {
 			}
 
 			var msg = "Missing field: " + field;
-			// console.log("Import failed. " + msg);
+			message("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -502,16 +494,12 @@ function validateProfile(obj) {
 	return true;
 }
 
-function validateTemplate(temp) {
+function validateTemplate(obj) {
 	var fields = templateFields;
-	return validateImport(temp, fields);
-}
-
-function validateImport(obj, fields) {
 	for (field in obj) {
 		if (fields.indexOf(field) === -1) {
 			var msg = "Bad field: " + field;
-			// console.log("Import failed. " + msg);
+			message("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -519,7 +507,7 @@ function validateImport(obj, fields) {
 	for (field of fields) {
 		if (typeof obj[field] === 'undefined') {
 			var msg = "Missing field: " + field;
-			// console.log("Import failed. " + msg);
+			message("Import failed. " + msg);
 			return false;
 		}
 	}
@@ -548,7 +536,11 @@ function editProfileSave() {
 			row.find("." + f).val(value);
 		}
 	}
+}
 
+function message(message) {
+	$("#message").text(message);
+	messageModal.dialog("open");
 }
 
 $(document).ready(function() {
@@ -737,8 +729,9 @@ $(document).ready(function() {
 		buttons: {
 			"Reset": function() {
 				importStartingData(true, function() {
+					console.log("Data re-imported");
 					$("#reset-confirm").dialog("close");
-					location.reload();
+					// location.reload();
 				});
 			},
 			Cancel: function() {
@@ -759,7 +752,7 @@ $(document).ready(function() {
 			"Import": function() {
 				importProfiles();
 				$(this).dialog("close");
-				location.reload();
+				// location.reload();
 			},
 			Cancel: function() {
 				$(this).dialog("close");
@@ -775,7 +768,7 @@ $(document).ready(function() {
 			"Import": function() {
 				importTemplates();
 				$(this).dialog("close");
-				location.reload();
+				// location.reload();
 			},
 			Cancel: function() {
 				$(this).dialog("close");
@@ -794,6 +787,17 @@ $(document).ready(function() {
 				$(this).dialog("close");
 			},
 			Cancel: function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+
+	messageModal = $("#message_modal").dialog({
+		esizable: false,
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			OK: function() {
 				$(this).dialog("close");
 			}
 		}

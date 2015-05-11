@@ -7,18 +7,22 @@ Tools.mergeProfiles = function(existing, new_profiles, overwrite_category) {
 	}
 
 	for (newprof of new_profiles) {
+		// Set the default mode
+		newprof.mode = "all";
 		var overwrote = false;
 		for (var i = 0; i < existing.length; i++) {
 			prof = existing[i];
 
 			// Overwrite matching domains with the imported data
-			if (prof["domain"] === newprof["domain"]) {
-				// Keep the existing 'mode' field
-				newprof['mode'] = prof['mode'];
+			if (prof.domain === newprof.domain) {
+				if (typeof prof.mode !== 'undefined') {
+					// Keep the existing 'mode' field
+					newprof.mode = prof.mode;
+				}
 
 				// Keep the existing category?
-				if (!overwrite_category || newprof['category'] === '') {
-					newprof['category'] = prof['category'];
+				if (!overwrite_category || newprof.category === '') {
+					newprof.category = prof.category;
 				}
 
 				existing[i] = newprof;
@@ -27,6 +31,7 @@ Tools.mergeProfiles = function(existing, new_profiles, overwrite_category) {
 			}
 		}
 
+		// If this is a new domain
 		if (!overwrote) {
 			existing.push(newprof);
 		}
@@ -59,9 +64,10 @@ Tools.mergeTemplates = function(existing, new_tempaltes) {
 }
 
 Tools.cleanProfile = function(profile) {
-	if (profile['template'] === 'none') {
-		profile['template'] = '';
+	if (profile.template === 'none') {
+		profile.template = '';
 	}
+	delete profile.mode;
 	return profile;
 }
 

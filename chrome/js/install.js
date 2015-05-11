@@ -20,7 +20,7 @@ function loadJSONFile(file, func) {
 	xhr.send();
 }
 
-function loadData(func) {
+function loadJSONData(func) {
 	// Load JSON files
 	loadJSONFile('data/starting_profiles.json', function(prof_data) {
 		starting_profiles = prof_data;
@@ -34,7 +34,7 @@ function loadData(func) {
 }
 
 function loadStartingData() {
-	loadData(function() {
+	loadJSONData(function() {
 		var fresh_data = {};
 
 		fresh_data.profiles = starting_profiles;
@@ -43,12 +43,17 @@ function loadStartingData() {
 		fresh_data.custom_words = starting_custom_words;
 		fresh_data.word_lists_enabled = starting_word_lists_enabled;
 
+		// Go through the profiles and set the default mode
+		for (p of fresh_data.profiles) {
+			p.mode = "all";
+		}
+
 		Data.saveData(fresh_data, function() {});
 	});
 }
 
 function importStartingData(overwrite_category, func) {
-	loadData(function() {
+	loadJSONData(function() {
 		// Get current data
 		Data.loadData(function(data) {
 
@@ -81,6 +86,7 @@ function importStartingData(overwrite_category, func) {
 
 			// Save data
 			Data.saveData(save_data, function() {
+				console.log("importStartingData");
 				if (typeof func !== 'undefined') {
 					func();
 				}
