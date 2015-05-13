@@ -377,6 +377,8 @@ $(document).ready(function() {
 		Browser.getTabUrl(function(response) {
 			var uri = parseUri(response);
 			var domain = uri.authority;
+			// Trim off the www from the front
+			domain = domain.replace(/^www\./, "");
 
 			for (p of profiles) {
 				if (Browser.domainMatch(domain, p["domain"])) {

@@ -125,11 +125,12 @@ Browser.domainMatch = function (domain, toCheck) {
 	else {
 		// Check if the domain matches or is a subdomain
 		// of the domain to check
-		var domainRe = new RegExp(".+\\." + toCheck + "$");
-		if (domain.match(domainRe)) {
+		if (domain === toCheck) {
 			return true;
 		}
-		else if (domain === toCheck) {
+
+		var domainRe = new RegExp(".+\\." + escapeRegExp(toCheck) + "$");
+		if (domain.match(domainRe)) {
 			return true;
 		}
 	}

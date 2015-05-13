@@ -223,14 +223,10 @@ function setUpPageAction(url) {
 		// Retrieve the profile matching this site
 		for (i = 0 ; i < profiles.length ; i++) {
 			p = profiles[i];
-			// Retrieve the profile matching this site
-			for (i = 0 ; i < profiles.length ; i++) {
-				p = profiles[i];
-				if (Browser.domainMatch(domain, p["domain"])) {
-					siteProfile = p;
-					siteIndex = i;
-					break;
-				}
+			if (Browser.domainMatch(domain, p["domain"])) {
+				siteProfile = p;
+				siteIndex = i;
+				break;
 			}
 		}
 
