@@ -10,7 +10,7 @@ var fields = ["profiles", "templates", "word_lists_enabled",
 DataStore.profiles = null;
 DataStore.templates = null;
 DataStore.categories = null;
-DataStore.comment_threshold = null;
+DataStore.comment_threshold = 0;
 DataStore.custom_words = null;
 DataStore.word_lists_enabled = null;
 

@@ -235,19 +235,32 @@ function setUpPageAction(url) {
 		}
 
 		// Fill in template menu
+		var template_menu = $('select#template');
 		for (t of templates) {
-			var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+			var optionHTML = "<option value=''></option>";
 			template_menu.append(optionHTML);
+
+			// Set up the option safely!
+			template_menu.find("option")
+				.filter(":last")
+				.attr("value", t["system"])
+				.text(t["system"]);
 		}
-		$('#template').selectmenu();
 
 		// Fill in category menu
+		var category_menu = $('select#category');
 		for (c of categories) {
 			if (c === "Uncategorized") {continue;}
-			var optionHTML = "<option value='" + c + "'>" + c + "</option>";
+
+			var optionHTML = "<option value=''></option>";
 			category_menu.append(optionHTML);
+
+			// Set up the option safely!
+			category_menu.find("option")
+				.filter(":last")
+				.attr("value", c)
+				.text(c);
 		}
-		
 
 		$("#mode_buttons").buttonset();
 

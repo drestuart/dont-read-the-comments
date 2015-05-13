@@ -13,29 +13,54 @@ function formatCategoryName(name) {
 function addCategoryTable(category_name) {
 	category_name_fixed = formatCategoryName(category_name);
 
-	var tableHTML = '<ul id="category' + category_name_fixed + '" class="opt_table profile_table">' +
+	// Base table HTML
+	var tableHTML = '<ul id="category" class="opt_table profile_table">' +
 		'<li class="header">' +
-		  '<button class="category_edit"></button>' +
-		  '<button class="category_save"></button>' +
-		  '<button class="category_cancel"></button>' +
-		  '<input type="text" class="readonly category_name" value="' + category_name + '" readonly="readonly">' +
+			'<button class="category_edit"></button>' +
+			'<button class="category_save"></button>' +
+			'<button class="category_cancel"></button>' +
+			'<input type="text" class="readonly category_name" readonly="readonly">' +
 		'</li>' +
 		'<div class="scroll_area"></div>' +
 		'<li class="control_row">' +
 			'<div class="mode_buttons">' +
-				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_all' + category_name_fixed +'" value="all">' +
-				'<label for="mode_all' + category_name_fixed +'">All</label>' +
-				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_individual' + category_name_fixed +'" value="individual">' +
-				'<label for="mode_individual' + category_name_fixed +'">Single</label>' +
-				'<input type="radio" class="mode" name="mode' + category_name_fixed +'" id="mode_disabled' + category_name_fixed +'" value="disabled">' +
-				'<label for="mode_disabled' + category_name_fixed +'">Off</label>' +
+				'<input type="radio" class="mode" id="mode_all" value="all">' +
+				'<label>All</label>' +
+				'<input type="radio" class="mode" id="mode_individual" value="individual">' +
+				'<label>Single</label>' +
+				'<input type="radio" class="mode" id="mode_disabled" value="disabled">' +
+				'<label>Off</label>' +
 			'</div>' +
 		'</li>' +
-	  '</ul>';
+	'</ul>';
 
+	// Add the table to the page
 	$("#profiles").append(tableHTML);
 
-	var table = $("#category" + category_name_fixed);
+	var table = $("#category");
+
+	// Add category name using attr to avoid injections
+
+	// Category input value
+	table.find("input.category_name").val(category_name);
+
+	// Mode buttons and labels
+	table.find(".mode").each(function(ind, elt) {
+		elt = $(elt);
+		// Set name attr
+		elt.attr("name", 'mode' + category_name_fixed);
+
+		// Update id attr
+		var oldid = $(elt).attr("id");
+		var newid = oldid + category_name_fixed;
+		elt.attr("id", newid);
+
+		// Update label for attr
+		elt.next("label").attr("for", newid);
+	});
+
+	// Update table id
+	table.attr("id", 'category' + category_name_fixed);
 
 	// Wire up category edit buttons
 	table.find("button.category_edit").on('click', function() {
@@ -562,8 +587,14 @@ $(document).ready(function() {
 
 		// Set up template menu in profile edit modal
 		for (t of templates) {
-			var optionHTML = "<option value='" + t["system"] + "'>" + t["system"] + "</option>";
+			var optionHTML = "<option value=''></option>";
 			$("#edit-profile .template").append(optionHTML);
+
+			// Set up the option safely!
+			$("#edit-profile .template").find("option")
+				.filter(":last")
+				.attr("value", t["system"])
+				.text(t["system"]);
 		}
 
 		// Wire up template select
