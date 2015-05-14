@@ -673,8 +673,8 @@ $(document).ready(function() {
 	$("#add_template").on('click', function() {
 		addTemplateRow();
 
-	// Scroll table to the bottom
-	$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
+		// Scroll table to the bottom
+		$("#templates .scroll_area").scrollTop($("#templates .scroll_area")[0].scrollHeight);
 	}).button({
 		icons: {
 			primary: "ui-icon-plusthick"

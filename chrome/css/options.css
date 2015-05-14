@@ -212,11 +212,6 @@ ul.profile_table {
 	width: 95%;
 }
 
-.opt_table button.add_row {
-	width: 2.3em;
-	height: 20px;
-}
-
 .scroll_area .profile_row, .scroll_area .template_row {
 	border: 1px solid #cccccc;
 	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
