@@ -295,7 +295,7 @@ color_map = {
 			0.1 : "orangered",
 			0.0001 : "yellow",
 			0 : "#bbb"};
-ratios = [0.2, 0.1, 0.00001, 0];
+ratios = [0.2, 0.1, 0.0001, 0];
 
 function getShowHideColor(ratio) {
 	for (var r of ratios) {
