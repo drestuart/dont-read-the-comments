@@ -668,7 +668,12 @@ $(document).ready(function() {
 
 		// Set up slider
 		var ctselect = $("#comment_threshold_select");
-		ctselect[0].selectedIndex = ct;
+		ctselect.find("option").each(function (ind, elt) {
+			if ($(elt).attr("value") === ct) {
+				ctselect[0].selectedIndex = ind;
+			}
+		});
+
 		$("#comment_threshold").slider({
 			min: 0,
 			max: 11, // !!!
@@ -736,7 +741,7 @@ $(document).ready(function() {
 
 		data.profiles = getProfileData();
 		data.templates = getTemplateData();
-		data.comment_threshold = $("#comment_threshold").slider("value");
+		data.comment_threshold = $("#comment_threshold_select option:selected").attr("value");
 		data.custom_words = $("#custom_list").val()
 			.replace(/\s+/g, " ")
 			.trim()
