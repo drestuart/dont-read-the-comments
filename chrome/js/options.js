@@ -28,7 +28,7 @@ function formatCategoryName(name) {
 	return name.toLowerCase().replace(/\W/g, "-");
 }
 
-function addCategoryTable(category_name) {
+function addCategoryTable(category_name, scroll) {
 	category_name_fixed = formatCategoryName(category_name);
 
 	// Base table HTML
@@ -151,6 +151,11 @@ function addCategoryTable(category_name) {
 
 	numCategories++;
 
+	if (scroll) {
+		// Scroll to new table
+		$("body").scrollTop(table.offset().top);
+	}
+
 	return table;
 }
 
@@ -186,7 +191,7 @@ function addProfileRow(data) {
 	category_name_fixed = formatCategoryName(category_name);
 	var categoryTable = $("#category" + category_name_fixed);
 	if (!categoryTable.length) {
-		categoryTable = addCategoryTable(category_name);
+		categoryTable = addCategoryTable(category_name, false);
 	}
 
 	categoryTable.find('.scroll_area').append(rowHTML);
@@ -589,7 +594,7 @@ $(document).ready(function() {
 		}
 
 		// Add the Uncategorized table
-		addCategoryTable("Uncategorized");
+		addCategoryTable("Uncategorized", false);
 
 		for (p of profiles) {
 			addProfileRow(p);
@@ -728,7 +733,7 @@ $(document).ready(function() {
 
 	// Add Category button
 	$("#add_category").on('click', function() {
-		addCategoryTable("New Category " + numCategories);
+		addCategoryTable("New Category " + numCategories, true);
 	}).button({
 		icons: {
 			primary: "ui-icon-plusthick"
