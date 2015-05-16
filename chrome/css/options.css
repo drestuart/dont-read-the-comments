@@ -294,6 +294,15 @@ div.word_list_area h3 {
 	max-height: 9em;
 }
 
+.contextual_help {
+	color: #999;
+	text-decoration: none;
+}
+
+.contextual_help:hover {
+	text-decoration: underline;
+}
+
 /* jQuery UI overrides */
 
 .ui-slider-range {
