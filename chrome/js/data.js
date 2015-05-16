@@ -105,7 +105,9 @@ Data.saveData = function(savedata, callback) {
 			}
 		}
 	}
+	// Save to Chrome storage and reset sync timer
 	chrome.storage.sync.set(savedata, callback);
+	Data.lastSyncTime = null;
 }
 
 Data.getCategories = function(profiles) {

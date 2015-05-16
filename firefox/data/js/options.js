@@ -7,7 +7,7 @@ var templateFields = ["system", "section_selector", "comment_selector"];
 var editProfile;
 
 function formatCategoryName(name) {
-	return name.toLowerCase().replace(/ /g, "_");
+	return name.toLowerCase().replace(/\W/g, "-");
 }
 
 function addCategoryTable(category_name) {
