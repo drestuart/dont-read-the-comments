@@ -89,37 +89,6 @@ $(document).ready(function() {
 	});
 
 	// Set up Upload button
-	Browser.profileUploadableCheck(siteProfile, {
-		uploadable: function() {
-			$("#upload").on('click', function() {
-				$("#message").text("");
-
-				var ajaxData = buildProfile();
-
-				Browser.profileUploadableCheck(ajaxData, {
-					uploadable: function() {
-						$.ajax({
-							method: "POST",
-							url: "http://www.coldbrewsoftware.com/drtc/profile",
-							data: ajaxData,
-						})
-						.done(function(data, textStatus, jqXHR) {
-							$("#message").text(data);
-						})
-						.fail(function(jqXHR, textStatus, errorThrown) {
-							$("#message").text("Error: " + errorThrown);
-						});
-					},
-					notUploadable: function() {
-						$("#message").text("A profile for this site already exists.");
-					}
-				});
-			});
-		},
-		notUploadable: function() {
-			$("#upload").parents("tr").hide();
-		}
-	});
 	$("#upload").button();
 
 	// Fill in template values
@@ -130,7 +99,7 @@ $(document).ready(function() {
 
 	$('#section_selector, #comment_selector').on('input', function() {
 		$('#template').val('');
-		$('#template').selectmenu();
+		$('#template').selectmenu("refresh");
 	});
 
 	$("#enable").on("click", function() {
@@ -205,9 +174,6 @@ function setUpPageAction(url) {
 
 	// Empty the fields
 	$("#section_selector, #comment_selector").val("");
-
-	// Show the upload button
-	$("#upload").parents("tr").show();
 
 	// Clear site profile
 	siteProfile = null;
@@ -290,6 +256,39 @@ function setUpPageAction(url) {
 				.selectmenu("menuWidget")
 				.addClass("selectmenu_scroll");
 			$("#mode_buttons").buttonset();
+
+			// Show or hide the upload button
+			Browser.profileUploadableCheck(siteProfile, {
+				uploadable: function() {
+					$("#upload").on('click', function() {
+						$("#message").text("");
+
+						var ajaxData = buildProfile();
+
+						Browser.profileUploadableCheck(ajaxData, {
+							uploadable: function() {
+								$.ajax({
+									method: "POST",
+									url: "http://www.coldbrewsoftware.com/drtc/profile",
+									data: ajaxData,
+								})
+								.done(function(data, textStatus, jqXHR) {
+									$("#message").text(data);
+								})
+								.fail(function(jqXHR, textStatus, errorThrown) {
+									$("#message").text("Error: " + errorThrown);
+								});
+							},
+							notUploadable: function() {
+								$("#message").text("A profile for this site already exists.");
+							}
+						});
+					});
+				},
+				notUploadable: function() {
+					$("#upload").parents("tr").hide();
+				}
+			});
 		}
 		else {
 			$("#profile_not_found").show();
