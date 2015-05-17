@@ -58,7 +58,7 @@ DataStore.save = function(data) {
 		}
 	}
 	// Reset sync timer
-	Data.lastSyncTime = null;
+	DataStore.lastSyncTime = null;
 }
 
 DataStore.getTemplateData = function() {

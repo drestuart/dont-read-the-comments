@@ -142,7 +142,7 @@ function hideElement(elt, ct) {
 
 	// Check if this element is actually visible in the comments section
 	// If it's not, skip the rest of the function
-	if (siteProfile["mode"] === "individual") {
+	if (siteProfile["mode"] === "individual" && comments_section.length) {
 		var eltTop = elt.offset().top;
 		var eltBottom = eltTop + elt.outerHeight(true);
 
