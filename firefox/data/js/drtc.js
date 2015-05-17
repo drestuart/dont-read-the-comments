@@ -380,7 +380,6 @@ $(document).ready(function() {
 			// Trim off the www from the front
 			domain = domain.replace(/^www\./, "");
 
-
 			for (p of profiles) {
 				if (Browser.domainMatch(domain, p["domain"])) {
 					siteProfile = p;

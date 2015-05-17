@@ -135,7 +135,8 @@ function addCategoryTable(category_name, scroll) {
 
 	if (scroll) {
 		// Scroll to new table
-		$("body").scrollTop(table.offset().top);
+		console.log("Scrolling!");
+		$(document).scrollTop(table.offset().top);
 	}
 
 	return table;
