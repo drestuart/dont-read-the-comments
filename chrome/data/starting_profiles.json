@@ -64,7 +64,6 @@
 {"category": "World News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "ibtimes.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
 {"category": "World News", "comment_selector": "div.pundit-content", "domain": "businessinsider.com", "template": "", "section_selector": "#comments"},
 {"category": "World News", "comment_selector": "div.gig-comments-comment, div.gig-comments-comment-child", "domain": "standard.co.uk", "template": "", "section_selector": "#gigyacomment_thread"},
-{"category": "Art", "comment_selector": "div.ccomment.ch", "domain": "*.deviantart.com", "template": "", "section_selector": "#gmi-CCommentMaster"},
 {"category": "Local News", "comment_selector": ".fyre-comment-wrapper", "domain": "al.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
 {"category": "Local News", "comment_selector": "div.postContainer.fsl.fwb.fcb", "domain": "adn.com", "template": "Facebook", "section_selector": "div.fbFeedbackContent"},
 {"category": "Local News", "comment_selector": "div.post-content", "domain": "arkansasnews.com", "template": "Disqus", "section_selector": "#dsq-2"},
