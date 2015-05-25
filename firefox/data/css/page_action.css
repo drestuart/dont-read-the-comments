@@ -70,6 +70,10 @@ td[colspan]:not([colspan="1"]) {
 	max-height: 9em;
 }
 
+#donate {
+	text-align: center;
+}
+
 /* jQueryUI overrides */
 
 span.ui-selectmenu-text, span.ui-button-text {
