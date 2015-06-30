@@ -84,7 +84,8 @@ Browser.setUpTemplateQueryListener = function(func) {
 }
 
 Browser.openOptionsPage = function() {
-	chrome.tabs.create({url: "chrome://extensions/?options=ohjehbcchmjagodhlgboaadkkdpegega"});
+	var url = "chrome://extensions/?options=" + chrome.runtime.id;
+	chrome.tabs.create({url: url});
 }
 
 Browser.setUpLocationChange = function(func) {
