@@ -1,5 +1,5 @@
 [
-{"system": "Disqus", "section_selector": "#dsq-2", "comment_selector": "div.post-content"},
+{"system": "Disqus", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content"},
 {"system": "Facebook", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb"},
 {"system": "Livefyre", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper"},
 {"system": "Kinja", "section_selector": "#js_discussion-region", "comment_selector": "article.js_reply.reply"},
