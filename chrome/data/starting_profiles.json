@@ -127,5 +127,6 @@
 {"category": "Blogs", "comment_selector": ".citem", "domain": "polygon.com", "template": "", "section_selector": "#comments"},
 {"category": "Politics", "comment_selector": ".fyre-comment-wrapper", "domain": "salon.com", "template": "Livefyre", "section_selector": ".fyre-widget"},
 {"category": "Politics", "comment_selector": "div.post-content", "domain": "joemygod.com", "template": "Disqus", "section_selector": "[id^=dsq-]"},
-{"category": "Entertainment", "comment_selector": "div.post-content", "domain": "ew.com", "template": "Disqus", "section_selector": "[id^=dsq-]"}
+{"category": "Entertainment", "comment_selector": "div.post-content", "domain": "ew.com", "template": "Disqus", "section_selector": "[id^=dsq-]"},
+{"category": "World News", "comment_selector": ".UFICommentContent", "domain": "usatoday.com", "template": "", "section_selector": "#comments"}
 ]
