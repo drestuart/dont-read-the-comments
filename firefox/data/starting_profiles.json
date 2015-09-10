@@ -1,4 +1,4 @@
-Ï[
+[
 {"domain": "motherjones.com", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content", "template": "Disqus", "category": "World News"},
 {"domain": "nymag.com", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper", "template": "Livefyre", "category": "World News"},
 {"domain": "pbs.org", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content", "template": "Disqus", "category": "World News"},
