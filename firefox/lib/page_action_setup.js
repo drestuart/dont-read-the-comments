@@ -4,8 +4,8 @@ var data = self.data;
 var panel = require("sdk/panel");
 var tabs = require("sdk/tabs");
 
-var DataStore = require("data").DataStore;
-var OptionsPage = require("options_setup").OptionsPage;
+var DataStore = require("lib/data").DataStore;
+var OptionsPage = require("lib/options_setup").OptionsPage;
 
 var buttons = require("sdk/ui/button/toggle");
 

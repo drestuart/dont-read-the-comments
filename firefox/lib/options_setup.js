@@ -6,8 +6,8 @@ var tabs = require("sdk/tabs");
 var pageMod = require("sdk/page-mod");
 var array = require("sdk/util/array");
 
-var DataStore = require("data").DataStore;
-var Install = require("install").Install;
+var DataStore = require("lib/data").DataStore;
+var Install = require("lib/install").Install;
 
 tabs.on("ready", function(tab) {
 	if (tab.url === data.url("html/options.html")) {

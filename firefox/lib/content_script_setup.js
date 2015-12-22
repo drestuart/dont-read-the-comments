@@ -6,9 +6,9 @@ var tabs = require("sdk/tabs");
 var pageMod = require("sdk/page-mod");
 var array = require("sdk/util/array");
 
-var DataStore = require("data").DataStore;
-var PageAction = require("page_action_setup").PageAction;
-var parseURI = require("parseURI").parseURI;
+var DataStore = require("lib/data").DataStore;
+var PageAction = require("lib/page_action_setup").PageAction;
+var parseURI = require("lib/parseURI").parseURI;
 
 pageMod.PageMod({
 	include: "*",
