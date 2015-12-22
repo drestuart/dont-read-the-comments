@@ -1,16 +1,17 @@
 {
   "name": "dont-read-the-comments",
   "title": "Don't Read The Comments!",
-  "id": "jid1-iyp4oNA51UBDxw",
+  "id": "jid1-iyp4oNA51UBDxw@jetpack",
   "description": "A free browser extension which hides comment sections.  It’s configurable to work with any site and comes with settings for many sites built-in.",
   "author": "Dan Stuart",
   "license": "GPL 3.0",
-  "version": "1.0.6",
+  "version": "1.0.7",
 
   "icon": "data/images/logo_drtc_48.png",
   "homepage": "http://www.coldbrewsoftware.com/drtc",
-  "main": "main.js",
+  "main": "lib/main.js",
   "permissions": {
-    "cross-domain-content": ["http://www.coldbrewsoftware.com/"]
+    "cross-domain-content": ["http://www.coldbrewsoftware.com/"],
+    "multiprocess": "true"
   }
 }

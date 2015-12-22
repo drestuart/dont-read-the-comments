@@ -4,9 +4,9 @@ var data = self.data;
 var tabs = require("sdk/tabs");
 
 // Local libs
-var Install = require("install").Install;
-var PageAction = require("page_action_setup").PageAction;
-var ContentScript = require("content_script_setup").ContentScript;
+var Install = require("lib/install").Install;
+var PageAction = require("lib/page_action_setup").PageAction;
+var ContentScript = require("lib/content_script_setup").ContentScript;
 
 // Turn off warnings god damn your eyes
 require("sdk/preferences/service").set("javascript.options.strict", false);

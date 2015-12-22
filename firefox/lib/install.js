@@ -1,4 +1,4 @@
-var DataStore = require("data").DataStore;
+var DataStore = require("lib/data").DataStore;
 var self = require("sdk/self");
 var data = self.data;
 
