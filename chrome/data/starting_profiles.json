@@ -106,7 +106,7 @@
 {"domain": "mashable.com", "section_selector": ".fyre-widget", "comment_selector": ".fyre-comment-wrapper", "template": "Livefyre", "category": "Entertainment"},
 {"domain": "collegehumor.com", "section_selector": "div.fbFeedbackContent", "comment_selector": "div.postContainer.fsl.fwb.fcb", "template": "Facebook", "category": "Entertainment"},
 {"domain": "avclub.com", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content", "template": "Disqus", "category": "Entertainment"},
-{"domain": "youtube.com", "section_selector": "#watch-discussion, #comments > ytd-item-section-renderer", "comment_selector": ".comment-item, ytd-comment-renderer", "template": "", "category": "Entertainment"},
+{"domain": "youtube.com", "section_selector": "#comments", "comment_selector": "#comment.ytd-comment-thread-renderer, ytd-comment-renderer.ytd-comment-replies-renderer", "template": "", "category": "Entertainment"},
 {"domain": "knowyourmeme.com", "section_selector": "div.fbFeedbackContent,     #comments", "comment_selector": "div.postContainer.fsl.fwb.fcb,     .comment.rel", "template": "", "category": "Entertainment"},
 {"domain": "cartalk.com", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content", "template": "Disqus", "category": "Entertainment"},
 {"domain": "ew.com", "section_selector": "[id^=dsq-]", "comment_selector": "div.post-content", "template": "Disqus", "category": "Entertainment"},
