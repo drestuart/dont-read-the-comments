@@ -9,10 +9,8 @@
   "homepage_url": "http://www.coldbrewsoftware.com/drtc",
 
   "permissions": [
-    "webNavigation",
     "*://*/*",
     "storage",
-    "activeTab",
     "tabs"
   ],
 
